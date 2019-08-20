@@ -1,4 +1,4 @@
-export interface UserModel {
+export interface User {
   counter: number;
   email: string;
   firstName: string;
@@ -8,5 +8,4 @@ export interface UserModel {
   password: string;
   status: boolean;
   username: string;
-
 }

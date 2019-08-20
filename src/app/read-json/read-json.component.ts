@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {BackendService} from '../core/backend/backend.service';
 import {Observable} from 'rxjs';
-import {UserModel} from '../models/user.model';
+import {User} from '../models/user.model';
 
 @Component({
   selector: 'app-read-json',
@@ -13,7 +13,7 @@ export class ReadJsonComponent implements OnInit {
 
   title = 'JSON to Table Example';
   constructor(private backendService: BackendService) { }
-  arrUsers: UserModel[];
+  arrUsers: User[];
 
   ngOnInit() {
     this.getAllUsers();
