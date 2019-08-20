@@ -1,0 +1,12 @@
+<p>read-json works!</p>
+<div style="text-align:left;width:500px;">
+  <h1>
+    {{ title }}!
+
+  </h1>
+  <div *ngFor="let user of arrUsers">
+    <p>{{user | json}}</p>
+
+  </div>
+
+</div>
