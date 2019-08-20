@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {BackendService} from '../core/backend/backend.service';
+import {Observable} from 'rxjs';
+import {UserModel} from '../models/user.model';
 
 @Component({
   selector: 'app-read-json',
@@ -9,18 +12,15 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 export class ReadJsonComponent implements OnInit {
 
   title = 'JSON to Table Example';
-  constructor(private httpService: HttpClient) { }
-  arrUsers: string [];
+  constructor(private backendService: BackendService) { }
+  arrUsers: UserModel[];
 
   ngOnInit() {
-    this.httpService.get('http://localhost:8080/jbugs/api/users/').subscribe(
-      data => {
-        this.arrUsers = data as string [];	 // FILL THE ARRAY WITH DATA.
-        //  console.log(this.arrBirds[1]);
-      },
-      (err: HttpErrorResponse) => {
-        console.log (err.message);
-      }
+    this.getAllUsers();
+  }
+  getAllUsers() {
+    this.backendService.get('http://localhost:8080/jbugs/api/users/').subscribe(
+      (userList) => { this.arrUsers = userList; }
     );
   }
 }
