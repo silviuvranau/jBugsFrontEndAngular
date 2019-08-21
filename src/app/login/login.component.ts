@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
     console.log(this.loginCreds);
 
 
-      this.backendService.post('http://localhost:8080/jbugs/api/login/', this.loginCreds).subscribe();
+      this.backendService.post('http://localhost:8080/jbugs/api/login/', this.loginCreds).subscribe(response => console.log("response", response));
 
 
 

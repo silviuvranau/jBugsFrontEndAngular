@@ -7,7 +7,7 @@ import {ReadJsonComponent} from './read-json/read-json.component';
 import {HttpClientModule} from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import {FormsModule} from '@angular/forms';
-import { RecaptchaModule} from 'ng-recaptcha';
+import { RecaptchaModule} from 'angular-google-recaptcha';
 
 
 @NgModule({
@@ -22,7 +22,9 @@ import { RecaptchaModule} from 'ng-recaptcha';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    RecaptchaModule.forRoot()
+    RecaptchaModule.forRoot({
+      siteKey: '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI ',
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]
