@@ -2,27 +2,27 @@ import {Role} from "../models/role.model";
 import {Permission} from "../models/permission.model";
 
 export class RolePermission {
-  private _roleDTO: Role;
-  private _permissionDTO: Permission;
+  private roleDTO: Role;
+  private permissionDTO: Permission;
 
   constructor(roleDTO: Role, permissionDTO: Permission) {
-    this._roleDTO = roleDTO;
-    this._permissionDTO = permissionDTO;
+    this.roleDTO = roleDTO;
+    this.permissionDTO = permissionDTO;
   }
 
-  get roleDTO(): Role {
-    return this._roleDTO;
+  get role(): Role {
+    return this.roleDTO;
   }
 
-  set roleDTO(value: Role) {
-    this._roleDTO = value;
+  set role(value: Role) {
+    this.roleDTO = value;
   }
 
-  get permissionDTO(): Permission {
-    return this._permissionDTO;
+  get permission(): Permission {
+    return this.permissionDTO;
   }
 
-  set permissionDTO(value: Permission) {
-    this._permissionDTO = value;
+  set permission(value: Permission) {
+    this.permissionDTO = value;
   }
 }
