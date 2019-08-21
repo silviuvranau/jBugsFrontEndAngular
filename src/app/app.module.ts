@@ -5,19 +5,29 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {ReadJsonComponent} from './read-json/read-json.component';
 import {HttpClientModule} from '@angular/common/http';
+import {RolesComponent} from './roles/roles.component';
+import {TableModule} from 'primeng/table';
+import {CheckboxModule} from 'primeng/primeng';
+import {FormsModule} from '@angular/forms';
+import {RolesService} from "./roles/roles.service";
 
 @NgModule({
   declarations: [
     AppComponent,
     ReadJsonComponent,
     ReadJsonComponent,
+    RolesComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    TableModule,
+    FormsModule,
+    CheckboxModule
   ],
-  providers: [],
+  providers: [RolesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
