@@ -1,4 +1,4 @@
-<form #f = 'ngForm' (ngSubmit) = 'login(username,password)' >
+<form #f = 'ngForm' (ngSubmit) = 'login(username,password,captcha)' >
 
 
   <h2 style="position:absolute;margin-left: 43%">LOGIN</h2>
@@ -68,6 +68,39 @@
     Log in
 
   </button>
+
+   <!-- START CAPTCHA -->
+   <div class="capbox">
+     <div class = "form-group input-group-lg">
+
+
+
+
+       <label for = 'captcha'>Captcha</label>
+
+       <div >
+       <label >{{text}}</label>
+
+       </div>
+
+
+       <input
+              type="text"
+              id="captcha"
+              name="captcha"
+              ngModel
+              required
+              #captcha ="ngModel"
+              size ='3'
+       >
+     </div>
+
+
+
+   </div>
+   <br><br>
+   <!-- END CAPTCHA -->
+
  </div>
 
 </form>
