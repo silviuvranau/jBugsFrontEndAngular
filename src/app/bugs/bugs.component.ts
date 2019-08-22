@@ -20,7 +20,7 @@ export class BugsComponent implements OnInit {
   ngOnInit() {
     this.bugsService.getAllRoles().subscribe(obj => {
       this.bugs = obj;
-      console.log(this.bugs);
+      // console.log(this.bugs);
     });
 
     this.cols = [
@@ -43,6 +43,9 @@ export class BugsComponent implements OnInit {
       const value2 = data2[event.field];
       let result = null;
 
+      console.log(value1);
+      console.log(value2);
+
       if (value1 == null && value2 != null) {
         result = -1;
       } else if (value1 != null && value2 == null) {
@@ -51,17 +54,13 @@ export class BugsComponent implements OnInit {
         result = 0;
       } else if (typeof value1 === 'string' && typeof value2 === 'string') {
         result = value1.localeCompare(value2);
-      } else if (value1 === 'assignedId' && value2 === 'assignedId') {
+      } else if (event.field === 'assignedId') {
         result = data1.assignedId.username.localeCompare(data2.assignedId.username);
-      } else if (value1 === 'createdId' && value2 === 'createdId') {
+      } else if (event.field === 'createdId') {
         result = data1.createdId.username.localeCompare(data2.createdId.username);
+      } else {
+        result = (value1 < value2) ? -1 : (value1 > value2) ? 1 : 0;
       }
-
-
-      // else {
-      //   result = (value1 < value2) ? -1 : (value1 > value2) ? 1 : 0;
-      // }
-
       return (event.order * result);
     });
   }

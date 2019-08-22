@@ -1,41 +1,15 @@
-<p-table [columns]="cols" [value]="bugs" [paginator]="true" [rows]="25" [customSort]="true"
+<p-table [columns]="cols" [value]="bugs" [paginator]="true" [rows]="5" [customSort]="true"
          (sortFunction)="customSort($event)">
   <ng-template pTemplate="header" let-columns>
 
     <tr>
       <th *ngFor="let col of cols" [pSortableColumn]="col.field" pResizableColumn pReorderableColumn>
         {{col.header}}
+        <p-sortIcon [field]="col.field"></p-sortIcon>
       </th>
     </tr>
 
-    <!--    <tr>-->
-    <!--      <th [pSortableColumn]="col.field" pResizableColumn pReorderableColumn>-->
-    <!--        {{co}}-->
-    <!--      </th>-->
-    <!--    </tr>-->
-
   </ng-template>
-  <!--  <ng-template pTemplate="body" let-rowData let-columns="columns">-->
-  <!--    <tr [pSelectableRow]="rowData">-->
-  <!--      <td *ngFor="let col of cols">-->
-  <!--&lt;!&ndash;        <p *ngIf = "[col.field] === 'created_username'">&ndash;&gt;-->
-  <!--          {{rowData[col.field]}}-->
-  <!--&lt;!&ndash;        </p>&ndash;&gt;-->
-  <!--      </td>-->
-  <!--    </tr>-->
-  <!--  </ng-template>-->
-
-  <!--    <ng-template pTemplate="body" let-bugs>-->
-  <!--      <td title = "{{bugs.title}}">{{bugs.title}}</td>-->
-  <!--      <td title = "{{bugs.description}}">{{bugs.description}}</td>-->
-  <!--      <td title = "{{bugs.version}}">{{bugs.version}}</td>-->
-  <!--      <td title = "{{bugs.target_date}}">{{bugs.target_date}}</td>-->
-  <!--      <td title = "{{bugs.status}}">{{bugs.status}}</td>-->
-  <!--      <td title = "{{bugs.fixed_version}}">{{bugs.fixed_version}}</td>-->
-  <!--      <td title = "{{bugs.severity}}">{{bugs.severity}}</td>-->
-  <!--      <td title = "{{bugs.created_username}}">{{bugs.created_username}}</td>-->
-  <!--      <td title = "{{bugs.assigned_username}}">{{bugs.assigned__username}}</td>-->
-  <!--    </ng-template>-->
 
   <ng-template pTemplate="body" let-bugs>
     <tr>
