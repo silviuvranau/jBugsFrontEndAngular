@@ -60,6 +60,8 @@ export class LoginComponent implements OnInit {
 
           response => {
 
+
+            console.log("response is ",response);
             if(response === null){
 
               alert('INVALID CREDENTIALS');
