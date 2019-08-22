@@ -7,6 +7,7 @@ export class BugsService {
   constructor(private backendService: BackendService) {
   }
 
+
   getAllRoles(): Observable<Bug[]> {
     return this.backendService.get('http://localhost:8080/jbugs/api/bugs/');
   }

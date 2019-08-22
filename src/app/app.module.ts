@@ -10,7 +10,8 @@ import {TableModule} from 'primeng/table';
 import {CheckboxModule} from 'primeng/primeng';
 import {FormsModule} from '@angular/forms';
 import {RolesService} from './roles/roles.service';
-import { BugsComponent } from './bugs/bugs.component';
+import {BugsComponent} from './bugs/bugs.component';
+import {BugsService} from './bugs/bugs.service';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,7 @@ import { BugsComponent } from './bugs/bugs.component';
     FormsModule,
     CheckboxModule
   ],
-  providers: [RolesService],
+  providers: [RolesService, BugsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
