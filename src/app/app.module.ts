@@ -9,7 +9,8 @@ import {RolesComponent} from './roles/roles.component';
 import {TableModule} from 'primeng/table';
 import {CheckboxModule} from 'primeng/primeng';
 import {FormsModule} from '@angular/forms';
-import {RolesService} from "./roles/roles.service";
+import {RolesService} from './roles/roles.service';
+import {LoginComponent} from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import {RolesService} from "./roles/roles.service";
     ReadJsonComponent,
     ReadJsonComponent,
     RolesComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,4 +32,5 @@ import {RolesService} from "./roles/roles.service";
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
 
