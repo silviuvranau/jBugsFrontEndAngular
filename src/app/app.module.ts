@@ -9,7 +9,8 @@ import {RolesComponent} from './roles/roles.component';
 import {TableModule} from 'primeng/table';
 import {CheckboxModule} from 'primeng/primeng';
 import {FormsModule} from '@angular/forms';
-import {RolesService} from "./roles/roles.service";
+import {RolesService} from './roles/roles.service';
+import { BugsComponent } from './bugs/bugs.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import {RolesService} from "./roles/roles.service";
     ReadJsonComponent,
     ReadJsonComponent,
     RolesComponent,
+    BugsComponent,
   ],
   imports: [
     BrowserModule,

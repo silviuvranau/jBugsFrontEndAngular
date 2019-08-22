@@ -16,7 +16,7 @@ export enum Status {
     INFO_NEEDED
 }
 
-export interface Bug{   
+export interface Bug {
     id: number;
     title: string;
     description: string;

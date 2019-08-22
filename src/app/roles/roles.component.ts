@@ -27,6 +27,7 @@ export class RolesComponent implements OnInit {
     // get list with permissions from backend
     this.roleService.getAllPermissions().subscribe(obj => {
       this.permissions = obj;
+      console.log(this.permissions.length);
     });
   }
 
