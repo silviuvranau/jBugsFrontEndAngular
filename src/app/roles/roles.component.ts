@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Role} from '../models/role.model';
-import {Permission} from "../models/permission.model";
-import {RolesService} from "./roles.service";
-import {RolePermission} from "./role.permission";
+import {Permission} from '../models/permission.model';
+import {RolesService} from './roles.service';
+import {RolePermission} from './role.permission';
 
 @Component({
   selector: 'app-roles',
@@ -19,14 +19,14 @@ export class RolesComponent implements OnInit {
   }
 
   ngOnInit() {
+    // get list with roles from backend
     this.roleService.getAllRoles().subscribe(obj => {
       this.roles = obj;
-      console.log(this.roles.length);
     });
 
+    // get list with permissions from backend
     this.roleService.getAllPermissions().subscribe(obj => {
       this.permissions = obj;
-      console.log(this.permissions.length);
     });
   }
 
@@ -39,12 +39,14 @@ export class RolesComponent implements OnInit {
     return false;
   }
 
+  /**
+   * Method for sending new checkbox changes to backend
+   * @param per
+   * @param role
+   */
   onCheckboxClick(per: Permission, role: Role) {
-    const perJSON = JSON.parse(JSON.stringify(per));
-    const roleJSON = JSON.parse(JSON.stringify(role));
+    // create Wrapper with role and permission given from table
     this.rolePermission = new RolePermission(role, per);
-    const rolePermissionJson = JSON.parse(JSON.stringify(this.rolePermission));
-    console.log(rolePermissionJson);
 
     this.roleService.sendData(this.rolePermission).subscribe((data: {}) => {
       console.log(data);
