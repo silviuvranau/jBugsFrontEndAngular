@@ -1,0 +1,134 @@
+<div class="introduction">
+    <h2>Create a new user</h2>
+</div>
+
+<div style = "margin-left:30%; margin-top:5%; width: 550px;">
+<p-card header="Add a new user" subheader="">
+    <form #createUserForm="ngForm" (ngSubmit) = addUser(createUserForm)>
+        <div style="width: 400px">
+            <label for="firstName">First Name</label>
+            <input
+            required
+            pattern = "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$"
+            id = "firstName"
+            name = "firstName"
+            class = "form-control"
+            #firstName = "ngModel"
+            ngModel
+            >
+        </div>
+        <div class="alert alert-danger" style="width:400px" *ngIf="firstName.touched && firstName.invalid">
+            <div *ngIf = "firstName.errors.required">
+                First name is required.
+            </div>
+            <div *ngIf = "firstName.errors.pattern">
+                Invalid first name.
+            </div>
+        </div>
+        <div style="width:400px">
+            <label for="lastName">Last Name</label>
+            <input
+            required
+            pattern = "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$"
+            id = "lastName"
+            name = "lastName"
+            class = "form-control"
+            #lastName = "ngModel"
+            ngModel
+            >
+        </div>
+        <div class="alert alert-danger" style="width:400px" *ngIf="lastName.touched && lastName.invalid">
+            <div *ngIf = "lastName.errors.required">
+                Last name is required.
+            </div>
+            <div *ngIf = "lastName.errors.pattern">
+                Invalid last name.
+            </div>
+        </div>
+        <label for="email">Email</label>
+        <div class = "form-inline">
+        <!-- <div style="width:400px"> -->
+            <input
+            required
+            pattern = "^[a-zA-Z0-9_.+-]+$"
+            id = "email"
+            name = "email"
+            class = "form-control"
+            #email = "ngModel"
+            ngModel
+            style = "width: 245px;"
+            >
+        <!-- </div> -->
+        <!-- <div style = "width:400px"> -->
+            <input type="text"
+             readonly class="form-control-plaintext"
+             value = "@msggroup.com"
+             style = "width: 140px; margin-left:15px;">
+        <!-- </div> -->
+        </div>
+        <div class="alert alert-danger" style="width:400px" *ngIf="email.touched && email.invalid">
+            <div *ngIf = "email.errors.required">
+                Email is required.
+            </div>
+            <div *ngIf = "email.errors.pattern">
+                Invalid email.
+            </div>
+        </div>
+        <div style="width:400px">
+            <label for="mobileNumber">Mobile Number</label>
+            <input
+            pattern = "[+]407[0-9]{8}"
+            required
+            id = "mobileNumber"
+            name = "mobileNumber"
+            class = "form-control"
+            #mobileNumber = "ngModel"
+            ngModel
+            >
+        </div>
+        <div class="alert alert-danger" style="width:400px" *ngIf="mobileNumber.touched && mobileNumber.invalid">
+            <div *ngIf = "mobileNumber.errors.required">
+                Mobile number is required.
+            </div>
+            <div *ngIf = "mobileNumber.errors.pattern">
+                Invalid mobile number.
+            </div>
+        </div>
+        <div style="width:400px">
+            <label for="password">Password</label>
+            <input
+            required
+            id = "password"
+            name = "password"
+            class = "form-control"
+            type = "password"
+            #password = "ngModel"
+            ngModel
+            >
+        </div>
+        <div class="alert alert-danger" style="width:400px" *ngIf="password.touched && password.invalid">
+            <div *ngIf = "password.errors.required">
+                Password is required.
+            </div>
+        </div>
+        <p style = "margin-top: 2%; margin-bottom: 2%">Roles</p>
+        <div *ngFor = "let role of roles" class = "checkbox">
+            <label>
+                <input type = "checkbox"
+                [(ngModel)] = "role.checked"
+                name = "role"
+                id = "role{{role.id}}"
+                [value] = "role.id">
+                {{role.type}}
+            </label>
+        </div>
+                  
+        <button class = "btn btn-primary" style = "margin-top:3%" [disabled]="createUserForm.invalid">Add User</button>
+    </form>
+
+</p-card>
+</div>  
+
+<!-- <p>
+    {{createUserForm.value | json}}
+</p> -->

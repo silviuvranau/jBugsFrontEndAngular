@@ -8,4 +8,5 @@ export interface User {
   password: string;
   status: boolean;
   username: string;
+  roleIds: number[];
 }

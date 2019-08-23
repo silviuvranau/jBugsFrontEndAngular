@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {BackendService} from '../core/backend/backend.service';
-import {Login} from '../models/login.model';
+import {BackendService} from "../core/backend/backend.service";
+import {Login} from "../models/login.model";
+
 
 @Component({
   selector: 'app-login',
@@ -12,6 +13,11 @@ export class LoginComponent implements OnInit {
 
   loginCreds: Login;
   text: number;
+   htmlStr: string;
+
+  showMsg: boolean = false;
+
+
 
 
   constructor(private router: Router, private backendService: BackendService) {
@@ -40,6 +46,7 @@ export class LoginComponent implements OnInit {
   }
 
 
+
   login(usernam, pass, captcha) {
 
     this.loginCreds = {
@@ -49,44 +56,52 @@ export class LoginComponent implements OnInit {
     };
 
 
-    if (this.text.toString() === captcha.value.toString()) {
-      console.log('da is egalee');
 
-      this.backendService.post('http://localhost:8080/jbugs/api/login', this.loginCreds).subscribe(
+
+      this.backendService.post('http://localhost:8080/jbugs/api/login/', this.loginCreds).subscribe(
         response => {
 
 
-          console.log('response is ', response);
-          if (response === null) {
+          console.log("response is ", response);
 
-            alert('INVALID CREDENTIALS');
+          if (this.text.toString() !== captcha.value.toString()) {
 
-            // console.log("E NUUUUULLLLLL", typeof response);
+            alert('INVALID CAPTCHA');
+            this.showMsg = true;
+
 
           }
-          // console.log('response', response);
+
+
+
+          else if (response === null) {
+
+
+            alert('Not valid credentials')
+            //console.log("E NUUUUULLLLLL", typeof response);
+
+
+
+          }
+
+          else {
+
+            alert('Login buun');
+            this.router.navigate(['/dashboard']);
+          }
+          //console.log('response', response);
 
         });
 
 
-    } else {
-
-      alert('Not a valid captcha');
     }
 
 
-    // console.log(JSON.stringify(this.loginCreds));
 
 
-    // console.log(this.loginCreds);
 
 
-    // console.log('Credentials are \n user name:', this.loginCreds.username, '\n', 'password:', pass.value);
 
-    // this.router.navigate(['/dashboard']);
-
-
-  }
 
 
 }
