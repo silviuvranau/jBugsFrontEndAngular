@@ -6,11 +6,13 @@ import {AppComponent} from './app.component';
 import {ReadJsonComponent} from './read-json/read-json.component';
 import {HttpClientModule} from '@angular/common/http';
 import {LoginComponent} from './login/login.component';
+import {FormsModule} from '@angular/forms';
 import {RolesComponent} from './roles/roles.component';
 import {TableModule} from 'primeng/table';
 import {CheckboxModule} from 'primeng/primeng';
-import {FormsModule} from '@angular/forms';
-import {RolesService} from './roles/roles.service';
+import {DashboardComponent} from './dashboard/dashboard.component';
+import {UserListComponent} from './user-list/user-list.component';
+import {RolesService} from "./roles/roles.service";
 
 @NgModule({
   declarations: [
@@ -18,16 +20,17 @@ import {RolesService} from './roles/roles.service';
     ReadJsonComponent,
     ReadJsonComponent,
     LoginComponent,
-    RolesComponent
-
+    RolesComponent,
+    DashboardComponent,
+    UserListComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    TableModule,
     FormsModule,
-    CheckboxModule
+    CheckboxModule,
+    TableModule
   ],
   providers: [RolesService],
   bootstrap: [AppComponent]
