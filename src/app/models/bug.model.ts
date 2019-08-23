@@ -1,4 +1,4 @@
-import { User } from './user.model';
+import {User} from './user.model';
 
 export enum Severity {
     LOW,
@@ -16,7 +16,7 @@ export enum Status {
     INFO_NEEDED
 }
 
-export interface Bug{   
+export interface Bug {
     id: number;
     title: string;
     description: string;
@@ -26,4 +26,5 @@ export interface Bug{
     createdId: User;
     assignedId: User;
     status: Status;
+  severity: Status;
 }

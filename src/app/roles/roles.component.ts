@@ -22,11 +22,13 @@ export class RolesComponent implements OnInit {
     // get list with roles from backend
     this.roleService.getAllRoles().subscribe(obj => {
       this.roles = obj;
+      console.log(this.roles.length);
     });
 
     // get list with permissions from backend
     this.roleService.getAllPermissions().subscribe(obj => {
       this.permissions = obj;
+      console.log(this.permissions.length);
     });
   }
 

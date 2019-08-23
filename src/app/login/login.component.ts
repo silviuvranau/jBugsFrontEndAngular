@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {BackendService} from "../core/backend/backend.service";
 import {Login} from "../models/login.model";
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -12,6 +13,10 @@ export class LoginComponent implements OnInit {
 
   loginCreds: Login;
   text: number;
+   htmlStr: string;
+
+  showMsg: boolean = false;
+
 
   constructor(private router: Router, private backendService: BackendService) {
   }
@@ -46,22 +51,37 @@ export class LoginComponent implements OnInit {
     };
 
 
-    if (this.text.toString() === captcha.value.toString()) {
-      console.log('da is egalee');
+
 
       this.backendService.post('http://localhost:8080/jbugs/api/login/', this.loginCreds).subscribe(
         response => {
 
 
           console.log("response is ", response);
-          if (response === null) {
 
-            alert('INVALID CREDENTIALS');
+          if (this.text.toString() !== captcha.value.toString()) {
 
+            alert('INVALID CAPTCHA');
+            this.showMsg = true;
+
+
+          }
+
+
+
+          else if (response === null) {
+
+
+            alert('Not valid credentials')
             //console.log("E NUUUUULLLLLL", typeof response);
 
-          } else {
-            console.log("login succesfull");
+
+
+          }
+
+          else {
+
+            alert('Login buun');
             this.router.navigate(['/dashboard']);
           }
           //console.log('response', response);
@@ -69,24 +89,14 @@ export class LoginComponent implements OnInit {
         });
 
 
-    } else {
-
-      alert('Not a valid captcha');
     }
 
 
-    //console.log(JSON.stringify(this.loginCreds));
 
 
-    //console.log(this.loginCreds);
 
 
-    //console.log('Credentials are \n user name:', this.loginCreds.username, '\n', 'password:', pass.value);
 
-    //this.router.navigate(['/dashboard']);
-
-
-  }
 
 
 }
