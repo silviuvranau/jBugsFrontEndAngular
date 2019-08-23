@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {BugsService} from './bugs.service';
 import {Bug} from '../models/bug.model';
-import {SortEvent} from "primeng/api";
+import {SortEvent} from 'primeng/api';
 
 @Component({
   selector: 'app-bugs',
