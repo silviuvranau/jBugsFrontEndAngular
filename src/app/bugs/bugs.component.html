@@ -1,0 +1,124 @@
+<p-table [columns]="cols" [value]="bugs" [paginator]="true" [rows]="5" [customSort]="true"
+         (sortFunction)="customSort($event)" (onRowSelect)="onRowSelect($event)"
+         selectionMode="single" [(selection)]="selectedBug">
+  <ng-template pTemplate="header" let-columns>
+
+    <tr>
+      <th *ngFor="let col of cols" [pSortableColumn]="col.field" pResizableColumn pReorderableColumn>
+        {{col.header}}
+        <p-sortIcon [field]="col.field"></p-sortIcon>
+      </th>
+    </tr>
+
+  </ng-template>
+
+  <ng-template pTemplate="body" let-rowData let-bugs>
+    <tr [pSelectableRow]="rowData">
+      <td>{{bugs.title}}</td>
+      <td>{{bugs.description}}</td>
+      <td>{{bugs.version}}</td>
+      <td>{{bugs.targetDate}}</td>
+      <td>{{bugs.status}}</td>
+      <td>{{bugs.fixedVersion}}</td>
+      <td>{{bugs.severity}}</td>
+      <td>{{bugs.createdId.username}}</td>
+      <td>{{bugs.assignedId.username}}</td>
+    </tr>
+  </ng-template>
+
+  <!--  <ng-template pTemplate="body" let-bug="bugs">-->
+  <!--    <tr *ngFor="let bug of bugs">-->
+  <!--      <td *ngFor="let col of cols">-->
+  <!--        {{bug[col]}}-->
+  <!--      </td>-->
+  <!--    </tr>-->
+  <!--  </ng-template>-->
+</p-table>
+
+<p-dialog header="Bug Details" [(visible)]="displayDialog" [responsive]="true" [modal]="true"
+          [style]="{width: '500px', background: 'lightgrey'}">
+  <div class="ui-g ui-fluid" *ngIf="bug">
+
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label styleClass="bugPopUpLabels" for="title">Title</label>
+      </div>
+      <div class="ui-g-8">
+        <input pInputText id="title" [(ngModel)]="bug.title"/>
+      </div>
+    </div>
+
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="description">Description</label>
+      </div>
+      <div class="ui-g-8">
+        <input pInputText id="description" [(ngModel)]="bug.description"/>
+      </div>
+    </div>
+
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="version">Version</label>
+      </div>
+      <div class="ui-g-8">
+        <input pInputText id="version" [(ngModel)]="bug.version"/>
+      </div>
+    </div>
+
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="targetDate">Target Date</label>
+      </div>
+      <div class="ui-g-8">
+        <input pInputText id="targetDate" [(ngModel)]="bug.targetDate"/>
+      </div>
+    </div>
+
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="status">Status</label>
+      </div>
+      <div class="ui-g-8">
+        <input pInputText id="status" [(ngModel)]="bug.status"/>
+      </div>
+    </div>
+
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="fixedVersion">Fixed Version</label>
+      </div>
+      <div class="ui-g-8">
+        <input pInputText id="fixedVersion" [(ngModel)]="bug.fixedVersion"/>
+      </div>
+    </div>
+
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="severity">Severity</label>
+      </div>
+      <div class="ui-g-8">
+        <input pInputText id="severity" [(ngModel)]="bug.severity"/>
+      </div>
+    </div>
+
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="createdId">Created by</label>
+      </div>
+      <div class="ui-g-8">
+        <input pInputText id="createdId" [(ngModel)]="bug.createdId.username"/>
+      </div>
+    </div>
+
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="assignedId">Assigned to</label>
+      </div>
+      <div class="ui-g-8">
+        <input pInputText id="assignedId" [(ngModel)]="bug.assignedId.username"/>
+      </div>
+    </div>
+
+  </div>
+</p-dialog>

@@ -7,10 +7,12 @@ import {ReadJsonComponent} from './read-json/read-json.component';
 import {HttpClientModule} from '@angular/common/http';
 import {RolesComponent} from './roles/roles.component';
 import {TableModule} from 'primeng/table';
-import {CheckboxModule} from 'primeng/primeng';
+import {CheckboxModule, DialogModule, InputTextModule} from 'primeng/primeng';
 import {FormsModule} from '@angular/forms';
 import {RolesService} from './roles/roles.service';
-import {LoginComponent} from './login/login.component';
+import {BugsComponent} from './bugs/bugs.component';
+import {BugsService} from './bugs/bugs.service';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,7 @@ import {LoginComponent} from './login/login.component';
     ReadJsonComponent,
     ReadJsonComponent,
     RolesComponent,
-    LoginComponent,
+    BugsComponent,
   ],
   imports: [
     BrowserModule,
@@ -26,11 +28,13 @@ import {LoginComponent} from './login/login.component';
     HttpClientModule,
     TableModule,
     FormsModule,
-    CheckboxModule
+    CheckboxModule,
+    DialogModule,
+    InputTextModule,
+    BrowserAnimationsModule
   ],
-  providers: [RolesService],
+  providers: [RolesService, BugsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-
 
