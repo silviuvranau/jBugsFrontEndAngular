@@ -1,10 +1,10 @@
 <p-table [columns]="cols" [value]="bugs" [paginator]="true" [rows]="5" [customSort]="true"
          (sortFunction)="customSort($event)" (onRowSelect)="onRowSelect($event)"
-         selectionMode="single" [(selection)]="selectedBug">
+         selectionMode="single" [(selection)]="selectedBug" [style]="{width: '100%'}">
   <ng-template pTemplate="header" let-columns>
 
     <tr>
-      <th *ngFor="let col of cols" [pSortableColumn]="col.field" pResizableColumn pReorderableColumn>
+      <th *ngFor="let col of cols" [pSortableColumn]="col.field" pResizableColumn pReorderableColumn [ngStyle]="{'width':col.width}">
         {{col.header}}
         <p-sortIcon [field]="col.field"></p-sortIcon>
       </th>

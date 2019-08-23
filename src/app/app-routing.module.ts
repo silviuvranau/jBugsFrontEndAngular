@@ -3,7 +3,8 @@ import {RouterModule, Routes} from '@angular/router';
 import {LoginComponent} from './login/login.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {UserListComponent} from './user-list/user-list.component';
-import {RolesComponent} from "./roles/roles.component";
+import {RolesComponent} from './roles/roles.component';
+import {BugsComponent} from "./bugs/bugs.component";
 
 const routes: Routes = [
   {
@@ -27,6 +28,10 @@ const routes: Routes = [
       {
         path: 'changePermissions',
         component: RolesComponent
+      },
+      {
+        path: 'bugs',
+        component: BugsComponent
       }
     ]
   }

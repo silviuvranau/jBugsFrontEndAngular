@@ -8,7 +8,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {LoginComponent} from './login/login.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {RolesComponent} from './roles/roles.component';
-import {ButtonModule} from 'primeng/primeng';
+import {ButtonModule, DialogModule} from 'primeng/primeng';
 import {CardModule} from 'primeng/card';
 import { FormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
@@ -16,6 +16,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {TableModule} from 'primeng/table';
 import {CheckboxModule} from 'primeng/primeng';
 import { UserCreateComponent } from './user-create/user-create.component';
+import {BugsComponent} from './bugs/bugs.component';
+import {BugsService} from "./bugs/bugs.service";
+import {RolesService} from "./roles/roles.service";
+import {UserListComponent} from "./user-list/user-list.component";
 
 
 @NgModule({
@@ -26,7 +30,9 @@ import { UserCreateComponent } from './user-create/user-create.component';
     LoginComponent,
     DashboardComponent,
     RolesComponent,
-    UserCreateComponent
+    UserCreateComponent,
+    BugsComponent,
+    UserListComponent
   ],
   imports: [
     BrowserModule,
@@ -39,9 +45,10 @@ import { UserCreateComponent } from './user-create/user-create.component';
     BrowserAnimationsModule,
     FormsModule,
     CheckboxModule,
-    TableModule
+    TableModule,
+    DialogModule
   ],
-  providers: [],
+  providers: [BugsService, RolesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
