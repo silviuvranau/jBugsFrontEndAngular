@@ -1,20 +1,21 @@
 <p-table [value]="roles">
   <ng-template pTemplate="header" let-columns>
     <tr>
-      <th class="checkBoxColumn" *ngFor="let col of permissions">
+      <th [ngStyle]="{'width':'100px'}">
+      </th>
+      <th class="checkBoxColumn" *ngFor="let col of permissions" [ngStyle]="{'width':'220px'}">
         {{col.type}}
       </th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-role>
     <tr>
-      <td class="roleType">
+      <td class="roleType" >
         {{role.type}}
       </td>
-      <td class="checkBoxColumn" *ngFor="let per of permissions">
+      <td class="checkBoxColumn" *ngFor="let per of permissions" >
         <p-checkbox [ngModel]="checkIfRoleHasPermission(per, role.permissions)" binary="true"
                     (onChange)="onCheckboxClick(per, role)"></p-checkbox>
-
       </td>
     </tr>
   </ng-template>
