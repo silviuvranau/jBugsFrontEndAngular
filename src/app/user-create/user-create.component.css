@@ -1,0 +1,16 @@
+h2{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+    margin-left: 3%;
+}
+
+form-style {
+    padding: 20px;
+    max-width: 400px;
+}
+
+.form-inline {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+  }
