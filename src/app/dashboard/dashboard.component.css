@@ -1,0 +1,24 @@
+div.introduction{
+  background-image: linear-gradient(-90deg, #21BEE1, #1F70E8);
+  height: 100px;
+  padding: 15px;
+}
+nav a {
+  padding: 5px 10px;
+  text-decoration: none;
+  margin-right: 10px;
+  margin-top: 10px;
+  display: inline-block;
+  background-color: #eee;
+  border-radius: 4px;
+}
+nav a:visited, a:link {
+  color: #607D8B;
+}
+nav a:hover {
+  color: #039be5;
+  background-color: #CFD8DC;
+}
+nav a.active {
+  color: #039be5;
+}

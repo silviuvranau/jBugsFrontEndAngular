@@ -8,6 +8,9 @@ import {HttpClientModule} from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import {FormsModule} from '@angular/forms';
 import { RecaptchaModule} from 'angular-google-recaptcha';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { UserListComponent } from './user-list/user-list.component';
+
 
 
 @NgModule({
@@ -16,6 +19,8 @@ import { RecaptchaModule} from 'angular-google-recaptcha';
     ReadJsonComponent,
     ReadJsonComponent,
     LoginComponent,
+    DashboardComponent,
+    UserListComponent,
   ],
   imports: [
     BrowserModule,

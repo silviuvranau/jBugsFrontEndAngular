@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit {
       if (this.text.toString() === captcha.value.toString()) {
          console.log('da is egalee');
 
-        this.backendService.post('http://localhost:8080/jbugs/api/users/auth', this.loginCreds).subscribe(
+        this.backendService.post('http://localhost:8080/jbugs/api/login/', this.loginCreds).subscribe(
 
           response => {
 
@@ -68,6 +68,10 @@ export class LoginComponent implements OnInit {
 
               //console.log("E NUUUUULLLLLL", typeof response);
 
+            }
+            else {
+              console.log("login succesfull");
+              this.router.navigate(['/dashboard']);
             }
             //console.log('response', response);
 
