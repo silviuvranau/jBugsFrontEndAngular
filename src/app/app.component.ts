@@ -12,11 +12,11 @@ export class AppComponent {
   myRecaptcha = new FormControl(false);
 
   onScriptLoad() {
-    console.log('Google reCAPTCHA loaded and is ready for use!')
+    console.log('Google reCAPTCHA loaded and is ready for use!');
   }
 
   onScriptError() {
-    console.log('Something went long when loading the Google reCAPTCHA')
+    console.log('Something went long when loading the Google reCAPTCHA');
   }
 
 

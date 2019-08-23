@@ -20,6 +20,8 @@ import {UserListComponent} from './user-list/user-list.component';
 import {BugsComponent} from './bugs/bugs.component';
 import {BugsService} from './bugs/bugs.service';
 import {RolesService} from './roles/roles.service';
+import {ExcelService} from './user-list/excel.service';
+
 
 
 @NgModule({
@@ -48,7 +50,7 @@ import {RolesService} from './roles/roles.service';
     TableModule,
     DialogModule
   ],
-  providers: [BugsService, RolesService],
+  providers: [BugsService, RolesService, ExcelService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
