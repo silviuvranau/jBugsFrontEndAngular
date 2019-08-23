@@ -5,11 +5,12 @@ import {User} from "../models/user.model";
 import {LoginComponent} from "../login/login.component";
 import {Login} from "../models/login.model";
 
+
 export class LoginService{
 
 
 
-  constructor(private backendService : BackendService){}
+  constructor(private backendService : BackendService ){}
 
 
 
@@ -18,11 +19,6 @@ export class LoginService{
     return this.backendService.post('http://localhost:8080/jbugs/api/login/', loginCreds);
   }
 
-  isAuthenticated(): boolean{
-
-
-      return false;
-  }
 
 
 

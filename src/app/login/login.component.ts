@@ -5,6 +5,7 @@ import {Login} from "../models/login.model";
 import {ToasterService} from "ngx-toaster/src/lib";
 import {ToastrComponentlessModule, ToastrService} from "ngx-toastr";
 import {LoginService} from "../service/login.service";
+import {AuthService} from "../service/auth.serice";
 
 
 @Component({
@@ -23,7 +24,8 @@ export class LoginComponent implements OnInit {
 
 
 
-  constructor(private router: Router, private loginService: LoginService, private toasterService: ToastrService) {
+
+  constructor(private router: Router, private loginService: LoginService, private toasterService: ToastrService, private authService: AuthService) {
 
 
   }
@@ -32,10 +34,13 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
 
     this.generateNumbers();
-
+    // this.authService.loggedInSetter(false);
+    localStorage.setItem("loggedIn","false");
 
 
   }
+
+  
 
 
 
@@ -49,7 +54,6 @@ export class LoginComponent implements OnInit {
     console.log(this.text);
 
   }
-
 
 
   login(usernam, pass, captcha) {
@@ -94,6 +98,7 @@ export class LoginComponent implements OnInit {
 
             this.toasterService.success("Login Successful");
             this.router.navigate(['/dashboard']);
+            this.authService.loggedInSetter();
           }
           //console.log('response', response);
 
