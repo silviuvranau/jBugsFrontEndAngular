@@ -1,7 +1,8 @@
 import {Permission} from './permission.model';
 
-export interface Role {
+export interface Role{
     id: number;
     type: string;
-  permissions: Permission[];
+    checked: boolean;
+    permissions: Permission[];
 }

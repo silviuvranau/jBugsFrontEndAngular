@@ -47,6 +47,7 @@ export class BackendService {
    * @param params parameters such as HttpHeaders, HttpParams, reportProgress etc.
    */
   public post(url: string, data: any, params?: any): Observable<any> {
+    console.log(url);
     return this.invoke('POST', url, data, params);
   }
 

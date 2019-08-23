@@ -3,14 +3,17 @@ import {BackendService} from '../core/backend/backend.service';
 import {User} from '../models/user.model';
 
 @Component({
-  selector: 'app-read-json',
-  templateUrl: './read-json.component.html',
-  styleUrls: ['./read-json.component.css']
+  selector: 'app-user-list',
+  templateUrl: './user-list.component.html',
+  styleUrls: ['./user-list.component.css']
 })
-export class ReadJsonComponent implements OnInit {
+export class UserListComponent implements OnInit {
 
   title = 'JSON to Table Example';
-  constructor(private backendService: BackendService) { }
+
+  constructor(private backendService: BackendService) {
+  }
+
   arrUsers: User[];
 
   ngOnInit() {
@@ -20,11 +23,15 @@ export class ReadJsonComponent implements OnInit {
     // });
 
   }
+
   getAllUsers() {
     this.backendService.get('http://localhost:8080/jbugs/api/users/').subscribe(
-      (userList) => { this.arrUsers = userList; }
+      (userList) => {
+        this.arrUsers = userList;
+      }
     );
 
 
   }
+
 }
