@@ -5,27 +5,29 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {ReadJsonComponent} from './read-json/read-json.component';
 import {HttpClientModule} from '@angular/common/http';
-import {LoginComponent} from './login/login.component';
-import {DashboardComponent} from './dashboard/dashboard.component';
-import {UsersComponent} from './users/users.component';
-import {BugsComponent} from './bugs/bugs.component';
-import {RolesComponent} from './roles/roles.component';
+import { UserCreateComponent } from './user-create/user-create.component';
+import {ButtonModule} from 'primeng/primeng';
+import {CardModule} from 'primeng/card';
+import { FormsModule } from '@angular/forms';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
     AppComponent,
     ReadJsonComponent,
     ReadJsonComponent,
-    LoginComponent,
-    DashboardComponent,
-    UsersComponent,
-    BugsComponent,
-    RolesComponent
+    UserCreateComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ButtonModule,
+    CardModule,
+    FormsModule,
+    ToastrModule.forRoot(),
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

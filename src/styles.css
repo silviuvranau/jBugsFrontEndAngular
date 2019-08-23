@@ -1,1 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+@import "../node_modules/primeng/resources/themes/nova-light/theme.css";
+@import "../node_modules/primeng/resources/primeng.min.css";
+@import "../node_modules/primeicons/primeicons.css";
+@import "../node_modules/bootstrap/dist/css/bootstrap.css";
+@import "../node_modules/ngx-toastr/toastr.css";
+
+div.introduction{
+    background-image: linear-gradient(-90deg, #21BEE1, #1F70E8);
+    height: 100px;
+    padding: 15px;
+}
+
