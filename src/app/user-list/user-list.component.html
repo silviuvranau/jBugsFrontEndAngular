@@ -2,27 +2,23 @@
 <div style="text-align:left;width:500px;">
 
 
-  <div>
-    <table>
+  <p-table [columns]="cols" [value]="arrUsers">
+    <ng-template pTemplate="header" let-columns>
       <tr>
-        <th>FirstName</th>
-        <th>LastName</th>
-        <th>Email</th>
-        <th>Mobile Number</th>
-        <th>Username</th>
-        <th>Status</th>
+        <th *ngFor="let col of cols" [pSortableColumn]="col.field" pResizableColumn pReorderableColumn [ngStyle]="{'width': col.width}">
+          {{col.header}}
+          <p-sortIcon [field]="col.field"></p-sortIcon>
+        </th>
       </tr>
-      <tr *ngFor="let user of arrUsers">
-        <th>{{user.firstName}}</th>
-        <th>{{user.lastName}}</th>
-        <th>{{user.email}}</th>
-        <th>{{user.mobileNumber}}</th>
-        <th>{{user.username}}</th>
-        <th>{{user.status}}</th>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr>
+        <td *ngFor="let col of cols">
+          {{rowData[col.field]}}
+        </td>
       </tr>
-    </table>
-
-  </div>
+    </ng-template>
+  </p-table>
 
 
   <div></div>
