@@ -10,6 +10,12 @@ import {SortEvent} from "primeng/api";
 })
 export class BugsComponent implements OnInit {
 
+  displayDialog: boolean;
+
+  bug: Bug;
+
+  selectedBug: Bug;
+
   bugs: Bug[];
 
   cols: any[];
@@ -63,5 +69,15 @@ export class BugsComponent implements OnInit {
       }
       return (event.order * result);
     });
+  }
+
+  onRowSelect(event) {
+    this.bug = this.cloneBug(event.data);
+    this.displayDialog = true;
+  }
+
+  cloneBug(b: Bug): Bug {
+    const bug = Object.assign({}, b);
+    return bug;
   }
 }
