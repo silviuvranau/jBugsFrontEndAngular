@@ -33,10 +33,10 @@ export class UserCreateComponent implements OnInit {
         console.error(error);
         this.toastrService.error(error.message);
       }
-    )
+    );
   }
 
-  addUser(createUserForm:NgForm){
+  addUser(createUserForm: NgForm) {
     let userToInsert: User = {} as User;
     userToInsert.firstName = createUserForm.controls.firstName.value;
     userToInsert.lastName = createUserForm.controls.lastName.value;
@@ -59,7 +59,7 @@ export class UserCreateComponent implements OnInit {
         console.error(error);
         this.toastrService.error(error.message);
       }
-    )
+    );
 
   }
 

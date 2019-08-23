@@ -32,10 +32,11 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
 
     this.generateNumbers();
-    this.back = '';
+
 
 
   }
+
 
 
   generateNumbers() {
@@ -71,8 +72,8 @@ export class LoginComponent implements OnInit {
           if (this.text.toString() !== captcha.value.toString()) {
 
             //alert('INVALID CAPTCHA');
-            this.toasterService.error("Invalid Captcha")
-            this.showMsg = true;
+            this.toasterService.error("Invalid Captcha");
+
 
 
           }

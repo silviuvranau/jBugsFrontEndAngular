@@ -15,8 +15,16 @@ export class LoginService{
 
   sentToBackendUserCredentials(loginCreds: Login): Observable<User>{
 
-    return this.backendService.post('http://localhost:8080/jbugs/api/login/',loginCreds);
+    return this.backendService.post('http://localhost:8080/jbugs/api/login/', loginCreds);
   }
+
+  isAuthenticated(): boolean{
+
+
+      return false;
+  }
+
+
 
 
 }

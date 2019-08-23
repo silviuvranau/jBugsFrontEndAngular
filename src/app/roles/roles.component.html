@@ -1,9 +1,6 @@
 <p-table [value]="roles">
   <ng-template pTemplate="header" let-columns>
     <tr>
-      <th>
-
-      </th>
       <th class="checkBoxColumn" *ngFor="let col of permissions">
         {{col.type}}
       </th>

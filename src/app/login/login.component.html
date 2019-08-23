@@ -4,8 +4,8 @@
 <script src="bootstrap.min.js"></script>
 <script src="bootstrap-auto-dismiss-alert.js"></script>
 
-
-<form #f = 'ngForm' (ngSubmit) = 'login(username,password,captcha)' [style.background-image]="'url(' + back+ ')'"  >
+<body>
+<form #f = 'ngForm' (ngSubmit) = 'login(username,password,captcha)' [style.background-image]="'url(' + + ')'"  >
 
 
   <h2 style="position:absolute;margin-left: 43%">LOGIN</h2>
@@ -80,13 +80,13 @@
         <label for = 'captcha'>
 
 
-          <h2 style="margin-top: 1px">Captcha</h2>
+          <h2 style="margin-top: 1px;color: cadetblue">Captcha</h2>
 
 
         </label>
 
         <div >
-          <label >{{text}}</label>
+          <label style="color: whitesmoke" >{{text}}</label>
 
         </div>
 
@@ -148,3 +148,5 @@
 
 
 </form>
+
+</body>
