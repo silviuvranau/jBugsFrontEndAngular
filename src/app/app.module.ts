@@ -6,13 +6,17 @@ import {AppComponent} from './app.component';
 import {ReadJsonComponent} from './read-json/read-json.component';
 import {HttpClientModule} from '@angular/common/http';
 import {LoginComponent} from './login/login.component';
-import {FormsModule} from '@angular/forms';
+import {DashboardComponent} from './dashboard/dashboard.component';
 import {RolesComponent} from './roles/roles.component';
+import {ButtonModule} from 'primeng/primeng';
+import {CardModule} from 'primeng/card';
+import { FormsModule } from '@angular/forms';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {TableModule} from 'primeng/table';
 import {CheckboxModule} from 'primeng/primeng';
-import {DashboardComponent} from './dashboard/dashboard.component';
-import {UserListComponent} from './user-list/user-list.component';
-import {RolesService} from "./roles/roles.service";
+import { UserCreateComponent } from './user-create/user-create.component';
+
 
 @NgModule({
   declarations: [
@@ -20,19 +24,24 @@ import {RolesService} from "./roles/roles.service";
     ReadJsonComponent,
     ReadJsonComponent,
     LoginComponent,
-    RolesComponent,
     DashboardComponent,
-    UserListComponent,
+    RolesComponent,
+    UserCreateComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    ButtonModule,
+    CardModule,
+    FormsModule,
+    ToastrModule.forRoot(),
+    BrowserAnimationsModule,
     FormsModule,
     CheckboxModule,
     TableModule
   ],
-  providers: [RolesService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
