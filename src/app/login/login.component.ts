@@ -13,13 +13,8 @@ export class LoginComponent implements OnInit {
   loginCreds: Login;
   text: number;
 
-
-
   constructor(private router: Router, private backendService: BackendService) {
-
-
   }
-
 
   ngOnInit() {
 
