@@ -16,6 +16,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {TableModule} from 'primeng/table';
 import {CheckboxModule} from 'primeng/primeng';
 import { UserCreateComponent } from './user-create/user-create.component';
+import {UserListComponent} from "./user-list/user-list.component";
+import {LoginService} from "./service/login.service";
 
 
 @NgModule({
@@ -26,7 +28,8 @@ import { UserCreateComponent } from './user-create/user-create.component';
     LoginComponent,
     DashboardComponent,
     RolesComponent,
-    UserCreateComponent
+    UserCreateComponent,
+    UserListComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +44,7 @@ import { UserCreateComponent } from './user-create/user-create.component';
     CheckboxModule,
     TableModule
   ],
-  providers: [],
+  providers: [LoginService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

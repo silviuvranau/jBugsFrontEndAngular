@@ -2,6 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {BackendService} from "../core/backend/backend.service";
 import {Login} from "../models/login.model";
+import {ToasterService} from "ngx-toaster/src/lib";
+import {ToastrComponentlessModule, ToastrService} from "ngx-toastr";
+import {LoginService} from "../service/login.service";
 
 
 @Component({
@@ -13,14 +16,14 @@ export class LoginComponent implements OnInit {
 
   loginCreds: Login;
   text: number;
-   htmlStr: string;
-
-  showMsg: boolean = false;
 
 
 
 
-  constructor(private router: Router, private backendService: BackendService) {
+
+
+
+  constructor(private router: Router, private loginService: LoginService, private toasterService: ToastrService) {
 
 
   }
@@ -29,6 +32,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
 
     this.generateNumbers();
+    this.back = '';
 
 
   }
@@ -58,7 +62,7 @@ export class LoginComponent implements OnInit {
 
 
 
-      this.backendService.post('http://localhost:8080/jbugs/api/login/', this.loginCreds).subscribe(
+     this.loginService.sentToBackendUserCredentials(this.loginCreds).subscribe(
         response => {
 
 
@@ -66,7 +70,8 @@ export class LoginComponent implements OnInit {
 
           if (this.text.toString() !== captcha.value.toString()) {
 
-            alert('INVALID CAPTCHA');
+            //alert('INVALID CAPTCHA');
+            this.toasterService.error("Invalid Captcha")
             this.showMsg = true;
 
 
@@ -77,8 +82,8 @@ export class LoginComponent implements OnInit {
           else if (response === null) {
 
 
-            alert('Not valid credentials')
-            //console.log("E NUUUUULLLLLL", typeof response);
+            //alert('Not valid credentials')
+            this.toasterService.error("Invalid Credentials")
 
 
 
@@ -86,7 +91,7 @@ export class LoginComponent implements OnInit {
 
           else {
 
-            alert('Login buun');
+            this.toasterService.success("Login Successful");
             this.router.navigate(['/dashboard']);
           }
           //console.log('response', response);
