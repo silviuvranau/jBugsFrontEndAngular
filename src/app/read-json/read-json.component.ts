@@ -1,7 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {Component, OnInit} from '@angular/core';
 import {BackendService} from '../core/backend/backend.service';
-import {Observable} from 'rxjs';
 import {User} from '../models/user.model';
 
 @Component({
@@ -17,10 +15,16 @@ export class ReadJsonComponent implements OnInit {
 
   ngOnInit() {
     this.getAllUsers();
+    // this.backendService.get('https://api.github.com/users/seeschweiler').subscribe(data => {
+    //   console.log(data);
+    // });
+
   }
   getAllUsers() {
     this.backendService.get('http://localhost:8080/jbugs/api/users/').subscribe(
       (userList) => { this.arrUsers = userList; }
     );
+
+
   }
 }
