@@ -1,0 +1,16 @@
+table {
+  border-collapse: collapse;
+}
+
+table, th, td {
+  border: 1px solid black;
+  text-align: center;
+}
+
+.roleType {
+  font-weight: bold;
+}
+
+.checkBoxColumn {
+  column-width: 200px;
+}

@@ -6,8 +6,13 @@
 @import "../node_modules/ngx-toastr/toastr.css";
 
 div.introduction{
-    background-image: linear-gradient(-90deg, #21BEE1, #1F70E8);
-    height: 100px;
-    padding: 15px;
+  background-image: linear-gradient(-90deg, #21BEE1, #1F70E8);
+  height: 100px;
+  padding: 15px;
 }
 
+body {
+
+  padding: 20px;
+  max-width: 400px;
+}
