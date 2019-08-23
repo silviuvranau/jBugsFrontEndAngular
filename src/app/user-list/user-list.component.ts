@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {BackendService} from '../core/backend/backend.service';
 import {User} from '../models/user.model';
+import {Bug} from '../models/bug.model';
 
 @Component({
   selector: 'app-user-list',
@@ -49,6 +50,15 @@ export class UserListComponent implements OnInit {
     );
 
 
+  }
+  onRowSelect(event) {
+    this.user = this.cloneBug(event.data);
+    this.displayDialog = true;
+  }
+
+  cloneBug(b: User): User {
+    const bug = Object.assign({}, b);
+    return bug;
   }
 
 
