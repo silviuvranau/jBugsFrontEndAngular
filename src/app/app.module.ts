@@ -21,6 +21,7 @@ import {BugsComponent} from './bugs/bugs.component';
 import {BugsService} from './bugs/bugs.service';
 import {RolesService} from './roles/roles.service';
 import {ExcelService} from './user-list/excel.service';
+import {ExcelBugsService} from './bugs/excel-bugs.service';
 
 
 
@@ -50,7 +51,7 @@ import {ExcelService} from './user-list/excel.service';
     TableModule,
     DialogModule
   ],
-  providers: [BugsService, RolesService, ExcelService],
+  providers: [BugsService, RolesService, ExcelService, ExcelBugsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

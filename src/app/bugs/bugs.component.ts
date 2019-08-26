@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {BugsService} from './bugs.service';
 import {Bug} from '../models/bug.model';
 import {SortEvent} from 'primeng/api';
+import {ExcelBugsService} from './excel-bugs.service';
 
 @Component({
   selector: 'app-bugs',
@@ -20,7 +21,7 @@ export class BugsComponent implements OnInit {
 
   cols: any[];
 
-  constructor(private bugsService: BugsService) {
+  constructor(private bugsService: BugsService, private excelbugsService: ExcelBugsService) {
   }
 
   ngOnInit() {
@@ -79,5 +80,8 @@ export class BugsComponent implements OnInit {
   cloneBug(b: Bug): Bug {
     const bug = Object.assign({}, b);
     return bug;
+  }
+  exportAsXLSX(): void {
+    this.excelbugsService.exportAsExcelFile(this.bugs, 'BugsList');
   }
 }
