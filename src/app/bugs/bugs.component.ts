@@ -16,9 +16,9 @@ export class BugsComponent implements OnInit {
 
   displayDialog: boolean;
 
-  bug: Bug;
+  bug: BugToShow;
 
-  selectedBug: Bug;
+  selectedBug: BugToShow;
 
   bugs: Bug[];
   bugsToView: BugToShow[];
@@ -151,8 +151,10 @@ export class BugsComponent implements OnInit {
     this.displayDialog = true;
   }
 
-  cloneBug(b: Bug): Bug {
+  cloneBug(b: BugToShow): BugToShow {
     const bug = Object.assign({}, b);
+    console.log(b);
+    console.log(bug);
     return bug;
   }
 
