@@ -8,7 +8,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {LoginComponent} from './login/login.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {RolesComponent} from './roles/roles.component';
-import {ButtonModule} from 'primeng/primeng';
+import {ButtonModule, DialogModule} from 'primeng/primeng';
 import {CardModule} from 'primeng/card';
 import { FormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
@@ -16,6 +16,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {TableModule} from 'primeng/table';
 import {CheckboxModule} from 'primeng/primeng';
 import { UserCreateComponent } from './user-create/user-create.component';
+import {UserListComponent} from './user-list/user-list.component';
+import {BugsComponent} from './bugs/bugs.component';
+import {BugsService} from './bugs/bugs.service';
+import {RolesService} from './roles/roles.service';
+import {LoginService} from "./service/login.service";
+import {routes} from './app-routing.module';
+import {RouterModule} from "@angular/router";
+import {AuthService} from "./service/auth.serice";
+import {AuthGuardService} from "./guards/auth-guard.service";
+import {ExcelService} from "./user-list/excel.service";
 
 
 @NgModule({
@@ -26,7 +36,9 @@ import { UserCreateComponent } from './user-create/user-create.component';
     LoginComponent,
     DashboardComponent,
     RolesComponent,
-    UserCreateComponent
+    UserCreateComponent,
+    UserListComponent,
+    BugsComponent
   ],
   imports: [
     BrowserModule,
@@ -39,9 +51,11 @@ import { UserCreateComponent } from './user-create/user-create.component';
     BrowserAnimationsModule,
     FormsModule,
     CheckboxModule,
-    TableModule
+    TableModule,
+    DialogModule,
+    RouterModule.forRoot(routes)
   ],
-  providers: [],
+  providers: [BugsService, RolesService, LoginService, AuthGuardService, ExcelService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

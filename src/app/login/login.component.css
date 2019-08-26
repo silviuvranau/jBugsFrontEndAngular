@@ -2,8 +2,14 @@
   position: absolute;
   left: 41%;
   top: 25%;
-
-
 }
+
+
+.form-control.ng-invalid.ng-touched {
+  border: 2px;
+  border-style: solid;
+  border-color: #ff5c81;
+}
+
 
 

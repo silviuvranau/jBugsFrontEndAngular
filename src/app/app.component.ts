@@ -9,15 +9,7 @@ import {FormControl} from "@angular/forms";
 export class AppComponent {
   title = 'jbugsFrontEnd';
 
-  myRecaptcha = new FormControl(false);
 
-  onScriptLoad() {
-    console.log('Google reCAPTCHA loaded and is ready for use!')
-  }
-
-  onScriptError() {
-    console.log('Something went long when loading the Google reCAPTCHA')
-  }
 
 
 

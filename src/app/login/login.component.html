@@ -4,11 +4,11 @@
 <script src="bootstrap.min.js"></script>
 <script src="bootstrap-auto-dismiss-alert.js"></script>
 
+<body>
+<form #f = 'ngForm' (ngSubmit) = 'login(username,password,captcha)' [style.background-image]="'url(' + + ')'"  >
 
-<form #f = 'ngForm' (ngSubmit) = 'login(username,password,captcha)' >
 
-
-  <h2 style="position:absolute;margin-left: 43%">LOGIN</h2>
+  <h2 align="center" >LOGIN</h2>
   <div class="padd">
     <div class = "form-group input-group-lg">
 
@@ -31,10 +31,10 @@
       >
 
 
-      <div class ="alert alert-danger" *ngIf= "username.touched && username.invalid">
+      <div  *ngIf= "username.touched && username.invalid">
 
-        <div *ngIf="username.errors.required">
-          The field is required
+        <div *ngIf="username.errors.required" style="color: palevioletred">
+          *The field is required
 
 
         </div>
@@ -51,10 +51,10 @@
 
         >
 
-        <div class ="alert alert-danger" *ngIf="password.touched && password.invalid">
+        <div *ngIf="password.touched && password.invalid">
 
-          <div *ngIf="password.errors.required">
-            The field is required
+          <div *ngIf="password.errors.required" style="color: palevioletred">
+            *The field is required
 
 
           </div>
@@ -80,17 +80,17 @@
         <label for = 'captcha'>
 
 
-          <h2 style="margin-top: 1px">Captcha</h2>
+          <h2 style="margin-top: 1px;">Captcha</h2>
 
 
         </label>
 
         <div >
-          <label >{{text}}</label>
+          <label  >{{text}}</label>
 
         </div>
 
-        <div  >
+        <div   >
 
 
           <input
@@ -110,14 +110,15 @@
 
 
 
-          <div class ="alert alert-danger" *ngIf="captcha.touched && captcha.invalid">
+          <div  *ngIf="captcha.touched && captcha.invalid">
 
-            <div *ngIf="captcha.errors.required">
-              The field is required
+            <div *ngIf="captcha.errors.required" style="color: palevioletred">
+              *The field is required
 
 
             </div>
           </div>
+
         </div>
       </div>
 
@@ -148,3 +149,5 @@
 
 
 </form>
+
+</body>

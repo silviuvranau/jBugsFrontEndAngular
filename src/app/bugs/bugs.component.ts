@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {BugsService} from './bugs.service';
 import {Bug} from '../models/bug.model';
-import {SortEvent} from "primeng/api";
+import {SortEvent} from 'primeng/api';
 
 @Component({
   selector: 'app-bugs',
@@ -30,15 +30,15 @@ export class BugsComponent implements OnInit {
     });
 
     this.cols = [
-      {field: 'title', header: 'Title'},
-      {field: 'description', header: 'Description'},
-      {field: 'version', header: 'Version'},
-      {field: 'targetDate', header: 'Target Date'},
-      {field: 'status', header: 'Status'},
-      {field: 'fixedVersion', header: 'Fixed Version'},
-      {field: 'severity', header: 'Severity'},
-      {field: 'createdId', header: 'Created Username'},
-      {field: 'assignedId', header: 'Assigned Username'}
+      {field: 'title', header: 'Title', width: '80px'},
+      {field: 'description', header: 'Description', width: '200px'},
+      {field: 'version', header: 'Version', width: '70px'},
+      {field: 'targetDate', header: 'Target Date', width: '200px'},
+      {field: 'status', header: 'Status', width: '115px'},
+      {field: 'fixedVersion', header: 'Fixed Version', width: '70px'},
+      {field: 'severity', header: 'Severity', width: '120px'},
+      {field: 'createdId', header: 'Created Username', width: '100px'},
+      {field: 'assignedId', header: 'Assigned Username', width: '100px'}
     ];
   }
 
