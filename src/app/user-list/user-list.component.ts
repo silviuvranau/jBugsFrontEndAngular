@@ -66,20 +66,18 @@ export class UserListComponent implements OnInit {
   exportAsXLSX(): void {
     this.excelservice.exportAsExcelFile(this.arrUsers, 'sample');
   }
-  downloadPdf() {
+  downloadPdf(user: User) {
     const doc = new jsPDF();
     const col = ['Firstname', 'Lastname', 'Email', 'Mobile Number', 'Username', 'Status' ];
     const rows = [];
 
     /* The following array of object as response from the API req  */
-    this.arrUsers.forEach(element => {
-      const temp = [element.firstName, element.lastName, element.email, element.mobileNumber, element.username, element.status];
-      rows.push(temp);
+    const temp = [user.firstName, user.lastName, user.email, user.mobileNumber, user.username, user.status];
+    rows.push(temp);
 
-    });
 
     doc.autoTable(col, rows, { startY: 10 });
-    doc.save('UserList.pdf');
+    doc.save('User-' + user.firstName + '.pdf');
   }
 
 

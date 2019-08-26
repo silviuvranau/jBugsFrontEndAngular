@@ -3,6 +3,9 @@ import {BugsService} from './bugs.service';
 import {Bug} from '../models/bug.model';
 import {SortEvent} from 'primeng/api';
 import {ExcelBugsService} from './excel-bugs.service';
+import {User} from '../models/user.model';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 @Component({
   selector: 'app-bugs',
@@ -83,5 +86,17 @@ export class BugsComponent implements OnInit {
   }
   exportAsXLSX(): void {
     this.excelbugsService.exportAsExcelFile(this.bugs, 'BugsList');
+  }
+  downloadPdf(bug: Bug) {
+    const doc = new jsPDF();
+    const col = ['Title', 'Description', 'Version', 'Target Date', 'Status', 'Fixed Version', 'Severity', 'Created By', 'Assigned To' ];
+    const rows = [];
+
+    const temp = [bug.title, bug.description, bug.version, bug.targetDate, bug.status, bug.fixedVersion, bug.severity, bug.createdId, bug.assignedId];
+    rows.push(temp);
+
+
+    doc.autoTable(col, rows, { startY: 10 });
+    doc.save('Bug-' + bug.title + '.pdf');
   }
 }

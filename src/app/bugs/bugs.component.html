@@ -119,7 +119,7 @@
         <input pInputText id="assignedId" [(ngModel)]="bug.assignedId.username"/>
       </div>
     </div>
-
+    <button (click)="downloadPdf(bug)">Export as PDF</button>
   </div>
 </p-dialog>
 <button (click)="exportAsXLSX()" class="fa fa-file-excel-o" style="font-size:20px;color:green">Export Bug List as Excel</button>
