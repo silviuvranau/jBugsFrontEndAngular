@@ -43,7 +43,7 @@
                     (onChange)="dt.filter($event.value, col.field, 'equals')"></p-dropdown>
 
         <input *ngSwitchCase="'fixedVersion'" pInputText type="text"
-               (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+               (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" [ngStyle]="{'width':'50px'}">
 
         <p-dropdown *ngSwitchCase="'severity'" [options]="severityTypes"
                     (onChange)="dt.filter($event.value, col.field, 'equals')"></p-dropdown>
