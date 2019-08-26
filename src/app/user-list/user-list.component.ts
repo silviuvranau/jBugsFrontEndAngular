@@ -4,6 +4,7 @@ import {User} from '../models/user.model';
 import {Bug} from '../models/bug.model';
 import {ExcelService} from './excel.service';
 import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 @Component({
   selector: 'app-user-list',
@@ -67,9 +68,18 @@ export class UserListComponent implements OnInit {
   }
   downloadPdf() {
     const doc = new jsPDF();
+    const col = ['Firstname', 'Lastname', 'Email', 'Mobile Number', 'Username', 'Status' ];
+    const rows = [];
 
-    doc.text(this.arrUsers);
-    doc.save('a4.pdf');
+    /* The following array of object as response from the API req  */
+    this.arrUsers.forEach(element => {
+      const temp = [element.firstName, element.lastName, element.email, element.mobileNumber, element.username, element.status];
+      rows.push(temp);
+
+    });
+
+    doc.autoTable(col, rows, { startY: 10 });
+    doc.save('UserList.pdf');
   }
 
 
