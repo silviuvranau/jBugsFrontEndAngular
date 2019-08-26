@@ -16,14 +16,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {TableModule} from 'primeng/table';
 import {CheckboxModule} from 'primeng/primeng';
 import { UserCreateComponent } from './user-create/user-create.component';
-import {RolesService} from "./roles/roles.service";
-import {BugsService} from "./bugs/bugs.service";
-import {UserListComponent} from "./user-list/user-list.component";
+import {UserListComponent} from './user-list/user-list.component';
+import {BugsComponent} from './bugs/bugs.component';
+import {BugsService} from './bugs/bugs.service';
+import {RolesService} from './roles/roles.service';
 import {LoginService} from "./service/login.service";
-import {BugsComponent} from "./bugs/bugs.component";
-import { RouterModule } from '@angular/router';
 import {routes} from './app-routing.module';
 import {AuthGuard} from "./guards/auth-guard.service";
+import {RouterModule} from "@angular/router";
+
 
 @NgModule({
   declarations: [
@@ -52,7 +53,7 @@ import {AuthGuard} from "./guards/auth-guard.service";
     DialogModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [BugsService, RolesService, LoginService, AuthGuard],
+  providers: [BugsService, RolesService, LoginService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

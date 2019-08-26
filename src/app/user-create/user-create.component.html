@@ -1,11 +1,11 @@
-<div class="introduction">
+<!-- <div class="introduction">
     <h2>Create a new user</h2>
-</div>
+</div> -->
 
-<div style = "margin-left:30%; margin-top:5%; width: 550px;">
+<div style = "margin-left:30%; width: 550px;">
 <p-card header="Add a new user" subheader="">
     <form #createUserForm="ngForm" (ngSubmit) = addUser(createUserForm)>
-        <div style="width: 400px">
+        <div class = "form-style">
             <label for="firstName">First Name</label>
             <input
             required
@@ -17,15 +17,15 @@
             ngModel
             >
         </div>
-        <div class="alert alert-danger" style="width:400px" *ngIf="firstName.touched && firstName.invalid">
-            <div *ngIf = "firstName.errors.required">
-                First name is required.
+        <div style="width:400px" *ngIf="firstName.touched && firstName.invalid">
+            <div *ngIf = "firstName.errors.required" style = "color:red">
+                *First name is required.
             </div>
-            <div *ngIf = "firstName.errors.pattern">
-                Invalid first name.
+            <div *ngIf = "firstName.errors.pattern" style = "color:red">
+                *Invalid first name.
             </div>
         </div>
-        <div style="width:400px">
+        <div class = "form-style">
             <label for="lastName">Last Name</label>
             <input
             required
@@ -37,15 +37,15 @@
             ngModel
             >
         </div>
-        <div class="alert alert-danger" style="width:400px" *ngIf="lastName.touched && lastName.invalid">
-            <div *ngIf = "lastName.errors.required">
-                Last name is required.
+        <div style="width:400px" *ngIf="lastName.touched && lastName.invalid">
+            <div *ngIf = "lastName.errors.required" style = "color:red">
+                *Last name is required.
             </div>
-            <div *ngIf = "lastName.errors.pattern">
-                Invalid last name.
+            <div *ngIf = "lastName.errors.pattern" style = "color:red">
+                *Invalid last name.
             </div>
         </div>
-        <label for="email">Email</label>
+        <label for="email" class = "form-style">Email</label>
         <div class = "form-inline">
         <!-- <div style="width:400px"> -->
             <input
@@ -66,15 +66,15 @@
              style = "width: 140px; margin-left:15px;">
         <!-- </div> -->
         </div>
-        <div class="alert alert-danger" style="width:400px" *ngIf="email.touched && email.invalid">
-            <div *ngIf = "email.errors.required">
-                Email is required.
+        <div style="width:400px" *ngIf="email.touched && email.invalid">
+            <div *ngIf = "email.errors.required" style = "color:red">
+                *Email is required.
             </div>
-            <div *ngIf = "email.errors.pattern">
-                Invalid email.
+            <div *ngIf = "email.errors.pattern" style = "color:red">
+                *Invalid email.
             </div>
         </div>
-        <div style="width:400px">
+        <div class = "form-style">
             <label for="mobileNumber">Mobile Number</label>
             <input
             pattern = "[+]407[0-9]{8}"
@@ -86,15 +86,15 @@
             ngModel
             >
         </div>
-        <div class="alert alert-danger" style="width:400px" *ngIf="mobileNumber.touched && mobileNumber.invalid">
-            <div *ngIf = "mobileNumber.errors.required">
-                Mobile number is required.
+        <div style="width:400px" *ngIf="mobileNumber.touched && mobileNumber.invalid">
+            <div *ngIf = "mobileNumber.errors.required" style = "color:red">
+                *Mobile number is required.
             </div>
-            <div *ngIf = "mobileNumber.errors.pattern">
-                Invalid mobile number.
+            <div *ngIf = "mobileNumber.errors.pattern" style = "color:red">
+                *Invalid mobile number.
             </div>
         </div>
-        <div style="width:400px">
+        <div class = "form-style">
             <label for="password">Password</label>
             <input
             required
@@ -106,12 +106,12 @@
             ngModel
             >
         </div>
-        <div class="alert alert-danger" style="width:400px" *ngIf="password.touched && password.invalid">
-            <div *ngIf = "password.errors.required">
-                Password is required.
+        <div style="width:400px" *ngIf="password.touched && password.invalid">
+            <div *ngIf = "password.errors.required" style = "color:red">
+                *Password is required.
             </div>
         </div>
-        <p style = "margin-top: 2%; margin-bottom: 2%">Roles</p>
+        <p style = "margin-top: 25px; margin-bottom: 2%; font-weight: bold;">Roles</p>
         <div *ngFor = "let role of roles" class = "checkbox">
             <label>
                 <input type = "checkbox"
