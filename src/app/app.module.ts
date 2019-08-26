@@ -22,8 +22,10 @@ import {BugsService} from './bugs/bugs.service';
 import {RolesService} from './roles/roles.service';
 import {LoginService} from "./service/login.service";
 import {routes} from './app-routing.module';
-import {AuthGuard} from "./guards/auth-guard.service";
 import {RouterModule} from "@angular/router";
+import {AuthService} from "./service/auth.serice";
+import {AuthGuardService} from "./guards/auth-guard.service";
+import {ExcelService} from "./user-list/excel.service";
 
 
 @NgModule({
@@ -53,7 +55,7 @@ import {RouterModule} from "@angular/router";
     DialogModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [BugsService, RolesService, LoginService],
+  providers: [BugsService, RolesService, LoginService, AuthGuardService, ExcelService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
