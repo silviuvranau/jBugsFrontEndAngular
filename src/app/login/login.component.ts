@@ -1,7 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {BackendService} from "../core/backend/backend.service";
 import {Login} from "../models/login.model";
+import {ToastrService} from "ngx-toastr";
+import {LoginService} from "../service/login.service";
+import {AuthService} from "../service/auth.serice";
 
 
 @Component({
@@ -13,17 +15,19 @@ export class LoginComponent implements OnInit {
 
   loginCreds: Login;
   text: number;
-   htmlStr: string;
-
-  showMsg: boolean = false;
 
 
-  constructor(private router: Router, private backendService: BackendService) {
+  constructor(private router: Router, private loginService: LoginService, private toasterService: ToastrService, private authService: AuthService) {
+
+
   }
+
 
   ngOnInit() {
 
     this.generateNumbers();
+    // this.authService.loggedInSetter(false);
+    localStorage.setItem("loggedIn", "false");
 
 
   }
@@ -41,7 +45,6 @@ export class LoginComponent implements OnInit {
   }
 
 
-
   login(usernam, pass, captcha) {
 
     this.loginCreds = {
@@ -51,9 +54,7 @@ export class LoginComponent implements OnInit {
     };
 
 
-
-
-      this.backendService.post('http://localhost:8080/jbugs/api/login/', this.loginCreds).subscribe(
+    this.loginService.sentToBackendUserCredentials(this.loginCreds).subscribe(
         response => {
 
 
@@ -61,8 +62,9 @@ export class LoginComponent implements OnInit {
 
           if (this.text.toString() !== captcha.value.toString()) {
 
-            alert('INVALID CAPTCHA');
-            this.showMsg = true;
+            //alert('INVALID CAPTCHA');
+            this.toasterService.error("Invalid Captcha");
+
 
 
           }
@@ -72,8 +74,8 @@ export class LoginComponent implements OnInit {
           else if (response === null) {
 
 
-            alert('Not valid credentials')
-            //console.log("E NUUUUULLLLLL", typeof response);
+            //alert('Not valid credentials')
+            this.toasterService.error("Invalid Credentials")
 
 
 
@@ -81,8 +83,9 @@ export class LoginComponent implements OnInit {
 
           else {
 
-            alert('Login buun');
+            this.toasterService.success("Login Successful");
             this.router.navigate(['/dashboard']);
+            this.authService.loggedInSetter();
           }
           //console.log('response', response);
 
