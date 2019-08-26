@@ -4,6 +4,8 @@
 @import "../node_modules/primeicons/primeicons.css";
 @import "../node_modules/bootstrap/dist/css/bootstrap.css";
 @import "../node_modules/ngx-toastr/toastr.css";
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
 
 /* div.introduction{
   background-image: linear-gradient(-90deg, #21BEE1, #1F70E8);

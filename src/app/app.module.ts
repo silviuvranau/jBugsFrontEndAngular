@@ -8,25 +8,30 @@ import {HttpClientModule} from '@angular/common/http';
 import {LoginComponent} from './login/login.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {RolesComponent} from './roles/roles.component';
-import {ButtonModule, DialogModule} from 'primeng/primeng';
+import {
+  ButtonModule,
+  CalendarModule,
+  CheckboxModule,
+  DialogModule,
+  DropdownModule,
+  MultiSelectModule
+} from 'primeng/primeng';
 import {CardModule} from 'primeng/card';
-import { FormsModule } from '@angular/forms';
-import { ToastrModule } from 'ngx-toastr';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {FormsModule} from '@angular/forms';
+import {ToastrModule} from 'ngx-toastr';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TableModule} from 'primeng/table';
-import {CheckboxModule} from 'primeng/primeng';
-import { UserCreateComponent } from './user-create/user-create.component';
+import {UserCreateComponent} from './user-create/user-create.component';
 import {UserListComponent} from './user-list/user-list.component';
 import {BugsComponent} from './bugs/bugs.component';
 import {BugsService} from './bugs/bugs.service';
 import {RolesService} from './roles/roles.service';
-import {LoginService} from "./service/login.service";
-import {routes} from './app-routing.module';
-import {RouterModule} from "@angular/router";
-import {AuthService} from "./service/auth.serice";
+import {CommonModule, DatePipe} from '@angular/common';
+import {MatDatepickerModule, MatFormFieldModule, MatInputModule, MatNativeDateModule} from '@angular/material';
+import {AngularFontAwesomeModule} from 'angular-font-awesome';
 import {AuthGuardService} from "./guards/auth-guard.service";
+import {LoginService} from "./service/login.service";
 import {ExcelService} from "./user-list/excel.service";
-
 
 @NgModule({
   declarations: [
@@ -49,13 +54,20 @@ import {ExcelService} from "./user-list/excel.service";
     FormsModule,
     ToastrModule.forRoot(),
     BrowserAnimationsModule,
-    FormsModule,
     CheckboxModule,
     TableModule,
     DialogModule,
-    RouterModule.forRoot(routes)
+    CommonModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatNativeDateModule,
+    MatInputModule,
+    MultiSelectModule,
+    DropdownModule,
+    CalendarModule,
+    AngularFontAwesomeModule
   ],
-  providers: [BugsService, RolesService, LoginService, AuthGuardService, ExcelService],
+  providers: [BugsService, RolesService, DatePipe, AuthGuardService, LoginService, ExcelService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

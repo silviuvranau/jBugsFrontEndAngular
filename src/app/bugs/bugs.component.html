@@ -1,8 +1,17 @@
-<p-table [columns]="cols" [value]="bugs" [paginator]="true" [rows]="5" [customSort]="true"
+<p-table #dt [columns]="cols" [value]="bugsToView" [paginator]="true" [rows]="5" [customSort]="true"
          (sortFunction)="customSort($event)" (onRowSelect)="onRowSelect($event)"
          selectionMode="single" [(selection)]="selectedBug" [style]="{width: '100%'}">
-  <ng-template pTemplate="header" let-columns>
 
+  <ng-template pTemplate="caption">
+    <div style="text-align: right">
+      <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+      <input type="text" pInputText size="50" placeholder="Global Filter"
+             (input)="dt.filterGlobal($event.target.value, 'contains')"
+             [ngStyle]="{'width':'800px'}">
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="header" let-columns>
     <tr>
       <th *ngFor="let col of cols" [pSortableColumn]="col.field" pResizableColumn pReorderableColumn [ngStyle]="{'width':col.width}">
         {{col.header}}
@@ -10,19 +19,59 @@
       </th>
     </tr>
 
+    <tr>
+      <th *ngFor="let col of cols" [ngSwitch]="col.field">
+        <input *ngSwitchCase="'title'" pInputText type="text"
+               (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" [ngStyle]="{'width':'100px'}">
+        <input *ngSwitchCase="'description'" pInputText type="text"
+               (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" [ngStyle]="{'width':'110px'}">
+        <input *ngSwitchCase="'version'" pInputText type="text"
+               (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" [ngStyle]="{'width':'50px'}">
+
+        <!--        <mat-form-field *ngSwitchCase="'targetDate'" [ngStyle]="{'width':'100px'}" (onChange)="dt.filter($event, col.field, 'dateFilter')">-->
+        <!--          <input matInput [matDatepicker]="picker"-->
+        <!--                  (dateChange)="dt.filter($event, col.field, 'dateFilter')" (click)="picker.open()">-->
+        <!--          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>-->
+        <!--          <mat-datepicker  #picker></mat-datepicker>-->
+        <!--        </mat-form-field>-->
+
+        <p-calendar #cal=ngModel ngModel name="calendar" id="calendar" [style]="{'width': '300px'}"
+                    *ngSwitchCase="'targetDate'" [defaultDate]="" [readonlyInput]="false" dateFormat="yy-MM-dd"
+                    (onSelect)="dt.filter($event, col.field, 'dateFilter')"></p-calendar>
+
+        <p-dropdown *ngSwitchCase="'status'" [options]="statusTypes"
+                    (onChange)="dt.filter($event.value, col.field, 'equals')"></p-dropdown>
+
+        <input *ngSwitchCase="'fixedVersion'" pInputText type="text"
+               (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" [ngStyle]="{'width':'50px'}">
+
+        <p-dropdown *ngSwitchCase="'severity'" [options]="severityTypes"
+                    (onChange)="dt.filter($event.value, col.field, 'equals')"></p-dropdown>
+
+        <p-dropdown *ngSwitchCase="'createdId'" [options]="username"
+                    (onChange)="dt.filter($event.value, col.field, 'equals')"></p-dropdown>
+
+        <p-dropdown *ngSwitchCase="'assignedId'" [options]="username"
+                    (onChange)="dt.filter($event.value, col.field, 'equals')"></p-dropdown>
+
+      </th>
+
+
+    </tr>
+
   </ng-template>
 
-  <ng-template pTemplate="body" let-rowData let-bugs>
+  <ng-template pTemplate="body" let-rowData let-bugsToView>
     <tr [pSelectableRow]="rowData">
-      <td>{{bugs.title}}</td>
-      <td>{{bugs.description}}</td>
-      <td>{{bugs.version}}</td>
-      <td>{{bugs.targetDate}}</td>
-      <td>{{bugs.status}}</td>
-      <td>{{bugs.fixedVersion}}</td>
-      <td>{{bugs.severity}}</td>
-      <td>{{bugs.createdId.username}}</td>
-      <td>{{bugs.assignedId.username}}</td>
+      <td>{{bugsToView.title}}</td>
+      <td>{{bugsToView.description}}</td>
+      <td>{{bugsToView.version}}</td>
+      <td>{{bugsToView.targetDate | date:'yyyy-MM-dd'}}</td>
+      <td>{{bugsToView.status}}</td>
+      <td>{{bugsToView.fixedVersion}}</td>
+      <td>{{bugsToView.severity}}</td>
+      <td>{{bugsToView.createdId}}</td>
+      <td>{{bugsToView.assignedId}}</td>
     </tr>
   </ng-template>
 
@@ -71,7 +120,7 @@
         <label for="targetDate">Target Date</label>
       </div>
       <div class="ui-g-8">
-        <input pInputText id="targetDate" [(ngModel)]="bug.targetDate"/>
+        <input pInputText id="targetDate" [ngModel]="bug.targetDate | date: 'MM/dd/yyyy'"/>
       </div>
     </div>
 
