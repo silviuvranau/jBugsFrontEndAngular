@@ -92,7 +92,7 @@ export class BugsComponent implements OnInit {
     const col = ['Title', 'Description', 'Version', 'Target Date', 'Status', 'Fixed Version', 'Severity', 'Created By', 'Assigned To' ];
     const rows = [];
 
-    const temp = [bug.title, bug.description, bug.version, bug.targetDate, bug.status, bug.fixedVersion, bug.severity, bug.createdId, bug.assignedId];
+    const temp = [bug.title, bug.description, bug.version, bug.targetDate, bug.status, bug.fixedVersion, bug.severity, bug.createdId.username, bug.assignedId.username];
     rows.push(temp);
 
 
