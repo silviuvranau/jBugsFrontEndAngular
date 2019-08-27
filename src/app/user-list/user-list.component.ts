@@ -9,6 +9,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { RoleService } from '../service/role.service';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../service/user.service';
+import {executeBrowserBuilder} from "@angular-devkit/build-angular";
 
 @Component({
   selector: 'app-user-list',
@@ -126,7 +127,38 @@ export class UserListComponent implements OnInit {
       this.toastrService.error("Invalid mobile number")
       return;
     }
+
+
+
+
+
+    //////////////////CHECK FOR IF ONE CAN DEACTIVATE A USER/////////////////////////////
+
+    let canDeactivate: boolean;
+    this.userService.checkIfCanDeactivate(this.selectedUser).toPromise().then(response => {
+        if(response.toString() === "true")
+          canDeactivate = true;
+        else
+          canDeactivate = false;
+
+        console.log("STATUS:" + this.selectedUser.status);
+        console.log("CAN DEACTIVATE: " + canDeactivate);
+        if((!canDeactivate) && (this.selectedUser.status === true)) {
+          console.log("cannot deactivate");
+          this.toastrService.error("Cannot deactivate user because they have assigned bugs.");
+          return;
+        }
+
+        /////////restul
+
+      },
+      (error: HttpErrorResponse) => {
+        console.error(error);
+        this.toastrService.error(error.message);
+      });
+////////////////////////////////////////////////////////////////////////////////////////////////
     
+
 
     for(let role of this.roles){
       if(role.checked){
@@ -145,6 +177,10 @@ export class UserListComponent implements OnInit {
       }
     );
   }
+
+
+
+
 
 
 
