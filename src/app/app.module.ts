@@ -26,6 +26,7 @@ import {RouterModule} from "@angular/router";
 import {AuthService} from "./service/auth.serice";
 import {AuthGuardService} from "./guards/auth-guard.service";
 import {ExcelService} from "./user-list/excel.service";
+import { CookieService } from 'ngx-cookie-service';
 
 
 @NgModule({
@@ -55,7 +56,7 @@ import {ExcelService} from "./user-list/excel.service";
     DialogModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [BugsService, RolesService, LoginService, AuthGuardService, ExcelService],
+  providers: [BugsService, RolesService, LoginService, AuthGuardService, ExcelService, CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
