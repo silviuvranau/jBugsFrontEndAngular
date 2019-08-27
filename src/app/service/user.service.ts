@@ -17,4 +17,8 @@ export class UserService {
   public insertUser(user: User){
     return this.backendService.post("http://localhost:8080/jbugs/api/users",user);
   }
+
+  public editUser(user: User){
+    return this.backendService.put("http://localhost:8080/jbugs/api/users", user);
+  }
 }
