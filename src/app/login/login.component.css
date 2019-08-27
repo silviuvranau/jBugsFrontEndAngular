@@ -5,7 +5,11 @@
 }
 
 
-
+.form-control.ng-invalid.ng-touched {
+  border: 2px;
+  border-style: solid;
+  border-color: #ff5c81;
+}
 
 
 

@@ -1,6 +1,7 @@
 import {Bug} from '../models/bug.model';
 import {BackendService} from '../core/backend/backend.service';
 import {Observable} from 'rxjs';
+import {User} from '../models/user.model';
 
 export class BugsService {
 
@@ -8,7 +9,11 @@ export class BugsService {
   }
 
 
-  getAllRoles(): Observable<Bug[]> {
+  getAllBugs(): Observable<Bug[]> {
     return this.backendService.get('http://localhost:8080/jbugs/api/bugs/');
+  }
+
+  getAllUsers(): Observable<User[]> {
+    return this.backendService.get('http://localhost:8080/jbugs/api/users/');
   }
 }

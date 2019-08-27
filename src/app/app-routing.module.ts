@@ -6,7 +6,7 @@ import {UserListComponent} from './user-list/user-list.component';
 import {RolesComponent} from "./roles/roles.component";
 import {UserCreateComponent} from './user-create/user-create.component';
 import {BugsComponent} from './bugs/bugs.component';
-import {AuthGuard} from "./guards/auth-guard.service";
+import {AuthGuardService} from "./guards/auth-guard.service";
 
 
 export const routes: Routes = [
@@ -23,7 +23,7 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuardService],
     children: [
       {
         path: 'user-list',
