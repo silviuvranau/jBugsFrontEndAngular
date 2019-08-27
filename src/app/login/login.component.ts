@@ -38,8 +38,9 @@ export class LoginComponent implements OnInit {
 
     this.generateNumbers();
     // this.authService.loggedInSetter(false);
-    localStorage.setItem("loggedIn","false");
 
+    localStorage.setItem("loggedIn","false");
+    this.cookieService.delete("username");
 
   }
 

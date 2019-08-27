@@ -13,7 +13,8 @@ export const routes: Routes = [
   {
     path: '',
     redirectTo: 'dashboard',
-    pathMatch: 'full'
+    pathMatch: 'full',
+    canActivate:   [AuthGuardService]
   },
   {
     path: 'login',
@@ -23,7 +24,7 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
-     canActivate:   [AuthGuardService],
+    canActivate:   [AuthGuardService],
     children: [
       {
         path: 'user-list',
