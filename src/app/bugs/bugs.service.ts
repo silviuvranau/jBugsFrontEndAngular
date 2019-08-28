@@ -24,8 +24,6 @@ export class BugsService {
 
   checkIfUserHasPermission(username: string, permissionType: string) {
     const userPermission = new UserPermission(username, permissionType);
-    console.log(username);
-    console.log(permissionType);
     return this.backendService.post("http://localhost:8080/jbugs/api/userPermission", userPermission);
   }
 }

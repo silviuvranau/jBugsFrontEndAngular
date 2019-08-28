@@ -9,6 +9,7 @@ import {NgForm} from "@angular/forms";
 import {ToastrService} from "ngx-toastr";
 import {HttpErrorResponse} from "@angular/common/http";
 import {CookieService} from "ngx-cookie-service";
+import {PermissionCheckerService} from "../utils/permissionCheckerService";
 
 @Component({
   selector: 'app-bugs',
@@ -49,7 +50,7 @@ export class BugsComponent implements OnInit {
   @ViewChild('dt', {static: true})
   dt: Table;
 
-  constructor(private bugsService: BugsService, private datePipe: DatePipe, private toastrService: ToastrService,
+  constructor(private bugsService: BugsService, private permissionChecker: PermissionCheckerService, private datePipe: DatePipe, private toastrService: ToastrService,
               private cookieService: CookieService) {
   }
 
@@ -159,8 +160,12 @@ export class BugsComponent implements OnInit {
     this.bugsService.getAllBugs().subscribe((obj) => {
       this.bugs = obj;
       this.getBugsToView();
-      this.checkIfUserHasPermission('BUG_MANAGEMENT');
-      this.checkIfUserHasPermission('BUG_CLOSE');
+      //this.checkIfUserHasPermission('BUG_MANAGEMENT');
+      //this.checkIfUserHasPermission('BUG_CLOSE');
+      this.userHasManagementPermission = this.permissionChecker.checkIfUserHasPermission(this.loggedInUser, 'BUG_MANAGEMENT');
+      this.userHasBugClosePermission = this.permissionChecker.checkIfUserHasPermission(this.loggedInUser, 'BUG_CLOSE');
+      console.log("MANAGEMENT PERMISSION", this.userHasManagementPermission);
+      console.log("BUGCLOSE PERMISSION", this.userHasBugClosePermission);
     }, ((error: HttpErrorResponse) => {
       console.error(error);
       this.toastrService.error(error.message);
