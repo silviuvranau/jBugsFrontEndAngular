@@ -8,34 +8,25 @@ export enum Severity {
 }
 
 export enum Status {
-  NEW = 1,
-  IN_PROGRESSS = 2,
-  FIXED = 3,
-  CLOSED = 4,
-  REJECTED = 5,
-  INFO_NEEDED = 6
+  NEW = 'NEW',
+  IN_PROGRESS = 'IN_PROGRESS',
+  FIXED = 'FIXED',
+  CLOSED = 'CLOSED',
+  REJECTED = 'REJECTED',
+  INFO_NEEDED = 'INFO_NEEDED'
 }
 
-export const StatusLabelMapping: Record<Status, string> = {
-  [Status.NEW]: 'NEW',
-  [Status.IN_PROGRESSS]: 'IN_PROGRESS',
-  [Status.FIXED]: 'FIXED',
-  [Status.CLOSED]: 'CLOSED',
-  [Status.REJECTED]: 'REJECTED',
-  [Status.INFO_NEEDED]: 'INFO_NEEDED'
-};
-
 export interface Bug {
-    id: number;
-    title: string;
-    description: string;
-    version: string;
-    targetDate: string;
-    fixedVersion: string;
-    createdId: User;
-    assignedId: User;
-    status: Status;
+  assignedId: User;
+  createdId: User;
+  description: string;
+  fixedVersion: string;
+  id: number;
   severity: Severity;
+  status: Status;
+  targetDate: string;
+  title: string;
+  version: string;
 };
 
 export class BugToShow {

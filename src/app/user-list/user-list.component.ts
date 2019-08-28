@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {BackendService} from '../core/backend/backend.service';
 import {User} from '../models/user.model';
 import {ExcelService} from './excel.service';
-import jsPDF from 'jspdf';
+//import jsPDF from 'jspdf';
 import {Role} from '../models/role.model';
 import {HttpErrorResponse} from '@angular/common/http';
 import {RoleService} from '../service/role.service';
@@ -94,10 +94,10 @@ export class UserListComponent implements OnInit {
     this.excelservice.exportAsExcelFile(this.arrUsers, 'sample');
   }
   downloadPdf() {
-    const doc = new jsPDF();
+    //const doc = new jsPDF();
 
-    doc.text(this.arrUsers);
-    doc.save('a4.pdf');
+    // doc.text(this.arrUsers);
+    // doc.save('a4.pdf');
   }
 
   onEditClick() {

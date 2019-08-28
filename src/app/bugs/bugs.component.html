@@ -4,7 +4,6 @@
 
   <ng-template pTemplate="caption">
     <div style="text-align: right">
-      <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
       <input type="text" pInputText size="50" placeholder="Global Filter"
              (input)="dt.filterGlobal($event.target.value, 'contains')"
              [ngStyle]="{'width':'800px'}">
@@ -23,17 +22,12 @@
       <th *ngFor="let col of cols" [ngSwitch]="col.field">
         <input *ngSwitchCase="'title'" pInputText type="text"
                (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" [ngStyle]="{'width':'100px'}">
+
         <input *ngSwitchCase="'description'" pInputText type="text"
                (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" [ngStyle]="{'width':'110px'}">
+
         <input *ngSwitchCase="'version'" pInputText type="text"
                (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" [ngStyle]="{'width':'50px'}">
-
-        <!--        <mat-form-field *ngSwitchCase="'targetDate'" [ngStyle]="{'width':'100px'}" (onChange)="dt.filter($event, col.field, 'dateFilter')">-->
-        <!--          <input matInput [matDatepicker]="picker"-->
-        <!--                  (dateChange)="dt.filter($event, col.field, 'dateFilter')" (click)="picker.open()">-->
-        <!--          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>-->
-        <!--          <mat-datepicker  #picker></mat-datepicker>-->
-        <!--        </mat-form-field>-->
 
         <p-calendar #cal=ngModel ngModel name="calendar" id="calendar" [style]="{'width': '300px'}"
                     *ngSwitchCase="'targetDate'" [defaultDate]="" [readonlyInput]="false" dateFormat="yy-MM-dd"
@@ -64,7 +58,9 @@
   <ng-template pTemplate="body" let-rowData let-bugsToView>
     <tr [pSelectableRow]="rowData">
       <td>{{bugsToView.title}}</td>
-      <td>{{bugsToView.description}}</td>
+
+      <td><textarea>{{bugsToView.description}}</textarea></td>
+
       <td>{{bugsToView.version}}</td>
       <td>{{bugsToView.targetDate | date:'yyyy-MM-dd'}}</td>
       <td>{{bugsToView.status}}</td>
@@ -74,100 +70,165 @@
       <td>{{bugsToView.assignedId}}</td>
     </tr>
   </ng-template>
-
-  <!--  <ng-template pTemplate="body" let-bug="bugs">-->
-  <!--    <tr *ngFor="let bug of bugs">-->
-  <!--      <td *ngFor="let col of cols">-->
-  <!--        {{bug[col]}}-->
-  <!--      </td>-->
-  <!--    </tr>-->
-  <!--  </ng-template>-->
 </p-table>
 
+
 <p-dialog header="Bug Details" [(visible)]="displayDialog" [responsive]="true" [modal]="true"
-          [style]="{width: '500px'}">
-  <div class="ui-g ui-fluid" *ngIf="bug">
+          [style]="{width: '1000px', height: '1100px'}">
+  <form #editBugForm="ngForm" (ngSubmit)=editBug(editBugForm)>
 
-    <div class="ui-g-12">
-      <div class="ui-g-4">
-        <label styleClass="bugPopUpLabels" for="title">Title</label>
+    <div class="ui-g ui-fluid" *ngIf="bug">
+
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="title">Title</label>
+        </div>
+        <div class="ui-g-8">
+          <input pInputText
+                 required
+                 pattern="^\d*[a-zA-Z][a-zA-Z\d]*$"
+                 id="title"
+                 name="title"
+                 class="form-control"
+                 #title="ngModel"
+                 [(ngModel)]="bug.title"
+          />
+          <div *ngIf="title.touched && title.invalid">
+            <div *ngIf="title.errors.required" style="color:red">
+              *Title is required.
+            </div>
+            <div *ngIf="title.errors.pattern" style="color:red">
+              *Invalid title.
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="ui-g-8">
-        <input pInputText id="title" [(ngModel)]="bug.title"/>
+
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="description">Description</label>
+        </div>
+        <div class="ui-g-8">
+          <textarea required
+                    minlength=250
+                    id="description"
+                    name="description"
+                    class="form-control"
+                    #description="ngModel"
+                    rows="5" cols="50"
+                    [(ngModel)]="bug.description">
+          </textarea>
+          <div *ngIf="description.touched && description.invalid">
+            <div *ngIf="description.errors.required" style="color:red">
+              *Description is required.
+            </div>
+            <div *ngIf="description.errors.minlength" style="color:red">
+              *Invalid description. Description must have a minimum of 250 characters.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="version">Version</label>
+        </div>
+        <div class="ui-g-8">
+          <input pInputText
+                 required
+                 pattern="^[0-9.]*$"
+                 id="version"
+                 name="version"
+                 class="form-control"
+                 #version="ngModel"
+                 [(ngModel)]="bug.version"
+          />
+          <div *ngIf="version.touched && version.invalid">
+            <div *ngIf="version.errors.required" style="color:red">
+              *Version is required.
+            </div>
+            <div *ngIf="version.errors.pattern" style="color:red">
+              *Invalid version. Versions must be of the form '1.1.1'
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="targetDate">Target Date</label>
+        </div>
+        <div class="ui-g-8">
+          <p-calendar ngModel name="targetDate" id="targetDate" #targetDate="ngModel" [style]="{'width': '300px'}"
+                      [(ngModel)]="selectedBugDate" dateFormat="yy-MM-dd"></p-calendar>
+        </div>
+      </div>
+
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="status">Status</label>
+        </div>
+        <div class="ui-g-8">
+          <p-dropdown id="status" name="status" [options]="getTransitionOptions(bug.status)"
+                      [(ngModel)]="bug.status"></p-dropdown>
+        </div>
+      </div>
+
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="fixedVersion">Fixed Version</label>
+        </div>
+        <div class="ui-g-8">
+          <input pInputText
+                 required
+                 pattern="^[0-9.]*$"
+                 id="fixedVersion"
+                 name="fixedVersion"
+                 class="form-control"
+                 #fixedVersion="ngModel"
+                 [(ngModel)]="bug.fixedVersion"
+          />
+          <div *ngIf="fixedVersion.touched && fixedVersion.invalid">
+            <!--            <div *ngIf = "fixedVersion.errors.required" style = "color:red">-->
+            <!--              *Version is required.-->
+            <!--            </div>-->
+            <div *ngIf="fixedVersion.errors.pattern" style="color:red">
+              *Invalid version. Versions must be of the form '1.1.1'
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="severity">Severity</label>
+        </div>
+        <div class="ui-g-8">
+          <p-dropdown id="severity" name="severity" [options]="severityTypes" [(ngModel)]="bug.severity"></p-dropdown>
+        </div>
+      </div>
+
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="createdId">Created by</label>
+        </div>
+        <div class="ui-g-8">
+          <input pInputText id="createdId" name="createdId" [disabled]="true" [(ngModel)]="bug.createdId"/>
+        </div>
+      </div>
+
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="assignedId">Assigned to</label>
+        </div>
+        <div class="ui-g-8">
+          <p-dropdown id="assignedId" name="assignedId" [options]="createdByUsernames"
+                      [(ngModel)]="bug.assignedId"></p-dropdown>
+        </div>
       </div>
     </div>
 
-    <div class="ui-g-12">
-      <div class="ui-g-4">
-        <label for="description">Description</label>
-      </div>
-      <div class="ui-g-8">
-        <input pInputText id="description" [(ngModel)]="bug.description"/>
-      </div>
-    </div>
+    <button class="btn btn-primary" style="margin-top:3%" [disabled]="editBugForm.invalid">Edit Bug</button>
 
-    <div class="ui-g-12">
-      <div class="ui-g-4">
-        <label for="version">Version</label>
-      </div>
-      <div class="ui-g-8">
-        <input pInputText id="version" [(ngModel)]="bug.version"/>
-      </div>
-    </div>
-
-    <div class="ui-g-12">
-      <div class="ui-g-4">
-        <label for="targetDate">Target Date</label>
-      </div>
-      <div class="ui-g-8">
-        <input pInputText id="targetDate" [ngModel]="bug.targetDate | date: 'MM/dd/yyyy'"/>
-      </div>
-    </div>
-
-    <div class="ui-g-12">
-      <div class="ui-g-4">
-        <label for="status">Status</label>
-      </div>
-      <div class="ui-g-8">
-        <input pInputText id="status" [(ngModel)]="bug.status"/>
-      </div>
-    </div>
-
-    <div class="ui-g-12">
-      <div class="ui-g-4">
-        <label for="fixedVersion">Fixed Version</label>
-      </div>
-      <div class="ui-g-8">
-        <input pInputText id="fixedVersion" [(ngModel)]="bug.fixedVersion"/>
-      </div>
-    </div>
-
-    <div class="ui-g-12">
-      <div class="ui-g-4">
-        <label for="severity">Severity</label>
-      </div>
-      <div class="ui-g-8">
-        <input pInputText id="severity" [(ngModel)]="bug.severity"/>
-      </div>
-    </div>
-
-    <div class="ui-g-12">
-      <div class="ui-g-4">
-        <label for="createdId">Created by</label>
-      </div>
-      <div class="ui-g-8">
-        <input pInputText id="createdId" [(ngModel)]="bug.createdId"/>
-      </div>
-    </div>
-
-    <div class="ui-g-12">
-      <div class="ui-g-4">
-        <label for="assignedId">Assigned to</label>
-      </div>
-      <div class="ui-g-8">
-        <input pInputText id="assignedId" [(ngModel)]="bug.assignedId"/>
-      </div>
-    </div>
-
-  </div>
+  </form>
 </p-dialog>
