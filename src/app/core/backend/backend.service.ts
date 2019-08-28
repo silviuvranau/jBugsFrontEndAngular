@@ -60,13 +60,19 @@ export class BackendService {
     return this.invoke('DELETE', url, null, params);
   }
 
+  public login(url: string, data: any): Observable<any>{
+    const requestUrl = `${url}`;
+    return this.http.request('POST', requestUrl, {body: data, withCredentials: true});
+  }
+
   private invoke(method: string, url: string, data: any = {}, params?: any): Observable<any> {
     const options = {
       body: data,
       params,
       headers: {
         'Accept-Language': 'en'
-      }
+      },
+      withCredentials: true
     };
     if (!url) {
       throw new Error('No URL provided.');

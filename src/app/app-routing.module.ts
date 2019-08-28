@@ -6,13 +6,15 @@ import {UserListComponent} from './user-list/user-list.component';
 import {RolesComponent} from "./roles/roles.component";
 import {UserCreateComponent} from './user-create/user-create.component';
 import {BugsComponent} from './bugs/bugs.component';
+import {AuthGuardService} from "./guards/auth-guard.service";
 
 
 export const routes: Routes = [
   {
     path: '',
     redirectTo: 'dashboard',
-    pathMatch: 'full'
+    pathMatch: 'full',
+    canActivate:   [AuthGuardService]
   },
   {
     path: 'login',
@@ -22,7 +24,7 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
-    //canActivate:   [AuthGuardService],
+    canActivate:   [AuthGuardService],
     children: [
       {
         path: 'user-list',
