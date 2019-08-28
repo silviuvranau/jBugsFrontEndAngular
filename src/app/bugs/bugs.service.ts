@@ -16,4 +16,8 @@ export class BugsService {
   getAllUsers(): Observable<User[]> {
     return this.backendService.get('http://localhost:8080/jbugs/api/users/');
   }
+
+  editBug(id: number, bug: Bug) {
+    return this.backendService.put("https://localhost:8080/jbugs/api/bugs/" + id, bug);
+  }
 }
