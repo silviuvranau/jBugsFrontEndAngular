@@ -245,8 +245,8 @@ export class BugsComponent implements OnInit {
     let assignedToUser = this.findUserWithUsername(assignedUsername);
     let createdByUser = this.findUserWithUsername(createdUsername);
 
-    bugToInsert.createdId = assignedToUser;
-    bugToInsert.assignedId = createdByUser;
+    bugToInsert.createdId = createdByUser;
+    bugToInsert.assignedId = assignedToUser;
 
     console.log(bugToInsert);
 
