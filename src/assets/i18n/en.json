@@ -1,0 +1,26 @@
+{
+  "HOME": {
+    "TITLE": "LOGIN",
+    "SELECT": "Change language"
+  },
+
+  "LOGIN": {
+
+    "USERNAME": "Username",
+    "PASSWORD": "Pasword",
+    "CAPTCHA": "Enter Code",
+    "LOGBUTTON": "Login"
+
+  },
+
+  "NOTIFICATION": {
+
+    "INVALID_CAPTCHA": "Invalid Captcha",
+    "INVALID_CREDENTIALS": "Invalid Credentials",
+    "LOGIN_SUCCESS": "Login Successful"
+
+
+  }
+
+
+}

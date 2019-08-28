@@ -21,6 +21,8 @@
     "@angular/platform-browser": "~8.2.0",
     "@angular/platform-browser-dynamic": "~8.2.0",
     "@angular/router": "~8.2.0",
+    "@ngx-translate/core": "^11.0.1",
+    "@ngx-translate/http-loader": "^4.0.0",
     "@progress/kendo-angular-common": "^1.1.0",
     "@progress/kendo-angular-pdf-export": "^2.0.0",
     "@progress/kendo-drawing": "^1.5.12",

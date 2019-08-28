@@ -33,6 +33,16 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatInputModule} from '@angular/material/input';
 
+import {HttpClient} from '@angular/common/http';
+import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+
+
+export function HttpLoaderFactory(httpClient: HttpClient) {
+  return new TranslateHttpLoader(httpClient);
+}
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -66,7 +76,14 @@ import {MatInputModule} from '@angular/material/input';
     MatInputModule,
     MultiSelectModule,
     DropdownModule,
-    CalendarModule
+    CalendarModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    })
   ],
   providers: [BugsService, RolesService, LoginService, AuthGuardService, ExcelService,
   CookieService, DatePipe],

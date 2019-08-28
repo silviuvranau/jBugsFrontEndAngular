@@ -1,0 +1,25 @@
+{
+  "HOME": {
+    "TITLE": "LOGARE",
+    "SELECT": "Schimba Limba"
+  },
+  "LOGIN": {
+
+    "USERNAME": "Utilizator",
+    "PASSWORD": "Parola",
+    "CAPTCHA": "Introduceti codul",
+    "LOGBUTTON": "Autentificare"
+
+  },
+
+  "NOTIFICATION": {
+
+    "INVALID_CAPTCHA": "Captcha nu este valid",
+    "INVALID_CREDENTIALS": "Credentialele nu sunt valide",
+    "LOGIN_SUCCESS": "Autentificare cu succes"
+
+
+  }
+
+
+}

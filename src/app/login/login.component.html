@@ -8,7 +8,7 @@
 <form #f = 'ngForm' (ngSubmit) = 'login(username,password,captcha)' [style.background-image]="'url(' ++ ')'"  >
 
 
-  <h2 align="center" >LOGIN</h2>
+  <h2 style =' margin-left: 45%' > {{'HOME.TITLE' | translate}}</h2>
   <div class="padd">
     <div class = "form-group input-group-lg">
 
@@ -17,7 +17,7 @@
       <label for="username">  </label>
 
       <input
-             placeholder="Username"
+             placeholder="{{'LOGIN.USERNAME' | translate}}"
              class = "form-control"
              type="text"
              id="username"
@@ -46,7 +46,9 @@
 
         <label for="password"></label>
 
-        <input  placeholder="Password" class="form-control" type="password" id="password" name ="password" ngModel required #password ="ngModel"
+        <input   placeholder="{{'LOGIN.PASSWORD' | translate}}" class="form-control" type="password" id="password"
+                name ="password" ngModel required #password ="ngModel"
+
 
 
         >
@@ -95,7 +97,7 @@
 
           <input
 
-            placeholder="Enter captcha code"
+            placeholder="{{'LOGIN.CAPTCHA' | translate}}"
             class = 'form-control col-lg-8 '
             type="text"
             id="captcha"
@@ -135,8 +137,10 @@
     <button  [disabled]="f.invalid"
              class ="btn btn-primary btn-lg"
 
+
     >
-      Log in
+      {{'LOGIN.LOGBUTTON' | translate}}
+
 
     </button>
 

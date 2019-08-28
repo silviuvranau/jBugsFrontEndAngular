@@ -135,7 +135,7 @@ export class UserListComponent implements OnInit {
     //////////////////CHECK FOR IF ONE CAN DEACTIVATE A USER/////////////////////////////
 
     let canDeactivate: boolean;
-    this.userService.checkIfCanDeactivate(this.selectedUser).toPromise().then(response => {
+    this.userService.checkIfCanDeactivate(this.selectedUser).subscribe(response => {
         if(response.toString() === "true")
           canDeactivate = true;
         else
