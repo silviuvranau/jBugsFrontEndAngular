@@ -73,7 +73,7 @@
         <div class="ui-g-8">
           <input pInputText id="version" [(ngModel)]="selectedUser.email" style = "width:200px;"/>
           <br>
-          *Must be of the form <br> address@msggroup.com
+          {{'USERDETAILS.EMAILSTAR' | translate}} <br>  {{'USERDETAILS.EMAILSTAR2' | translate}}
         </div>
       </div>
 
@@ -84,7 +84,7 @@
         <div class="ui-g-8">
           <input pInputText id="targetDate" [(ngModel)]="selectedUser.mobileNumber" style = "width:200px;"/>
           <br>
-          *Must be a valid <br> RO / DE number
+          {{'USERDETAILS.MOBILESTAR' | translate}} <br>  {{'USERDETAILS.MOBILESTAR2' | translate}}
         </div>
       </div>
 
@@ -137,7 +137,7 @@
       </div>
       <div class = "ui-g-12">
         <div class = "ui-g-4">
-          <button class = "btn btn-primary" style = "margin-top:3%" (click) = "onEditClick()">Edit User</button>
+          <button class = "btn btn-primary" style = "margin-top:3%;width: 155px" (click) = "onEditClick()">{{'USERDETAILS.EDIT' | translate}}</button>
         </div>
       </div>
       

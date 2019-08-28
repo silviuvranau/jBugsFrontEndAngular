@@ -52,7 +52,12 @@
     "USERNAME": "Nume utilizator",
     "PASSWORD": "Parola",
     "BLOCKED": "Blocat",
-    "ROLES": "Roluri"
+    "ROLES": "Roluri",
+    "EDIT": "Editare utilizator",
+    "EMAILSTAR":"*Trebuie sa fie de forma",
+    "EMAILSTAR2":"adresa@msggroup.com" ,
+    "MOBILESTAR": "*Trebuie sa fie un numar valid de ",
+    "MOBILESTAR2":" RO / DE"
 
 
 

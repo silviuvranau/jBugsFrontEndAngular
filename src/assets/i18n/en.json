@@ -54,7 +54,12 @@
     "USERNAME": "Username",
     "PASSWORD": "Password",
     "BLOCKED": "Blocked",
-    "ROLES": "Roles"
+    "ROLES": "Roles",
+    "EDIT": "Edit User",
+    "EMAILSTAR":"*Must be of the form",
+    "EMAILSTAR2":"address@msggroup.com" ,
+    "MOBILESTAR": "*Must be a valid",
+    "MOBILESTAR2":" RO / DE number"
 
 
 
