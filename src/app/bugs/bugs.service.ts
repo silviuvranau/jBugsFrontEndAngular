@@ -18,6 +18,6 @@ export class BugsService {
   }
 
   editBug(id: number, bug: Bug) {
-    return this.backendService.put("https://localhost:8080/jbugs/api/bugs/" + id, bug);
+    return this.backendService.put("http://localhost:8080/jbugs/api/bugs", bug);
   }
 }
