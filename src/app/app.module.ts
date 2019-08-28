@@ -1,7 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
-import {AppRoutingModule} from './app-routing.module';
+import {AppRoutingModule, routes} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {ReadJsonComponent} from './read-json/read-json.component';
 import {HttpClientModule} from '@angular/common/http';
@@ -26,12 +26,16 @@ import {UserListComponent} from './user-list/user-list.component';
 import {BugsComponent} from './bugs/bugs.component';
 import {BugsService} from './bugs/bugs.service';
 import {RolesService} from './roles/roles.service';
-import {CommonModule, DatePipe} from '@angular/common';
-import {MatDatepickerModule, MatFormFieldModule, MatInputModule, MatNativeDateModule} from '@angular/material';
-import {AngularFontAwesomeModule} from 'angular-font-awesome';
-import {AuthGuardService} from "./guards/auth-guard.service";
 import {LoginService} from "./service/login.service";
+import {RouterModule} from "@angular/router";
+import {AuthGuardService} from "./guards/auth-guard.service";
 import {ExcelService} from "./user-list/excel.service";
+import {CommonModule, DatePipe} from '@angular/common';
+import {CookieService} from 'ngx-cookie-service';
+import {MatDatepickerModule} from '@angular/material/datepicker'
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatNativeDateModule} from '@angular/material/core';
+import {MatInputModule} from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -54,9 +58,11 @@ import {ExcelService} from "./user-list/excel.service";
     FormsModule,
     ToastrModule.forRoot(),
     BrowserAnimationsModule,
+    FormsModule,
     CheckboxModule,
     TableModule,
     DialogModule,
+    RouterModule.forRoot(routes),
     CommonModule,
     MatDatepickerModule,
     MatFormFieldModule,
@@ -64,10 +70,10 @@ import {ExcelService} from "./user-list/excel.service";
     MatInputModule,
     MultiSelectModule,
     DropdownModule,
-    CalendarModule,
-    AngularFontAwesomeModule
+    CalendarModule
   ],
-  providers: [BugsService, RolesService, DatePipe, AuthGuardService, LoginService, ExcelService],
+  providers: [BugsService, RolesService, LoginService, AuthGuardService, ExcelService,
+    CookieService, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

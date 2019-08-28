@@ -23,23 +23,27 @@
   </p-table>
   <p-dialog header="User Details" [(visible)]="displayDialog" [responsive]="true" [modal]="true"
             [style]="{width: '500px', background: 'lightgrey'}">
-    <div class="ui-g ui-fluid" *ngIf="user">
+    <div class="ui-g ui-fluid" *ngIf="selectedUser">
 
       <div class="ui-g-12">
         <div class="ui-g-4">
-          <label styleClass="bugPopUpLabels" for="title">Firstname</label>
+          <label styleClass="bugPopUpLabels" for="title">First Name</label>
         </div>
         <div class="ui-g-8">
-          <input pInputText id="title" [(ngModel)]="user.firstName"/>
+          <input pInputText
+                 id="firstName"
+                 [(ngModel)]="selectedUser.firstName"
+                 style="width:200px;"
+                 pattern="^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$"/>
         </div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-4">
-          <label for="description">LastName</label>
+          <label for="description">Last Name</label>
         </div>
         <div class="ui-g-8">
-          <input pInputText id="description" [(ngModel)]="user.lastName"/>
+          <input pInputText id="description" [(ngModel)]="selectedUser.lastName" style="width:200px;"/>
         </div>
       </div>
 
@@ -48,7 +52,9 @@
           <label for="version">Email</label>
         </div>
         <div class="ui-g-8">
-          <input pInputText id="version" [(ngModel)]="user.email"/>
+          <input pInputText id="version" [(ngModel)]="selectedUser.email" style="width:200px;"/>
+          <br>
+          *Must be of the form <br> address@msggroup.com
         </div>
       </div>
 
@@ -57,7 +63,9 @@
           <label for="targetDate">Mobile Number</label>
         </div>
         <div class="ui-g-8">
-          <input pInputText id="targetDate" [(ngModel)]="user.mobileNumber"/>
+          <input pInputText id="targetDate" [(ngModel)]="selectedUser.mobileNumber" style="width:200px;"/>
+          <br>
+          *Must be a valid <br> RO / DE number
         </div>
       </div>
 
@@ -66,18 +74,44 @@
           <label for="status">Username</label>
         </div>
         <div class="ui-g-8">
-          <input pInputText id="status" [(ngModel)]="user.username"/>
+          <input pInputText id="status" [(ngModel)]="selectedUser.username" style="width:200px;" disabled/>
         </div>
       </div>
 
       <div class="ui-g-12">
         <div class="ui-g-4">
-          <label for="fixedVersion">Status</label>
+          <label for="fixedVersion">Blocked</label>
         </div>
         <div class="ui-g-8">
-          <input pInputText id="fixedVersion" [(ngModel)]="user.status"/>
+
+          <input type="checkbox" id="fixedVersion" [(ngModel)]="selectedUser.status">
+
+
         </div>
       </div>
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          Roles
+        </div>
+      </div>
+      <div class="ui-g-12">
+        <div *ngFor="let role of roles" class="checkbox" class="ui-g-2">
+          <label>
+            <input type="checkbox"
+                   [(ngModel)]="role.checked"
+                   name="role"
+                   id="role{{role.id}}"
+                   [value]="role.id">
+            {{role.type}}
+          </label>
+        </div>
+      </div>
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <button class="btn btn-primary" style="margin-top:3%" (click)="onEditClick()">Edit User</button>
+        </div>
+      </div>
+
     </div>
   </p-dialog>
   <div></div>
