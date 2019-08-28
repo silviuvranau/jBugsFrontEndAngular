@@ -68,6 +68,10 @@ export class LoginComponent implements OnInit {
       password: pass.value
     };
 
+    if (this.text.toString() !== captcha.value.toString()) {
+      this.toasterService.error("Invalid Captcha");
+      return;
+    }
 
 
 
@@ -77,38 +81,18 @@ export class LoginComponent implements OnInit {
 
           console.log("response is ", response);
 
-          if (this.text.toString() !== captcha.value.toString()) {
-
-            //alert('INVALID CAPTCHA');
-            this.toasterService.error("Invalid Captcha");
-
-
-
-          }
-
-
-
-          else if (response === null) {
-
-
-            //alert('Not valid credentials')
-            this.toasterService.error("Invalid Credentials")
-
-
-
-          }
-
-          else {
 
             this.toasterService.success("Login Successful");
             this.router.navigate(['/dashboard']);
             this.authService.loggedInSetter();
 
             this.cookieService.set("username", this.loginCreds.username);
-
-          }
           //console.log('response', response);
 
+        },
+        (error) => {
+          console.log(error);
+          this.toasterService.error(error.error);
         });
 
 
