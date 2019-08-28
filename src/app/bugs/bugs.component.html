@@ -91,6 +91,7 @@
                  name="title"
                  class="form-control"
                  #title="ngModel"
+                 [disabled]="!userHasManagementPermission"
                  [(ngModel)]="bug.title"
           />
           <div *ngIf="title.touched && title.invalid">
@@ -116,6 +117,7 @@
                     class="form-control"
                     #description="ngModel"
                     rows="5" cols="50"
+                    [disabled]="!userHasManagementPermission"
                     [(ngModel)]="bug.description">
           </textarea>
           <div *ngIf="description.touched && description.invalid">
@@ -141,6 +143,7 @@
                  name="version"
                  class="form-control"
                  #version="ngModel"
+                 [disabled]="!userHasManagementPermission"
                  [(ngModel)]="bug.version"
           />
           <div *ngIf="version.touched && version.invalid">
@@ -160,6 +163,7 @@
         </div>
         <div class="ui-g-8">
           <p-calendar ngModel name="targetDate" id="targetDate" #targetDate="ngModel" [style]="{'width': '300px'}"
+                      [disabled]="!userHasManagementPermission"
                       [(ngModel)]="selectedBugDate" dateFormat="yy-MM-dd"></p-calendar>
         </div>
       </div>
@@ -170,6 +174,7 @@
         </div>
         <div class="ui-g-8">
           <p-dropdown id="status" name="status" [options]="getTransitionOptions(bug.status)"
+                      [disabled]="(!(userHasBugClosePermission && isStatusFixed)) && (!(userHasManagementPermission && !isStatusFixed))"
                       [(ngModel)]="bug.status"></p-dropdown>
         </div>
       </div>
@@ -186,6 +191,7 @@
                  name="fixedVersion"
                  class="form-control"
                  #fixedVersion="ngModel"
+                 [disabled]="!userHasManagementPermission"
                  [(ngModel)]="bug.fixedVersion"
           />
           <div *ngIf="fixedVersion.touched && fixedVersion.invalid">
@@ -204,7 +210,8 @@
           <label for="severity">Severity</label>
         </div>
         <div class="ui-g-8">
-          <p-dropdown id="severity" name="severity" [options]="severityTypes" [(ngModel)]="bug.severity"></p-dropdown>
+          <p-dropdown id="severity" name="severity" [options]="severityTypes" [(ngModel)]="bug.severity"
+                      [disabled]="!userHasManagementPermission"></p-dropdown>
         </div>
       </div>
 
@@ -223,12 +230,15 @@
         </div>
         <div class="ui-g-8">
           <p-dropdown id="assignedId" name="assignedId" [options]="createdByUsernames"
+                      [disabled]="!userHasManagementPermission"
                       [(ngModel)]="bug.assignedId"></p-dropdown>
         </div>
       </div>
   </div>
 
-    <button class="btn btn-primary" style="margin-top:3%" [disabled]="editBugForm.invalid">Edit Bug</button>
+    <button class="btn btn-primary" style="margin-top:3%" [hidden]="!userHasManagementPermission"
+            [disabled]="editBugForm.invalid">Edit Bug
+    </button>
 
   </form>
 </p-dialog>

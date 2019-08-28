@@ -8,6 +8,7 @@ import {DatePipe} from "@angular/common";
 import {NgForm} from "@angular/forms";
 import {ToastrService} from "ngx-toastr";
 import {HttpErrorResponse} from "@angular/common/http";
+import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: 'app-bugs',
@@ -15,6 +16,11 @@ import {HttpErrorResponse} from "@angular/common/http";
   styleUrls: ['./bugs.component.css']
 })
 export class BugsComponent implements OnInit {
+
+  loggedInUser: string;
+  userHasManagementPermission: boolean;
+  userHasBugClosePermission: boolean;
+  isStatusFixed: boolean;
 
   selectedBugDate = new Date();
 
@@ -45,20 +51,24 @@ export class BugsComponent implements OnInit {
   transitionsFromStatusRejected: SelectItem[];
   transitionsFromStatusClosed: SelectItem[];
 
-  statusCheck: Status;
-
   @ViewChild('dt', {static: true})
   dt: Table;
 
-  constructor(private bugsService: BugsService, private datePipe: DatePipe, private toastrService: ToastrService) {
+  constructor(private bugsService: BugsService, private datePipe: DatePipe, private toastrService: ToastrService,
+              private cookieService: CookieService) {
   }
 
   ngOnInit() {
+    this.loggedInUser = this.cookieService.get("username");
     this.bugsService.getAllBugs().subscribe(obj => {
       this.bugs = obj;
       console.log(this.bugs);
       this.getBugsToView();
       console.log(this.bugsToView);
+
+      this.checkIfUserHasManagmentPermission('BUG_MANAGEMENT');
+      this.checkIfUserHasClosePermission('BUG_CLOSE');
+
 
       this.dt.filterConstraints['dateFilter'] = function inCollection(value: any, filter: any): boolean {
         console.log(value);
@@ -125,6 +135,7 @@ export class BugsComponent implements OnInit {
     ];
 
     this.transitionsFromStatusFixed = [
+      {label: 'FIXED', value: 'FIXED'},
       {label: 'CLOSED', value: 'CLOSED'},
     ];
 
@@ -168,6 +179,18 @@ export class BugsComponent implements OnInit {
     }
   }
 
+  checkIfStatusFixed(status: Status) {
+    console.log("check if status fixed method---entered");
+    if (status === Status.FIXED) {
+      this.isStatusFixed = true;
+    } else {
+      this.isStatusFixed = false;
+    }
+    console.log("STATUS FIXED: " + this.isStatusFixed)
+    console.log("BUG CLOSE PERMISSION: " + this.userHasBugClosePermission)
+    console.log("")
+  }
+
   customSort(event: SortEvent) {
     event.data.sort((data1, data2) => {
       const value1 = data1[event.field];
@@ -197,6 +220,7 @@ export class BugsComponent implements OnInit {
   }
 
   onRowSelect(event) {
+    this.checkIfStatusFixed(this.selectedBug.status);
     this.bug = this.cloneBug(event.data);
     this.selectedBugDate = new Date(this.bug.targetDate);
     console.log(this.bug);
@@ -208,21 +232,32 @@ export class BugsComponent implements OnInit {
     return bug;
   }
 
-  // addEvent(change: string, event: MatDatepickerInputEvent<any>) {
-  //   // this.events.push(`${type}: ${event.value}`);
-  //   console.log(event.value);
-  //   console.log(change);
-  // }
-  //
-  // checkThings(dt: any, event: any, col: any) {
-  //   console.log(event.value);
-  //   console.log();
-  //   dt.filter(event.value, col, 'equals')
-  // }
-  //
-  consoleLog(event, col) {
-    console.log(event);
-    console.log(col);
+  checkIfUserHasManagmentPermission(requiredPermission: string) {
+    this.bugsService.checkIfUserHasPermission(this.loggedInUser, requiredPermission).subscribe(
+      (obj) => {
+        console.log("this.userManagement", obj);
+        this.userHasManagementPermission = obj;
+      },
+      (error: HttpErrorResponse) => {
+        console.error(error);
+        this.toastrService.error(error.message);
+      }
+    );
+    return false;
+  }
+
+  checkIfUserHasClosePermission(requiredPermission: string) {
+    this.bugsService.checkIfUserHasPermission(this.loggedInUser, requiredPermission).subscribe(
+      (obj) => {
+        console.log("this.userManagement", obj);
+        this.userHasBugClosePermission = obj;
+      },
+      (error: HttpErrorResponse) => {
+        console.error(error);
+        this.toastrService.error(error.message);
+      }
+    );
+    return false;
   }
 
   editBug(editBugForm: NgForm) {
@@ -248,7 +283,9 @@ export class BugsComponent implements OnInit {
 
     this.bugsService.editBug(bugToInsert.id, bugToInsert).subscribe(
       () => {
+        this.refreshBugs();
         this.toastrService.success("Bug edited successfully");
+
       },
       (error: HttpErrorResponse) => {
         console.error(error);
@@ -256,6 +293,16 @@ export class BugsComponent implements OnInit {
       }
     )
   }
+
+  refreshBugs() {
+    this.bugsService.getAllBugs().subscribe((obj) => {
+      this.bugs = obj;
+      this.getBugsToView();
+    }, ((error: HttpErrorResponse) => {
+      console.error(error);
+      this.toastrService.error(error.message);
+    }))
+  };
 
   findUserWithUsername(username: String): User {
     for (let user of this.users) {
