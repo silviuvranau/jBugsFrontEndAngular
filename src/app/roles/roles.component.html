@@ -1,13 +1,50 @@
 <p-table [value]="roles">
+
+
+<!--  <ng-template pTemplate = "header" let-columns let-permissions>-->
+<!--    <tr [pSelectableRow]="rowData">-->
+
+<!--      <td>{{permissions[0]}}</td>-->
+<!--      <td>{{arrUsers.lastName}}</td>-->
+<!--      <td>{{arrUsers.email}}</td>-->
+<!--      <td>{{arrUsers.mobileNumber}}</td>-->
+<!--      <td>{{arrUsers.username}}</td>-->
+
+
+<!--      <td>-->
+<!--        <div *ngIf="arrUsers.status === false">-->
+<!--          {{'USERLIST.ACTIVATED' |translate}}-->
+<!--        </div>-->
+<!--        <div *ngIf="arrUsers.status === true">-->
+<!--          {{'USERLIST.DEACTIVATED' |translate}}-->
+<!--        </div>-->
+<!--      </td>-->
+
+
+
+<!--    </tr>-->
+<!--  </ng-template>-->
+
+
   <ng-template pTemplate="header" let-columns>
     <tr>
       <th [ngStyle]="{'width':'100px'}">
       </th>
       <th class="checkBoxColumn" *ngFor="let col of permissions" [ngStyle]="{'width':'220px'}">
-        {{col.type}}
+
+        {{'USERLIST.'+ col.type}}
+
+
       </th>
     </tr>
   </ng-template>
+
+
+
+
+
+
+
   <ng-template pTemplate="body" let-role>
     <tr>
       <td class="roleType" >

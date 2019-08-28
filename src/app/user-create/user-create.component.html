@@ -3,10 +3,10 @@
 </div> -->
 
 <div style = "margin-left:30%; width: 550px;">
-<p-card header="Add a new user" subheader="">
+<p-card header="{{'CREATE.ADD' | translate}}" subheader="">
     <form #createUserForm="ngForm" (ngSubmit) = addUser(createUserForm)>
         <div class = "form-style">
-            <label for="firstName">First Name</label>
+            <label for="firstName">{{'CREATE.FIRSTNAME' | translate}}</label>
             <input
             required
             pattern = "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$"
@@ -26,7 +26,7 @@
             </div>
         </div>
         <div class = "form-style">
-            <label for="lastName">Last Name</label>
+            <label for="lastName">{{'CREATE.LASTNAME' | translate}}</label>
             <input
             required
             pattern = "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$"
@@ -45,7 +45,7 @@
                 *Invalid last name.
             </div>
         </div>
-        <label for="email" class = "form-style">Email</label>
+        <label for="email" class = "form-style">{{'CREATE.EMAIL' | translate}}</label>
         <div class = "form-inline">
         <!-- <div style="width:400px"> -->
             <input
@@ -75,7 +75,7 @@
             </div>
         </div>
         <div class = "form-style">
-            <label for="mobileNumber">Mobile Number</label>
+            <label for="mobileNumber">{{'CREATE.MOBILENUMBER' | translate}}</label>
             <input
             pattern = "[+]407[0-9]{8}"
             required
@@ -95,7 +95,7 @@
             </div>
         </div>
         <div class = "form-style">
-            <label for="password">Password</label>
+            <label for="password">{{'CREATE.PASSWORD' | translate}}</label>
             <input
             required
             id = "password"
@@ -111,7 +111,7 @@
                 *Password is required.
             </div>
         </div>
-        <p style = "margin-top: 25px; margin-bottom: 2%; font-weight: bold;">Roles</p>
+        <p style = "margin-top: 25px; margin-bottom: 2%; font-weight: bold;">{{'CREATE.ROLES' | translate}}</p>
         <div *ngFor = "let role of roles" class = "checkbox">
             <label>
                 <input type = "checkbox"
@@ -123,7 +123,7 @@
             </label>
         </div>
                   
-        <button class = "btn btn-primary" style = "margin-top:3%" [disabled]="createUserForm.invalid">Add User</button>
+        <button class = "btn btn-primary" style = "margin-top:3%" [disabled]="createUserForm.invalid">{{'CREATE.ADDUSER' | translate}}</button>
     </form>
 
 </p-card>

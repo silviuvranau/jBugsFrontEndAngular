@@ -41,10 +41,10 @@ export class UserListComponent implements OnInit {
     // });
     this.cols = [
       { field: 'firstName', header: 'FirstName', width: '120px' },
-      {field: 'lastName', header: 'LastName', width: '120px' },
+      {field: 'lastName', header: 'LastName', width: '150px' },
       { field: 'email', header: 'Email', width: '270px' },
       { field: 'mobileNumber', header: 'Mobile', width: '120px'},
-      { field: 'username', header: 'Username', width: '100px'},
+      { field: 'username', header: 'Username', width: '150px'},
       { field: 'status', header: 'Status', width: '100px'},
     ];
 

@@ -24,7 +24,7 @@
   "DASHBOARD": {
     "JBUGS": "JBugs",
     "USERLIST": "Lista utilizatori",
-    "CREATEUSER": "Creare user",
+    "CREATEUSER": "Creare utilizator",
     "ROLEPERMISSION": "Permisiunea rolului",
     "BUGS": "Bugs",
     "LOGOUT": "Delogare"
@@ -59,6 +59,19 @@
     "MOBILESTAR": "*Trebuie sa fie un numar valid de ",
     "MOBILESTAR2":" RO / DE"
 
+
+
+  },
+
+  "CREATE": {
+    "ADD": "Adauga utilizator nou",
+    "FIRSTNAME": "Prenume",
+    "LASTNAME": "Nume",
+    "EMAIL": "Email",
+    "MOBILENUMBER": "Telefon mobil",
+    "PASSWORD": "Parola",
+    "ROLES": "Roluri",
+    "ADDUSER": "Adauga Utilizator"
 
 
   }

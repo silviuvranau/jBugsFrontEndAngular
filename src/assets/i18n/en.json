@@ -61,6 +61,25 @@
     "MOBILESTAR": "*Must be a valid",
     "MOBILESTAR2":" RO / DE number"
 
+  },
+
+  "CREATE": {
+    "ADD": "Add a new user",
+    "FIRSTNAME": "First Name",
+    "LASTNAME": "Last Name",
+    "EMAIL": "Email",
+    "MOBILENUMBER": "Mobile Number",
+    "PASSWORD": "Password",
+    "ROLES": "Roles",
+    "ADDUSER": "Add User"
+
+
+  },
+
+  "ROLES": {
+
+
+
 
 
   }
