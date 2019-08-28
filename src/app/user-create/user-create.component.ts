@@ -19,7 +19,6 @@ export class UserCreateComponent implements OnInit {
   constructor(private roleService: RoleService, private userService: UserService, private toastrService: ToastrService) { }
 
   ngOnInit() {
-    this.toastrService.success("msj");
     this.findAllRoles();
   }
 
@@ -31,7 +30,7 @@ export class UserCreateComponent implements OnInit {
       },
       (error: HttpErrorResponse) => {
         console.error(error);
-        this.toastrService.error(error.message);
+        this.toastrService.error(error.error);
       }
     );
   }
@@ -57,7 +56,7 @@ export class UserCreateComponent implements OnInit {
       },
       (error: HttpErrorResponse) => {
         console.error(error);
-        this.toastrService.error(error.message);
+        this.toastrService.error(error.error);
       }
     );
 
