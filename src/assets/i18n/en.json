@@ -76,11 +76,24 @@
 
   },
 
-  "ROLES": {
+  "ROLES1": {
+
+    "USER_MANAGEMENT": "User Management",
+    "BUG_MANAGEMENT": "Bug Management",
+    "BUG_CLOSE": "Bug Close",
+    "PERMISSION_MANAGEMENT": "Permission Management",
+    "BUG_EXPORT_PDF": "Bug Export Pdf"
 
 
 
+  },
+  "ROLES2": {
 
+    "ADM": "Administrator",
+    "PM": "Project manager",
+    "TM": "Test manager",
+    "DEV": "Developer",
+    "TEST": "Tester"
 
   }
 

@@ -29,12 +29,12 @@
         <input *ngSwitchCase="'version'" pInputText type="text"
                (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" [ngStyle]="{'width':'50px'}">
 
-        <p-calendar #cal=ngModel ngModel name="calendar" id="calendar" [style]="{'width': '300px'}"
+        <p-calendar #cal=ngModel ngModel name="calendar" id="calendar" [style]="{'width': '175px'}"
                     *ngSwitchCase="'targetDate'" [defaultDate]="" [readonlyInput]="false" dateFormat="yy-MM-dd"
                     (onSelect)="dt.filter($event, col.field, 'dateFilter')"></p-calendar>
 
         <p-dropdown *ngSwitchCase="'status'" [options]="statusTypes"
-                    (onChange)="dt.filter($event.value, col.field, 'equals')"></p-dropdown>
+                    (onChange)="dt.filter($event.value, col.field, 'equals')" [ngStyle]="{'width':'1000px'}"></p-dropdown>
 
         <input *ngSwitchCase="'fixedVersion'" pInputText type="text"
                (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" [ngStyle]="{'width':'50px'}">

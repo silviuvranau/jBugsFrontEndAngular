@@ -88,7 +88,7 @@ export class BugsComponent implements OnInit {
       {field: 'title', header: 'Title', width: '120px'},
       {field: 'description', header: 'Description', width: '200px'},
       {field: 'version', header: 'Version', width: '70px'},
-      {field: 'targetDate', header: 'Target Date', width: '300px'},
+      {field: 'targetDate', header: 'Target Date', width: '200px'},
       {field: 'status', header: 'Status', width: '200px'},
       {field: 'fixedVersion', header: 'Fixed Version', width: '70px'},
       {field: 'severity', header: 'Severity', width: '200px'},

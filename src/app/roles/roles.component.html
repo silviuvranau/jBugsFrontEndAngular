@@ -30,9 +30,9 @@
     <tr>
       <th [ngStyle]="{'width':'100px'}">
       </th>
-      <th class="checkBoxColumn" *ngFor="let col of permissions" [ngStyle]="{'width':'220px'}">
+      <th class="checkBoxColumn" *ngFor="let col of permissions" [ngStyle]="{'width':'150px'}">
 
-        {{'USERLIST.'+ col.type}}
+        {{'ROLES1.'+ col.type | translate}}
 
 
       </th>
@@ -48,7 +48,7 @@
   <ng-template pTemplate="body" let-role>
     <tr>
       <td class="roleType" >
-        {{role.type}}
+        {{'ROLES2.'+role.type | translate}}
       </td>
       <td class="checkBoxColumn" *ngFor="let per of permissions" >
         <p-checkbox [ngModel]="checkIfRoleHasPermission(per, role.permissions)" binary="true"

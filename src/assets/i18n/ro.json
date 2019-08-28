@@ -74,6 +74,26 @@
     "ADDUSER": "Adauga Utilizator"
 
 
+  },
+  "ROLES1": {
+
+    "UM": "Gestionare Utilizator",
+    "BUG_MANAGEMENT": "Gestionare Bug",
+    "BUG_CLOSE": "Dezactivare Bug",
+    "PERMISSION_MANAGEMENT": "Gestionare Permisiuni",
+    "BUG_EXPORT_PDF": "Exportare Bug Pdf"
+
+
+
+  },
+  "ROLES2": {
+
+    "ADM": "Administrator",
+    "PM": "Manager de Proiect",
+    "TM": "Manager de Test",
+    "DEV": "Programator",
+    "TEST": "Tester"
+
   }
 
 
