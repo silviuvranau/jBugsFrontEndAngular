@@ -17,30 +17,25 @@ import {CookieService} from "ngx-cookie-service";
 })
 export class BugsComponent implements OnInit {
 
+  displayBugPopUp: boolean;
   loggedInUser: string;
   userHasManagementPermission: boolean;
   userHasBugClosePermission: boolean;
   isStatusFixed: boolean;
-
-  selectedBugDate = new Date();
-
-  displayDialog: boolean;
-
-  bug: BugToShow;
-
-  selectedBug: BugToShow;
-
-  bugs: Bug[];
-  bugsToView: BugToShow[];
+  isStatusRejected: boolean;
 
   users: User[];
+  bugs: Bug[];
+  bugsToView: BugToShow[];
+  popUpBug: BugToShow;
+  selectedBug: BugToShow;
+  selectedBugDate = new Date();
 
-  username: SelectItem[];
+  usernamesForFilter: SelectItem[];
+  createdByUsernamesForDropDown: SelectItem[];
 
-  createdByUsernames: SelectItem[];
 
   cols: any[];
-
   statusTypes: SelectItem[];
   severityTypes: SelectItem[];
 
@@ -60,40 +55,36 @@ export class BugsComponent implements OnInit {
 
   ngOnInit() {
     this.loggedInUser = this.cookieService.get("username");
-    this.bugsService.getAllBugs().subscribe(obj => {
-      this.bugs = obj;
-      console.log(this.bugs);
-      this.getBugsToView();
-      console.log(this.bugsToView);
-
-      this.checkIfUserHasManagmentPermission('BUG_MANAGEMENT');
-      this.checkIfUserHasClosePermission('BUG_CLOSE');
-
-
-      this.dt.filterConstraints['dateFilter'] = function inCollection(value: any, filter: any): boolean {
-        console.log(value);
-        console.log("Filter: " + new DatePipe('en').transform(filter, 'yyyy-MM-dd'));
-        if (filter === undefined || filter === null || (filter.length === 0 || filter === "") && value === null) {
-          return true;
-        }
-        if (value === undefined || value === null || value.length === 0) {
-          return false;
-        }
-        if (new DatePipe('en').transform(value, 'yyyy-MM-dd') == new DatePipe('en').transform(filter, 'yyyy-MM-dd')) {
-          return true;
-        }
-        return false;
-      }
-    });
-
+    this.initializeData();
     this.bugsService.getAllUsers().subscribe(obj => {
       this.users = obj;
-      this.username = [
+      this.usernamesForFilter = [
         {label: 'All', value: null}
       ];
       this.createUsernameLabels();
     });
 
+    /**
+     * Custom function to filter bugs after a given date.
+     * @param value
+     * @param filter
+     */
+    this.dt.filterConstraints['dateFilter'] = function inCollection(value: any, filter: any): boolean {
+      if (filter === undefined || filter === null || (filter.length === 0 || filter === "") && value === null) {
+        return true;
+      }
+      if (value === undefined || value === null || value.length === 0) {
+        return false;
+      }
+      if (new DatePipe('en').transform(value, 'yyyy-MM-dd') == new DatePipe('en').transform(filter, 'yyyy-MM-dd')) {
+        return true;
+      }
+      return false;
+    }
+
+    /**
+     * Initialize column header names.
+     */
     this.cols = [
       {field: 'title', header: 'Title', width: '120px'},
       {field: 'description', header: 'Description', width: '200px'},
@@ -106,22 +97,32 @@ export class BugsComponent implements OnInit {
       {field: 'assignedId', header: 'Assigned Username', width: '200px'}
     ];
 
+
+    /**
+     * Initializes status types.
+     */
     this.statusTypes = [
-      {label: 'NEW', value: 'NEW'},
-      {label: 'IN_PROGRESS', value: 'IN_PROGRESS'},
-      {label: 'FIXED', value: 'FIXED'},
-      {label: 'CLOSED', value: 'CLOSED'},
-      {label: 'REJECTED', value: 'REJECTED'},
-      {label: 'INFO_NEEDED', value: 'INFO_NEEDED'},
+      {label: 'NEW', value: Status.NEW},
+      {label: 'IN_PROGRESS', value: Status.IN_PROGRESS},
+      {label: 'FIXED', value: Status.FIXED},
+      {label: 'CLOSED', value: Status.CLOSED},
+      {label: 'REJECTED', value: Status.REJECTED},
+      {label: 'INFO_NEEDED', value: Status.INFO_NEEDED},
     ];
 
+    /**
+     * Initializes severity types.
+     */
     this.severityTypes = [
-      {label: 'LOW', value: 'LOW'},
-      {label: 'MEDIUM', value: 'MEDIUM'},
-      {label: 'HIGH', value: 'HIGH'},
-      {label: 'CRITICAL', value: 'CRITICAL'},
+      {label: 'LOW', value: Severity.LOW},
+      {label: 'MEDIUM', value: Severity.MEDIUM},
+      {label: 'HIGH', value: Severity.HIGH},
+      {label: 'CRITICAL', value: Severity.CRITICAL},
     ];
 
+    /**
+     * Initialize possible status transitions from each status type.
+     */
     this.transitionsFromStatusNew = [
       {label: 'NEW', value: 'NEW'},
       {label: 'IN_PROGRESS', value: 'IN_PROGRESS'},
@@ -154,20 +155,63 @@ export class BugsComponent implements OnInit {
     ];
   }
 
-  createUsernameLabels() {
-    for (let i = 0; i < this.users.length; i++) {
-      this.username.push({label: this.users[i].username, value: this.users[i].username});
+  initializeData() {
+    this.bugsService.getAllBugs().subscribe((obj) => {
+      this.bugs = obj;
+      this.getBugsToView();
+      this.checkIfUserHasPermission('BUG_MANAGEMENT');
+      this.checkIfUserHasPermission('BUG_CLOSE');
+    }, ((error: HttpErrorResponse) => {
+      console.error(error);
+      this.toastrService.error(error.message);
+    }))
+  };
 
-      if (i == 0) {
-        this.createdByUsernames = [
-          {label: this.users[i].username, value: this.users[i].username}
-        ];
-      } else {
-        this.createdByUsernames.push({label: this.users[i].username, value: this.users[i].username});
-      }
+  /**
+   * Adds the usernames of users for the filter and edit bug functionality.
+   */
+  createUsernameLabels() {
+    this.createdByUsernamesForDropDown = [
+      {label: "No one", value: null}
+    ];
+    for (let i = 0; i < this.users.length; i++) {
+      this.usernamesForFilter.push({label: this.users[i].username, value: this.users[i].username});
+      this.createdByUsernamesForDropDown.push({label: this.users[i].username, value: this.users[i].username});
     }
   }
 
+  /**
+   * Method clones the chosen bug (by selection of table row)
+   * so it can be shown into the popup window and checks its
+   * status.
+   * @param event
+   */
+  onRowSelect(event) {
+    this.checkStatusType(this.selectedBug.status);
+    this.popUpBug = this.cloneBug(event.data);
+    this.selectedBugDate = new Date(this.popUpBug.targetDate);
+    this.displayBugPopUp = true;
+  }
+
+  checkStatusType(currentStatus: Status) {
+    if (currentStatus === Status.FIXED) {
+      this.isStatusFixed = true;
+    } else if (currentStatus === Status.REJECTED) {
+      this.isStatusRejected = true;
+    } else {
+      this.isStatusFixed = false;
+      this.isStatusRejected = false;
+    }
+  }
+
+  cloneBug(b: BugToShow): BugToShow {
+    const bug = Object.assign({}, b);
+    return bug;
+  }
+
+  /**
+   * Maps the backend bug entities to frontend bug entities.
+   */
   getBugsToView() {
     var bugToView = {} as BugToShow;
     this.bugsToView = new Array<BugToShow>();
@@ -179,26 +223,15 @@ export class BugsComponent implements OnInit {
     }
   }
 
-  checkIfStatusFixed(status: Status) {
-    console.log("check if status fixed method---entered");
-    if (status === Status.FIXED) {
-      this.isStatusFixed = true;
-    } else {
-      this.isStatusFixed = false;
-    }
-    console.log("STATUS FIXED: " + this.isStatusFixed)
-    console.log("BUG CLOSE PERMISSION: " + this.userHasBugClosePermission)
-    console.log("")
-  }
-
+  /**
+   * Custom sort method for bug attributes.
+   * @param event
+   */
   customSort(event: SortEvent) {
     event.data.sort((data1, data2) => {
       const value1 = data1[event.field];
       const value2 = data2[event.field];
       let result = null;
-
-      console.log(value1);
-      console.log(value2);
 
       if (value1 == null && value2 != null) {
         result = -1;
@@ -219,24 +252,19 @@ export class BugsComponent implements OnInit {
     });
   }
 
-  onRowSelect(event) {
-    this.checkIfStatusFixed(this.selectedBug.status);
-    this.bug = this.cloneBug(event.data);
-    this.selectedBugDate = new Date(this.bug.targetDate);
-    console.log(this.bug);
-    this.displayDialog = true;
-  }
-
-  cloneBug(b: BugToShow): BugToShow {
-    const bug = Object.assign({}, b);
-    return bug;
-  }
-
-  checkIfUserHasManagmentPermission(requiredPermission: string) {
+  /**
+   * Method sends a request to the backend service
+   * to check whether the current user has the given permission.
+   * @param requiredPermission
+   */
+  checkIfUserHasPermission(requiredPermission: string) {
     this.bugsService.checkIfUserHasPermission(this.loggedInUser, requiredPermission).subscribe(
       (obj) => {
-        console.log("this.userManagement", obj);
-        this.userHasManagementPermission = obj;
+        if (requiredPermission === 'BUG_MANAGEMENT') {
+          this.userHasManagementPermission = obj;
+        } else if (requiredPermission === 'BUG_CLOSE') {
+          this.userHasBugClosePermission = obj;
+        }
       },
       (error: HttpErrorResponse) => {
         console.error(error);
@@ -246,23 +274,14 @@ export class BugsComponent implements OnInit {
     return false;
   }
 
-  checkIfUserHasClosePermission(requiredPermission: string) {
-    this.bugsService.checkIfUserHasPermission(this.loggedInUser, requiredPermission).subscribe(
-      (obj) => {
-        console.log("this.userManagement", obj);
-        this.userHasBugClosePermission = obj;
-      },
-      (error: HttpErrorResponse) => {
-        console.error(error);
-        this.toastrService.error(error.message);
-      }
-    );
-    return false;
-  }
-
+  /**
+   * The method creates a bug entity given user data and sends an update
+   * request to the backend service.
+   * @param editBugForm
+   */
   editBug(editBugForm: NgForm) {
     let bugToInsert: Bug = {} as Bug;
-    bugToInsert.id = this.bug.id;
+    bugToInsert.id = this.popUpBug.id;
     bugToInsert.title = editBugForm.controls.title.value;
     bugToInsert.description = editBugForm.controls.description.value;
     bugToInsert.version = editBugForm.controls.version.value;
@@ -271,19 +290,24 @@ export class BugsComponent implements OnInit {
     bugToInsert.status = editBugForm.controls.status.value;
     bugToInsert.severity = editBugForm.controls.severity.value;
 
-    let assignedUsername = editBugForm.controls.assignedId.value;
+    //User-entities will be assigned to the created bug entity given the
+    //username selected in the user-interface
     let createdUsername = editBugForm.controls.createdId.value;
-    let assignedToUser = this.findUserWithUsername(assignedUsername);
     let createdByUser = this.findUserWithUsername(createdUsername);
+    let assignedUsername = editBugForm.controls.assignedId.value;
+    let assignedToUser = {} as User;
+    if (assignedUsername != null) {
+      assignedToUser = this.findUserWithUsername(assignedUsername);
+    } else {
+      assignedToUser = null;
+    }
 
     bugToInsert.createdId = createdByUser;
     bugToInsert.assignedId = assignedToUser;
 
-    console.log(bugToInsert);
-
     this.bugsService.editBug(bugToInsert.id, bugToInsert).subscribe(
       () => {
-        this.refreshBugs();
+        this.initializeData();
         this.toastrService.success("Bug edited successfully");
 
       },
@@ -293,16 +317,6 @@ export class BugsComponent implements OnInit {
       }
     )
   }
-
-  refreshBugs() {
-    this.bugsService.getAllBugs().subscribe((obj) => {
-      this.bugs = obj;
-      this.getBugsToView();
-    }, ((error: HttpErrorResponse) => {
-      console.error(error);
-      this.toastrService.error(error.message);
-    }))
-  };
 
   findUserWithUsername(username: String): User {
     for (let user of this.users) {
