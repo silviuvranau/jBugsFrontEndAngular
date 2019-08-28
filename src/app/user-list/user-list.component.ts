@@ -40,7 +40,7 @@ export class UserListComponent implements OnInit {
     //   console.log(data);
     // });
     this.cols = [
-      { field: 'firstName', header: 'FirstName', width: '90px' },
+      { field: 'firstName', header: 'FirstName', width: '120px' },
       {field: 'lastName', header: 'LastName', width: '120px' },
       { field: 'email', header: 'Email', width: '270px' },
       { field: 'mobileNumber', header: 'Mobile', width: '120px'},
@@ -135,7 +135,7 @@ export class UserListComponent implements OnInit {
     //////////////////CHECK FOR IF ONE CAN DEACTIVATE A USER/////////////////////////////
 
     let canDeactivate: boolean;
-    this.userService.checkIfCanDeactivate(this.selectedUser).subscribe(response => {
+    this.userService.checkIfCanDeactivate(this.selectedUser).toPromise().then(response => {
         if(response.toString() === "true")
           canDeactivate = true;
         else

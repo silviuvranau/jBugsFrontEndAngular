@@ -20,6 +20,44 @@
     "LOGIN_SUCCESS": "Login Successful"
 
 
+  },
+
+  "DASHBOARD": {
+    "JBUGS": "JBugs",
+    "USERLIST": "User List",
+    "CREATEUSER": "Create User",
+    "ROLEPERMISSION": "Role Permissions",
+    "BUGS": "Bugs",
+    "LOGOUT": "Log out"
+  },
+
+  "USERLIST": {
+
+    "FirstName":"First Name" ,
+    "LastName":"Last Name" ,
+    "Email": "Email",
+    "Mobile":"Mobile" ,
+    "Username": "Username",
+    "Status": "Status",
+    "ACTIVATED": "Activated",
+    "DEACTIVATED":"Deactivated"
+
+
+  },
+
+  "USERDETAILS": {
+    "USERDETAIL":"User details",
+    "FIRSTNAME": "First name",
+    "LASTNAME": "Last name",
+    "EMAIL": "Email",
+    "MOBILENUMBER": "Mobile number",
+    "USERNAME": "Username",
+    "PASSWORD": "Password",
+    "BLOCKED": "Blocked",
+    "ROLES": "Roles"
+
+
+
   }
 
 

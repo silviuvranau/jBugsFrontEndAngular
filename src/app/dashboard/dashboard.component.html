@@ -13,7 +13,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#1F70E8">
     <a class="navbar-brand" routerLink="/">
-      JBugs
+      {{'DASHBOARD.JBUGS' | translate}}
     </a>
     
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
@@ -21,28 +21,30 @@
       <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" routerLink="user-list">
           <i class = "pi pi-user"></i>
-          Users List
+
+          {{'DASHBOARD.USERLIST' | translate}}
+
         </a>
       </li>
 
       <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" routerLink="add-user">
             <i class = "pi pi-user-plus"></i>
-            Create User
+            {{'DASHBOARD.CREATEUSER' | translate}}
           </a>
       </li>
 
       <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" routerLink="changePermissions">
             <i class = "pi pi-table"></i>
-            Role Permissions
+            {{'DASHBOARD.ROLEPERMISSION' | translate}}
           </a>
       </li>
 
       <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" routerLink="bugs">
             <i class = "pi pi-exclamation-triangle"></i>
-            Bugs
+            {{'DASHBOARD.BUGS' | translate}}
           </a>
       </li>
     
@@ -53,7 +55,7 @@
         <li class="nav-item" routerLinkActive="active">
             <a class="nav-link" routerLink="/">
               <i class = "pi pi-sign-out" (click)="logout()"></i>
-              Log Out
+              {{'DASHBOARD.LOGOUT' | translate}}
             </a>
         </li>
 

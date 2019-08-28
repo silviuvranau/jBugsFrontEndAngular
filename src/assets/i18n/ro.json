@@ -19,6 +19,43 @@
     "LOGIN_SUCCESS": "Autentificare cu succes"
 
 
+  },
+
+  "DASHBOARD": {
+    "JBUGS": "JBugs",
+    "USERLIST": "Lista utilizatori",
+    "CREATEUSER": "Creare user",
+    "ROLEPERMISSION": "Permisiunea rolului",
+    "BUGS": "Bugs",
+    "LOGOUT": "Delogare"
+
+  },
+
+  "USERLIST": {
+
+    "FirstName":"Prenume" ,
+    "LastName":"Nume" ,
+    "Email": "Email",
+    "Mobile":"Telefon" ,
+    "Username": "Utilizator",
+    "Status": "Status",
+    "ACTIVATED": "Activ",
+    "DEACTIVATED":"Inactiv"
+  },
+
+  "USERDETAILS": {
+    "USERDETAIL":"Detalii utilizator",
+    "FIRSTNAME": "Prenume",
+    "LASTNAME": "Nume",
+    "EMAIL": "Email",
+    "MOBILENUMBER": "Telefon mobil",
+    "USERNAME": "Nume utilizator",
+    "PASSWORD": "Parola",
+    "BLOCKED": "Blocat",
+    "ROLES": "Roluri"
+
+
+
   }
 
 
