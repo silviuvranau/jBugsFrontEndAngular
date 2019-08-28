@@ -95,6 +95,22 @@
     "DEV": "Developer",
     "TEST": "Tester"
 
+  },
+
+
+  "BUGS": {
+    "FILTER": "Global filter",
+    "Title": "Title",
+    "Description" :"Description" ,
+    "Version": "Version",
+    "Target Date":"Target Date" ,
+    "Status" :"Status",
+    "Fixed Version" :"Fixed Version" ,
+    "Severity":"Severity",
+    "Created Username": "Created Username",
+    "Assigned Username": "Assigned Username"
+
+
   }
 
 

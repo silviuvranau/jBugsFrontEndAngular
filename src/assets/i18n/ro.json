@@ -94,6 +94,21 @@
     "DEV": "Programator",
     "TEST": "Tester"
 
+  },
+
+  "BUGS": {
+    "FILTER": "Filtru global",
+    "Title": "Titlu",
+    "Description" :"Descriere" ,
+    "Version": "Versiune",
+    "Target Date":"Data marcata" ,
+    "Status" :"Status",
+    "Fixed Version" :"Versiune stabila" ,
+    "Severity":"Severitate",
+    "Created Username": "Bug creat de",
+    "Assigned Username": "Utilizator Asignat"
+
+
   }
 
 

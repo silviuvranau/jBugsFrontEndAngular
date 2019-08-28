@@ -4,7 +4,7 @@
 
   <ng-template pTemplate="caption">
     <div style="text-align: right">
-      <input type="text" pInputText size="50" placeholder="Global Filter"
+      <input type="text" pInputText size="50" placeholder="{{'BUGS.FILTER' | translate}}"
              (input)="dt.filterGlobal($event.target.value, 'contains')"
              [ngStyle]="{'width':'800px'}">
     </div>
@@ -13,7 +13,7 @@
   <ng-template pTemplate="header" let-columns>
     <tr>
       <th *ngFor="let col of cols" [pSortableColumn]="col.field" pResizableColumn pReorderableColumn [ngStyle]="{'width':col.width}">
-        {{col.header}}
+        {{'BUGS.'+col.header | translate}}
         <p-sortIcon [field]="col.field"></p-sortIcon>
       </th>
     </tr>
@@ -33,8 +33,8 @@
                     *ngSwitchCase="'targetDate'" [defaultDate]="" [readonlyInput]="false" dateFormat="yy-MM-dd"
                     (onSelect)="dt.filter($event, col.field, 'dateFilter')"></p-calendar>
 
-        <p-dropdown *ngSwitchCase="'status'" [options]="statusTypes"
-                    (onChange)="dt.filter($event.value, col.field, 'equals')" [ngStyle]="{'width':'1000px'}"></p-dropdown>
+        <p-dropdown  [style]="{'width':'90px'}" *ngSwitchCase="'status'" [options]="statusTypes"
+                    (onChange)="dt.filter($event.value, col.field, 'equals')"  ></p-dropdown>
 
         <input *ngSwitchCase="'fixedVersion'" pInputText type="text"
                (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" [ngStyle]="{'width':'50px'}">

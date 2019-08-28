@@ -88,12 +88,12 @@ export class BugsComponent implements OnInit {
       {field: 'title', header: 'Title', width: '120px'},
       {field: 'description', header: 'Description', width: '200px'},
       {field: 'version', header: 'Version', width: '70px'},
-      {field: 'targetDate', header: 'Target Date', width: '200px'},
-      {field: 'status', header: 'Status', width: '200px'},
+      {field: 'targetDate', header: 'Target Date', width: '173px'},
+      {field: 'status', header: 'Status', width: '100px'},
       {field: 'fixedVersion', header: 'Fixed Version', width: '70px'},
-      {field: 'severity', header: 'Severity', width: '200px'},
-      {field: 'createdId', header: 'Created Username', width: '200px'},
-      {field: 'assignedId', header: 'Assigned Username', width: '200px'}
+      {field: 'severity', header: 'Severity', width: '150px'},
+      {field: 'createdId', header: 'Created Username', width: '150px'},
+      {field: 'assignedId', header: 'Assigned Username', width: '150px'}
     ];
 
     this.statusTypes = [
