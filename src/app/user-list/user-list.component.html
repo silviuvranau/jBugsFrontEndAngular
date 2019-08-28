@@ -79,10 +79,14 @@
 
       <div class="ui-g-12">
         <div class="ui-g-4">
-          <label for="fixedVersion">Status</label>
+          <label for="fixedVersion">Blocked</label>
         </div>
         <div class="ui-g-8">
-          <input pInputText id="fixedVersion" [(ngModel)]="selectedUser.status"/>
+
+          <input type = "checkbox" id="fixedVersion" [(ngModel)]="selectedUser.status" >
+
+
+
         </div>
       </div>
       <div class = "ui-g-12">
