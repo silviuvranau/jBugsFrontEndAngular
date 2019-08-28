@@ -1,11 +1,17 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {BugsService} from './bugs.service';
-import {Bug, BugToShow, Status} from '../models/bug.model';
+import {Bug, BugToShow, Severity, Status} from '../models/bug.model';
 import {SelectItem, SortEvent} from 'primeng/api';
-import {MatDatepickerInputEvent} from '@angular/material';
 import {User} from '../models/user.model';
-import {Table} from 'primeng/table';
-import {DatePipe} from '@angular/common';
+import {Table} from "primeng/table";
+import {DatePipe} from "@angular/common";
+import {NgForm} from "@angular/forms";
+import {ToastrService} from "ngx-toastr";
+import {HttpErrorResponse} from "@angular/common/http";
+import {ExcelBugsService} from './excel-bugs.service';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+
 
 @Component({
   selector: 'app-bugs',
@@ -13,6 +19,8 @@ import {DatePipe} from '@angular/common';
   styleUrls: ['./bugs.component.css']
 })
 export class BugsComponent implements OnInit {
+
+  selectedBugDate = new Date();
 
   displayDialog: boolean;
 
@@ -27,16 +35,26 @@ export class BugsComponent implements OnInit {
 
   username: SelectItem[];
 
+  createdByUsernames: SelectItem[];
+
   cols: any[];
 
-  statusTypes: any[];
+  statusTypes: SelectItem[];
+  severityTypes: SelectItem[];
 
-  severityTypes: any[];
+  transitionsFromStatusNew: SelectItem[];
+  transitionsFromStatusInProgress: SelectItem[];
+  transitionsFromStatusFixed: SelectItem[];
+  tranisitionsFromStatusInfoNeeded: SelectItem[]
+  transitionsFromStatusRejected: SelectItem[];
+  transitionsFromStatusClosed: SelectItem[];
+
+  statusCheck: Status;
 
   @ViewChild('dt', {static: true})
   dt: Table;
 
-  constructor(private bugsService: BugsService, private datePipe: DatePipe) {
+  constructor(private bugsService: BugsService, private datePipe: DatePipe, private toastrService: ToastrService, private excelbugservice: ExcelBugsService) {
   }
 
   ngOnInit() {
@@ -48,7 +66,7 @@ export class BugsComponent implements OnInit {
 
       this.dt.filterConstraints['dateFilter'] = function inCollection(value: any, filter: any): boolean {
         console.log(value);
-        console.log( 'Filter: ' + new DatePipe('en').transform(filter, 'yyyy-MM-dd'));
+        console.log("Filter: " + new DatePipe('en').transform(filter, 'yyyy-MM-dd'));
         if (filter === undefined || filter === null || (filter.length === 0 || filter === "") && value === null) {
           return true;
         }
@@ -60,7 +78,6 @@ export class BugsComponent implements OnInit {
         }
         return false;
       }
-
     });
 
     this.bugsService.getAllUsers().subscribe(obj => {
@@ -99,11 +116,48 @@ export class BugsComponent implements OnInit {
       {label: 'CRITICAL', value: 'CRITICAL'},
     ];
 
+    this.transitionsFromStatusNew = [
+      {label: 'NEW', value: 'NEW'},
+      {label: 'IN_PROGRESS', value: 'IN_PROGRESS'},
+      {label: 'REJECTED', value: 'REJECTED'},
+    ];
+
+    this.transitionsFromStatusInProgress = [
+      {label: 'INFO_NEEDED', value: 'INFO_NEEDED'},
+      {label: 'REJECTED', value: 'REJECTED'},
+      {label: 'FIXED', value: 'FIXED'},
+    ];
+
+    this.transitionsFromStatusFixed = [
+      {label: 'CLOSED', value: 'CLOSED'},
+    ];
+
+    this.tranisitionsFromStatusInfoNeeded = [
+      {label: 'INFO_NEEDED', value: 'INFO_NEEDED'},
+      {label: 'IN_PROGRESS', value: 'IN_PROGRESS'},
+    ];
+
+    this.transitionsFromStatusRejected = [
+      {label: 'REJECTED', value: 'REJECTED'},
+      {label: 'CLOSED', value: 'CLOSED'},
+    ];
+
+    this.transitionsFromStatusClosed = [
+      {label: 'CLOSED', value: 'CLOSED'},
+    ];
   }
 
   createUsernameLabels() {
     for (let i = 0; i < this.users.length; i++) {
       this.username.push({label: this.users[i].username, value: this.users[i].username});
+
+      if (i == 0) {
+        this.createdByUsernames = [
+          {label: this.users[i].username, value: this.users[i].username}
+        ];
+      } else {
+        this.createdByUsernames.push({label: this.users[i].username, value: this.users[i].username});
+      }
     }
   }
 
@@ -148,32 +202,110 @@ export class BugsComponent implements OnInit {
 
   onRowSelect(event) {
     this.bug = this.cloneBug(event.data);
+    this.selectedBugDate = new Date(this.bug.targetDate);
+    console.log(this.bug);
     this.displayDialog = true;
   }
 
   cloneBug(b: BugToShow): BugToShow {
     const bug = Object.assign({}, b);
-    console.log(b);
-    console.log(bug);
     return bug;
   }
 
-  addEvent(change: string, event: MatDatepickerInputEvent<any>) {
-    // this.events.push(`${type}: ${event.value}`);
-    console.log(event.value);
-    console.log(change);
-  }
-
-  checkThings(dt: any, event: any, col: any) {
-    console.log(event.value);
-    console.log();
-    dt.filter(event.value, col, 'equals')
-  }
-
+  // addEvent(change: string, event: MatDatepickerInputEvent<any>) {
+  //   // this.events.push(`${type}: ${event.value}`);
+  //   console.log(event.value);
+  //   console.log(change);
+  // }
+  //
+  // checkThings(dt: any, event: any, col: any) {
+  //   console.log(event.value);
+  //   console.log();
+  //   dt.filter(event.value, col, 'equals')
+  // }
+  //
   consoleLog(event, col) {
     console.log(event);
     console.log(col);
   }
 
+  editBug(editBugForm: NgForm) {
+    let bugToInsert: Bug = {} as Bug;
+    bugToInsert.id = this.bug.id;
+    bugToInsert.title = editBugForm.controls.title.value;
+    bugToInsert.description = editBugForm.controls.description.value;
+    bugToInsert.version = editBugForm.controls.version.value;
+    bugToInsert.targetDate = new DatePipe('en').transform(editBugForm.controls.targetDate.value, 'yyyy-MM-dd');
+    bugToInsert.fixedVersion = editBugForm.controls.fixedVersion.value;
+    bugToInsert.status = editBugForm.controls.status.value;
+    bugToInsert.severity = editBugForm.controls.severity.value;
 
+    let assignedUsername = editBugForm.controls.assignedId.value;
+    let createdUsername = editBugForm.controls.createdId.value;
+    let assignedToUser = this.findUserWithUsername(assignedUsername);
+    let createdByUser = this.findUserWithUsername(createdUsername);
+
+    bugToInsert.createdId = assignedToUser;
+    bugToInsert.assignedId = createdByUser;
+
+    console.log(bugToInsert);
+
+    this.bugsService.editBug(bugToInsert.id, bugToInsert).subscribe(
+      () => {
+        this.toastrService.success("Bug edited successfully");
+      },
+      (error: HttpErrorResponse) => {
+        console.error(error);
+        this.toastrService.error(error.message);
+      }
+    )
+  }
+
+  findUserWithUsername(username: String): User {
+    for (let user of this.users) {
+      if (user.username === username) {
+        return user;
+      }
+    }
+  }
+
+  getTransitionOptions(status: Status) {
+    switch (status) {
+      case Status.NEW: {
+        return this.transitionsFromStatusNew;
+      }
+      case Status.IN_PROGRESS: {
+        return this.transitionsFromStatusInProgress;
+      }
+      case Status.FIXED: {
+        return this.transitionsFromStatusFixed;
+      }
+      case Status.INFO_NEEDED: {
+        return this.tranisitionsFromStatusInfoNeeded;
+      }
+      case Status.REJECTED: {
+        return this.transitionsFromStatusRejected;
+      }
+      case Status.CLOSED: {
+        return this.transitionsFromStatusClosed;
+      }
+    }
+  }
+  exportAsXLSX(): void {
+    this.excelbugservice.exportAsExcelFile(this.bugs, 'bugs');
+  }
+  downloadPdf(bug: BugToShow) {
+    const doc = new jsPDF();
+    const col = ['Title', 'Description', 'Target Date', 'Version', 'Status', 'Fixed Version', 'Severity', 'Createfd By', 'Assigned to'];
+    const rows = [];
+
+    /* The following array of object as response from the API req  */
+    const temp = [bug.title, bug.description, bug.targetDate, bug.version, bug.status, bug.fixedVersion, bug.severity, bug.createdId, bug.assignedId];
+    rows.push(temp);
+
+
+    doc.autoTable(col, rows, { startY: 10 });
+    doc.save('Bug-' + bug.title + '.pdf');
+  }
 }
+

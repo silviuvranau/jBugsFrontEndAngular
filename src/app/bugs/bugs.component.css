@@ -22,3 +22,6 @@ table, th, td {
 .bugPopUpLabels {
   font-weight: bold;
 }
+button{
+  color: green;
+}

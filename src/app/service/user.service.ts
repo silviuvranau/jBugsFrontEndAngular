@@ -17,4 +17,19 @@ export class UserService {
   public insertUser(user: User){
     return this.backendService.post("http://localhost:8080/jbugs/api/users",user);
   }
+
+  public editUser(user: User){
+    return this.backendService.put("http://localhost:8080/jbugs/api/users", user);
+  }
+
+
+
+
+
+  public checkIfCanDeactivate(user: User){
+
+    console.log("tried to post");
+    return this.backendService.post("http://localhost:8080/jbugs/api/bugs/canDeactivateUser", user);
+  }
+
 }
