@@ -43,7 +43,7 @@ export class BugsComponent implements OnInit {
   transitionsFromStatusNew: SelectItem[];
   transitionsFromStatusInProgress: SelectItem[];
   transitionsFromStatusFixed: SelectItem[];
-  tranisitionsFromStatusInfoNeeded: SelectItem[]
+  transitionsFromStatusInfoNeeded: SelectItem[]
   transitionsFromStatusRejected: SelectItem[];
   transitionsFromStatusClosed: SelectItem[];
 
@@ -141,7 +141,7 @@ export class BugsComponent implements OnInit {
       {label: 'CLOSED', value: 'CLOSED'},
     ];
 
-    this.tranisitionsFromStatusInfoNeeded = [
+    this.transitionsFromStatusInfoNeeded = [
       {label: 'INFO_NEEDED', value: 'INFO_NEEDED'},
       {label: 'IN_PROGRESS', value: 'IN_PROGRESS'},
     ];
@@ -160,12 +160,8 @@ export class BugsComponent implements OnInit {
     this.bugsService.getAllBugs().subscribe((obj) => {
       this.bugs = obj;
       this.getBugsToView();
-      //this.checkIfUserHasPermission('BUG_MANAGEMENT');
-      //this.checkIfUserHasPermission('BUG_CLOSE');
-      this.userHasManagementPermission = this.permissionChecker.checkIfUserHasPermission(this.loggedInUser, 'BUG_MANAGEMENT');
-      this.userHasBugClosePermission = this.permissionChecker.checkIfUserHasPermission(this.loggedInUser, 'BUG_CLOSE');
-      console.log("MANAGEMENT PERMISSION", this.userHasManagementPermission);
-      console.log("BUGCLOSE PERMISSION", this.userHasBugClosePermission);
+      this.checkIfUserHasPermission('BUG_MANAGEMENT');
+      this.checkIfUserHasPermission('BUG_CLOSE');
     }, ((error: HttpErrorResponse) => {
       console.error(error);
       this.toastrService.error(error.message);
@@ -263,13 +259,14 @@ export class BugsComponent implements OnInit {
    * @param requiredPermission
    */
   checkIfUserHasPermission(requiredPermission: string) {
-    this.bugsService.checkIfUserHasPermission(this.loggedInUser, requiredPermission).subscribe(
+    this.permissionChecker.checkIfUserHasPermission(this.loggedInUser, requiredPermission).subscribe(
       (obj) => {
         if (requiredPermission === 'BUG_MANAGEMENT') {
           this.userHasManagementPermission = obj;
         } else if (requiredPermission === 'BUG_CLOSE') {
           this.userHasBugClosePermission = obj;
         }
+        //return obj;
       },
       (error: HttpErrorResponse) => {
         console.error(error);
@@ -343,7 +340,7 @@ export class BugsComponent implements OnInit {
         return this.transitionsFromStatusFixed;
       }
       case Status.INFO_NEEDED: {
-        return this.tranisitionsFromStatusInfoNeeded;
+        return this.transitionsFromStatusInfoNeeded;
       }
       case Status.REJECTED: {
         return this.transitionsFromStatusRejected;
