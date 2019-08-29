@@ -162,6 +162,8 @@ export class BugsComponent implements OnInit {
       this.getBugsToView();
       this.checkIfUserHasPermission('BUG_MANAGEMENT');
       this.checkIfUserHasPermission('BUG_CLOSE');
+      console.log("BUG MANAGEMENT ", this.userHasManagementPermission);
+      console.log("BUG CLOSE ", this.userHasBugClosePermission);
     }, ((error: HttpErrorResponse) => {
       console.error(error);
       this.toastrService.error(error.message);
@@ -214,12 +216,28 @@ export class BugsComponent implements OnInit {
    * Maps the backend bug entities to frontend bug entities.
    */
   getBugsToView() {
-    var bugToView = {} as BugToShow;
     this.bugsToView = new Array<BugToShow>();
     for (let i = 0; i < this.bugs.length; i++) {
-      bugToView = new BugToShow(this.bugs[i].id, this.bugs[i].title, this.bugs[i].description, this.bugs[i].version, this.bugs[i].targetDate,
-        this.bugs[i].fixedVersion, this.bugs[i].createdId.username, this.bugs[i].assignedId.username, this.bugs[i].status,
-        this.bugs[i].severity);
+      var bugToView = {} as BugToShow;
+      bugToView.id = this.bugs[i].id;
+      bugToView.title = this.bugs[i].title;
+      bugToView.description = this.bugs[i].description;
+      bugToView.version = this.bugs[i].version;
+      bugToView.targetDate = this.bugs[i].targetDate;
+      bugToView.fixedVersion = this.bugs[i].fixedVersion;
+      bugToView.createdId = this.bugs[i].createdId.username;
+      bugToView.status = this.bugs[i].status;
+      bugToView.severity = this.bugs[i].severity;
+
+      if (this.bugs[i].assignedId === null) {
+        bugToView.assignedId = "";
+      } else {
+        bugToView.assignedId = this.bugs[i].assignedId.username;
+      }
+
+      // bugToView = new BugToShow(this.bugs[i].id, this.bugs[i].title, this.bugs[i].description, this.bugs[i].version, this.bugs[i].targetDate,
+      //   this.bugs[i].fixedVersion, this.bugs[i].createdId.username, this.bugs[i].assignedId.username, this.bugs[i].status,
+      //   this.bugs[i].severity);
       this.bugsToView.push(bugToView);
     }
   }
