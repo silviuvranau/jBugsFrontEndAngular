@@ -235,6 +235,8 @@
     <button class="btn btn-primary" style="margin-top:3%" [hidden]="!userHasManagementPermission"
             [disabled]="editBugForm.invalid">Edit Bug
     </button>
+    <button class="btn btn-primary" style="margin-top:3%" (click)="downloadPdf(popUpBug)">Export as PDF</button>
 
   </form>
 </p-dialog>
+<button (click)="exportAsXLSX()">Export List as Excel</button>
