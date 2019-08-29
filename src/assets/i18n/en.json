@@ -3,18 +3,13 @@
     "TITLE": "LOGIN",
     "SELECT": "Change language"
   },
-
   "LOGIN": {
-
     "USERNAME": "Username",
     "PASSWORD": "Pasword",
     "CAPTCHA": "Enter Code",
     "LOGBUTTON": "Login"
-
   },
-
   "NOTIFICATION": {
-
     "INVALID_CAPTCHA": "Invalid Captcha",
     "INVALID_CREDENTIALS": "Invalid Credentials",
     "LOGIN_SUCCESS": "Login Successful",
@@ -29,38 +24,31 @@
     "INVALIDFIRSTNAME": "*Invalid first name",
     "INVALIDLASTNAME": "*Invalid last name",
     "INVALIDEMAIL": "*Invalid email",
-    "INVALIDMOBILENUMBER": "*Invalid mobile number"
-
-
-
-
+    "INVALIDMOBILENUMBER": "*Invalid mobile number",
+    "USERNAMEREQUIRED": "*Username required",
+    "CAPTCHAREQUIRED": "*Captcha required"
   },
-
   "DASHBOARD": {
     "JBUGS": "JBugs",
     "USERLIST": "User List",
     "CREATEUSER": "Create User",
     "ROLEPERMISSION": "Role Permissions",
     "BUGS": "Bugs",
-    "LOGOUT": "Log out"
+    "LOGOUT": "Log out",
+    "NOT": "Notification"
   },
-
   "USERLIST": {
-
-    "FirstName":"First Name" ,
-    "LastName":"Last Name" ,
+    "FirstName": "First Name",
+    "LastName": "Last Name",
     "Email": "Email",
-    "Mobile":"Mobile" ,
+    "Mobile": "Mobile",
     "Username": "Username",
     "Status": "Status",
     "ACTIVATED": "Activated",
-    "DEACTIVATED":"Deactivated"
-
-
+    "DEACTIVATED": "Deactivated"
   },
-
   "USERDETAILS": {
-    "USERDETAIL":"User details",
+    "USERDETAIL": "User details",
     "FIRSTNAME": "First name",
     "LASTNAME": "Last name",
     "EMAIL": "Email",
@@ -70,13 +58,11 @@
     "BLOCKED": "Blocked",
     "ROLES": "Roles",
     "EDIT": "Edit User",
-    "EMAILSTAR":"*Must be of the form",
-    "EMAILSTAR2":"address@msggroup.com" ,
+    "EMAILSTAR": "*Must be of the form",
+    "EMAILSTAR2": "address@msggroup.com",
     "MOBILESTAR": "*Must be a valid",
-    "MOBILESTAR2":" RO / DE number"
-
+    "MOBILESTAR2": " RO / DE number"
   },
-
   "CREATE": {
     "ADD": "Add a new user",
     "FIRSTNAME": "First Name",
@@ -86,21 +72,36 @@
     "PASSWORD": "Password",
     "ROLES": "Roles",
     "ADDUSER": "Add User"
-
-
   },
-
   "ROLES1": {
-
     "USER_MANAGEMENT": "User Management",
     "BUG_MANAGEMENT": "Bug Management",
     "BUG_CLOSE": "Bug Close",
     "PERMISSION_MANAGEMENT": "Permission Management",
     "BUG_EXPORT_PDF": "Bug Export Pdf"
+  },
 
+  "NOTIFICATIONCOMP": {
+
+    "Type": "Type",
+    "Message": "Message",
+    "Date": "Date",
+    "Url": "Url"
 
 
   },
+
+  "MSG": {
+    "WELCOME_NEW_USER" : "WELCOME_NEW_USER",
+    "USER_UPDATED" :"USER_UPDATED",
+    "USER_DELETED": "USER_DELETED" ,
+    "BUG_UPDATED":"BUG_UPDATED" ,
+    "BUG_STATUS_UPDATED": "BUG_STATUS_UPDATED",
+    "BUG_CLOSED": "BUG_CLOSED",
+    "USER_DEACTIVATED": "USER_DEACTIVATED"
+
+  },
+
   "ROLES2": {
 
     "ADM": "Administrator",

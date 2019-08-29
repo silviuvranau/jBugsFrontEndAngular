@@ -21,9 +21,7 @@
       <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" routerLink="user-list">
           <i class = "pi pi-user"></i>
-
           {{'DASHBOARD.USERLIST' | translate}}
-
         </a>
       </li>
 
@@ -41,11 +39,20 @@
           </a>
       </li>
 
-      <li class="nav-item" routerLinkActive="active">
+      <div *ngIf = "userHasBugManagementPermission === true">
+        <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" routerLink="bugs">
             <i class = "pi pi-exclamation-triangle"></i>
             {{'DASHBOARD.BUGS' | translate}}
           </a>
+      </li>
+      </div>
+
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="notifications">
+          <i class="pi pi-globe"></i>
+          {{'DASHBOARD.NOT' | translate}}
+        </a>
       </li>
     
     </ul>

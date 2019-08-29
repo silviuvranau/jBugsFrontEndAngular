@@ -72,11 +72,7 @@ export class LoginComponent implements OnInit {
     };
 
     if (this.text.toString() !== captcha.value.toString()) {
-
-     // this.toasterService.error("Invalid Captcha");
       this.toasterService.error(this.translateService.instant('NOTIFICATION.INVALID_CAPTCHA'));
-
-
       return;
     }
 
@@ -89,10 +85,7 @@ export class LoginComponent implements OnInit {
           console.log("response is ", response);
 
 
-            //this.toasterService.success("Login Successful");
-
           this.toasterService.success(this.translateService.instant('NOTIFICATION.LOGIN_SUCCESS'));
-
             this.router.navigate(['/dashboard']);
             this.authService.loggedInSetter();
 

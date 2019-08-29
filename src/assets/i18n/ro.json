@@ -28,7 +28,30 @@
     "INVALIDFIRSTNAME": "*Prenume invalid",
     "INVALIDLASTNAME": "*Nume invalid",
     "INVALIDEMAIL": "*Email invalid",
-    "INVALIDMOBILENUMBER": "*Telefon mobil invalid"
+    "INVALIDMOBILENUMBER": "*Telefon mobil invalid",
+    "USERNAMEREQUIRED": "*Utilizator obligatoriu",
+    "CAPTCHAREQUIRED": "*Captcha obligatoriu"
+
+
+  },
+  "MSG": {
+    "WELCOME_NEW_USER" : "BUN VENIT UTILIZATOR NOU",
+    "USER_UPDATED" :"UTILIZATOR ACTUALIZAT",
+    "USER_DELETED": "UTILIZATOR STERS" ,
+    "BUG_UPDATED":"BUG ACTUALIZAT" ,
+    "BUG_STATUS_UPDATED": "BUG STATUS ACTUALIZAT",
+    "BUG_CLOSED": "BUG DEZACTIVAT",
+    "USER_DEACTIVATED": "UTILIZATOR DEZACTIVAT"
+
+  },
+
+
+  "NOTIFICATIONCOMP": {
+
+    "Type": "Tip",
+    "Message": "Mesaj",
+    "Date": "Data",
+    "Url": "Url"
 
 
   },
@@ -39,7 +62,8 @@
     "CREATEUSER": "Creare utilizator",
     "ROLEPERMISSION": "Permisiunea rolului",
     "BUGS": "Bugs",
-    "LOGOUT": "Delogare"
+    "LOGOUT": "Delogare",
+    "NOT": "Notificari"
 
   },
 
@@ -89,7 +113,7 @@
   },
   "ROLES1": {
 
-    "UM": "Gestionare Utilizator",
+    "USER_MANAGEMENT": "Gestionare Utilizator",
     "BUG_MANAGEMENT": "Gestionare Bug",
     "BUG_CLOSE": "Dezactivare Bug",
     "PERMISSION_MANAGEMENT": "Gestionare Permisiuni",

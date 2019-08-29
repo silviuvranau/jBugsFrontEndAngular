@@ -34,7 +34,9 @@
       <div  *ngIf= "username.touched && username.invalid">
 
         <div *ngIf="username.errors.required" style="color: palevioletred">
-          *The field is required
+
+          {{'NOTIFICATION.USERNAMEREQUIRED' | translate}}
+
 
 
         </div>
@@ -56,7 +58,7 @@
         <div *ngIf="password.touched && password.invalid">
 
           <div *ngIf="password.errors.required" style="color: palevioletred">
-            *The field is required
+            {{'NOTIFICATION.PASSWORDREQUIRED' | translate}}
 
 
           </div>
@@ -115,7 +117,9 @@
           <div  *ngIf="captcha.touched && captcha.invalid">
 
             <div *ngIf="captcha.errors.required" style="color: palevioletred">
-              *The field is required
+
+
+                {{'NOTIFICATION.CAPTCHAREQUIRED' | translate}}
 
 
             </div>
@@ -136,7 +140,6 @@
 
     <button  [disabled]="f.invalid"
              class ="btn btn-primary btn-lg"
-
 
     >
       {{'LOGIN.LOGBUTTON' | translate}}

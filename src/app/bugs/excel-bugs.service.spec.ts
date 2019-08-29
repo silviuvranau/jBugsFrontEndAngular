@@ -1,12 +1,12 @@
 import {TestBed} from '@angular/core/testing';
 
-import {ExcelService} from './excel.service';
+import {ExcelBugsService} from './excel-bugs.service';
 
-describe('ExcelService', () => {
+describe('ExcelBugsService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: ExcelService = TestBed.get(ExcelService);
+    const service: ExcelBugsService = TestBed.get(ExcelBugsService);
     expect(service).toBeTruthy();
   });
 });

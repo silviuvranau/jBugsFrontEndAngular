@@ -82,6 +82,7 @@ export class UserListComponent implements OnInit {
     this.selectedUser = this.cloneUser(event.data);
     this.displayDialog = true;
     console.log(this.selectedUser);
+    this.selectedUser.password = '';
     for(let role of this.roles){
       for(let id of this.selectedUser.roleIds)
         if(role.id === id)
@@ -129,6 +130,11 @@ export class UserListComponent implements OnInit {
       return;
     }
 
+    if(this.selectedUser.password === ''){
+      this.toastrService.error("Password cannot be empty");
+      return;
+    }
+
 
 
 
@@ -150,6 +156,24 @@ export class UserListComponent implements OnInit {
           return;
         }
 
+        for(let role of this.roles){
+          if(role.checked){
+            this.selectedUser.roleIds.push(role.id);
+          }
+        }
+
+        this.userService.editUser(this.selectedUser).subscribe(
+          () => {
+            this.toastrService.success(this.translateService.instant('NOTIFICATION.USEREDITSUCCESS'));
+            this.getAllUsers();
+          },
+          (error: HttpErrorResponse) => {
+            console.error(error);
+            this.toastrService.error(error.error);
+          }
+        );
+
+
         /////////restul
 
       },
@@ -161,22 +185,22 @@ export class UserListComponent implements OnInit {
     
 
 
-    for(let role of this.roles){
-      if(role.checked){
-        this.selectedUser.roleIds.push(role.id);
-      }
-    }
-
-    this.userService.editUser(this.selectedUser).subscribe(
-      () => {
-        this.toastrService.success(this.translateService.instant('NOTIFICATION.USEREDITSUCCESS'));
-        this.getAllUsers();
-      },
-      (error: HttpErrorResponse) => {
-        console.error(error);
-        this.toastrService.error(error.error);
-      }
-    );
+    // for(let role of this.roles){
+    //   if(role.checked){
+    //     this.selectedUser.roleIds.push(role.id);
+    //   }
+    // }
+    //
+    // this.userService.editUser(this.selectedUser).subscribe(
+    //   () => {
+    //     this.toastrService.success(this.translateService.instant('NOTIFICATION.USEREDITSUCCESS'));
+    //     this.getAllUsers();
+    //   },
+    //   (error: HttpErrorResponse) => {
+    //     console.error(error);
+    //     this.toastrService.error(error.error);
+    //   }
+    // );
   }
 
 

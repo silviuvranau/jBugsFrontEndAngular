@@ -1,37 +1,45 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
-import {AppRoutingModule} from './app-routing.module';
+import {AppRoutingModule, routes} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {ReadJsonComponent} from './read-json/read-json.component';
 import {HttpClientModule} from '@angular/common/http';
 import {LoginComponent} from './login/login.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {RolesComponent} from './roles/roles.component';
-import {ButtonModule, DialogModule, DropdownModule, CalendarModule, MultiSelectModule} from 'primeng/primeng';
+import {
+  ButtonModule,
+  CalendarModule,
+  CheckboxModule,
+  DialogModule,
+  DropdownModule,
+  MultiSelectModule
+} from 'primeng/primeng';
 import {CardModule} from 'primeng/card';
-import { FormsModule } from '@angular/forms';
-import { ToastrModule } from 'ngx-toastr';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {FormsModule} from '@angular/forms';
+import {ToastrModule} from 'ngx-toastr';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TableModule} from 'primeng/table';
-import {CheckboxModule} from 'primeng/primeng';
-import { UserCreateComponent } from './user-create/user-create.component';
+import {UserCreateComponent} from './user-create/user-create.component';
 import {UserListComponent} from './user-list/user-list.component';
 import {BugsComponent} from './bugs/bugs.component';
 import {BugsService} from './bugs/bugs.service';
 import {RolesService} from './roles/roles.service';
 import {LoginService} from "./service/login.service";
-import {routes} from './app-routing.module';
 import {RouterModule} from "@angular/router";
-import {AuthService} from "./service/auth.serice";
 import {AuthGuardService} from "./guards/auth-guard.service";
 import {ExcelService} from "./user-list/excel.service";
-import { CommonModule, DatePipe } from '@angular/common';
-import { CookieService } from 'ngx-cookie-service';
+import {CommonModule, DatePipe} from '@angular/common';
+import {CookieService} from 'ngx-cookie-service';
 import {MatDatepickerModule} from '@angular/material/datepicker'
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatNativeDateModule } from '@angular/material/core';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatNativeDateModule} from '@angular/material/core';
 import {MatInputModule} from '@angular/material/input';
+import {PermissionCheckerService} from "./utils/permissionCheckerService";
+import {ExcelBugsService} from './bugs/excel-bugs.service';
+import {NotificationListComponent} from "./notification/notification-list/notification-list.component";
+
 
 import {HttpClient} from '@angular/common/http';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
@@ -53,7 +61,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     RolesComponent,
     UserCreateComponent,
     UserListComponent,
-    BugsComponent
+    BugsComponent,
+    NotificationListComponent
   ],
   imports: [
     BrowserModule,
@@ -85,8 +94,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
       }
     })
   ],
-  providers: [BugsService, RolesService, LoginService, AuthGuardService, ExcelService,
-  CookieService, DatePipe],
+  providers: [BugsService, RolesService, LoginService, PermissionCheckerService, AuthGuardService, ExcelService,
+    CookieService, DatePipe, ExcelBugsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
