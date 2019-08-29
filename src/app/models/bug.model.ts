@@ -54,4 +54,6 @@ export class BugToShow {
     this.status = status;
     this.severity = severity;
   }
+
+
 };

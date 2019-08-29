@@ -37,7 +37,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatInputModule} from '@angular/material/input';
 import {PermissionCheckerService} from "./utils/permissionCheckerService";
-import {NotificationListComponent} from './notification/notification-list/notification-list.component';
+import {NotificationListComponent} from "./notification/notification-list/notification-list.component";
 
 @NgModule({
   declarations: [
@@ -75,7 +75,7 @@ import {NotificationListComponent} from './notification/notification-list/notifi
     DropdownModule,
     CalendarModule
   ],
-  providers: [BugsService, RolesService, LoginService, PermissionCheckerService, AuthGuardService, ExcelService,
+  providers: [BugsService, RolesService, PermissionCheckerService, LoginService, AuthGuardService, ExcelService,
   CookieService, DatePipe],
   bootstrap: [AppComponent]
 })
