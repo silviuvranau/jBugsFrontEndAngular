@@ -38,6 +38,7 @@ import {MatNativeDateModule} from '@angular/material/core';
 import {MatInputModule} from '@angular/material/input';
 import {PermissionCheckerService} from "./utils/permissionCheckerService";
 import {NotificationListComponent} from "./notification/notification-list/notification-list.component";
+import {CreateBugComponent} from './create-bug/create-bug.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import {NotificationListComponent} from "./notification/notification-list/notifi
     UserCreateComponent,
     UserListComponent,
     BugsComponent,
-    NotificationListComponent
+    NotificationListComponent,
+    CreateBugComponent
   ],
   imports: [
     BrowserModule,

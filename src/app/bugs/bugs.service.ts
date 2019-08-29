@@ -2,6 +2,7 @@ import {Bug} from '../models/bug.model';
 import {BackendService} from '../core/backend/backend.service';
 import {Observable} from 'rxjs';
 import {User} from '../models/user.model';
+import {BugAttachmentWrapper} from "../models/bugAttachmentWrapper.model";
 
 export class BugsService {
 
@@ -19,5 +20,10 @@ export class BugsService {
 
   editBug(id: number, bug: Bug) {
     return this.backendService.put("http://localhost:8080/jbugs/api/bugs", bug);
+  }
+
+  insertBug(bugAttWrapper: BugAttachmentWrapper) {
+    console.log(bugAttWrapper);
+    return this.backendService.post("http://localhost:8080/jbugs/api/bugs", bugAttWrapper);
   }
 }

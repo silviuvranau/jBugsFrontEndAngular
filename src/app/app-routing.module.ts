@@ -8,6 +8,7 @@ import {UserCreateComponent} from './user-create/user-create.component';
 import {BugsComponent} from './bugs/bugs.component';
 import {AuthGuardService} from "./guards/auth-guard.service";
 import {NotificationListComponent} from './notification/notification-list/notification-list.component';
+import {CreateBugComponent} from "./create-bug/create-bug.component";
 
 
 export const routes: Routes = [
@@ -46,6 +47,10 @@ export const routes: Routes = [
       {
         path: 'notifications',
         component: NotificationListComponent
+      },
+      {
+        path: 'create-bug',
+        component: CreateBugComponent
       }
     ]
   }

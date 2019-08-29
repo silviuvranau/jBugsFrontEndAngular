@@ -1,6 +1,6 @@
-import { Bug } from './bug.model';
+import {Bug} from './bug.model';
 
-export interface Model {
+export interface Attachment {
     id: number;
     attContent: string;
     bug: Bug;

@@ -234,10 +234,6 @@ export class BugsComponent implements OnInit {
       } else {
         bugToView.assignedId = this.bugs[i].assignedId.username;
       }
-
-      // bugToView = new BugToShow(this.bugs[i].id, this.bugs[i].title, this.bugs[i].description, this.bugs[i].version, this.bugs[i].targetDate,
-      //   this.bugs[i].fixedVersion, this.bugs[i].createdId.username, this.bugs[i].assignedId.username, this.bugs[i].status,
-      //   this.bugs[i].severity);
       this.bugsToView.push(bugToView);
     }
   }
