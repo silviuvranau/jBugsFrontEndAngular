@@ -7,6 +7,7 @@ import {RolesComponent} from "./roles/roles.component";
 import {UserCreateComponent} from './user-create/user-create.component';
 import {BugsComponent} from './bugs/bugs.component';
 import {AuthGuardService} from "./guards/auth-guard.service";
+import { NotificationListComponent } from './notification/notification-list/notification-list.component';
 
 
 export const routes: Routes = [
@@ -41,6 +42,10 @@ export const routes: Routes = [
       {
         path: 'bugs',
         component: BugsComponent
+      },
+      {
+        path: 'notifications',
+        component: NotificationListComponent
       }
     ]
   }
