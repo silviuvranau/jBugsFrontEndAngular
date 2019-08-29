@@ -56,7 +56,7 @@ export class UserListComponent implements OnInit {
       },
       (error: HttpErrorResponse) => {
         console.error(error);
-        this.toastrService.error(error.message);
+        this.toastrService.error(error.error);
       }
     );
   }
@@ -167,7 +167,7 @@ export class UserListComponent implements OnInit {
       },
       (error: HttpErrorResponse) => {
         console.error(error);
-        this.toastrService.error(error.message);
+        this.toastrService.error(error.error);
       }
     );
   }

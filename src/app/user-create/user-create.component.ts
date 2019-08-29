@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { Role } from '../models/role.model';
-import { RoleService } from '../service/role.service';
-import { ToastrService } from 'ngx-toastr';
-import { HttpErrorResponse } from '@angular/common/http';
-import { FormGroup, NgForm } from '@angular/forms';
-import { User } from '../models/user.model';
-import { UserService } from '../service/user.service';
+import {Component, OnInit} from '@angular/core';
+import {Role} from '../models/role.model';
+import {RoleService} from '../service/role.service';
+import {ToastrService} from 'ngx-toastr';
+import {HttpErrorResponse} from '@angular/common/http';
+import {NgForm} from '@angular/forms';
+import {User} from '../models/user.model';
+import {UserService} from '../service/user.service';
 
 @Component({
   selector: 'app-user-create',
@@ -19,7 +19,6 @@ export class UserCreateComponent implements OnInit {
   constructor(private roleService: RoleService, private userService: UserService, private toastrService: ToastrService) { }
 
   ngOnInit() {
-    this.toastrService.success("msj");
     this.findAllRoles();
   }
 
@@ -31,7 +30,7 @@ export class UserCreateComponent implements OnInit {
       },
       (error: HttpErrorResponse) => {
         console.error(error);
-        this.toastrService.error(error.message);
+        this.toastrService.error(error.error);
       }
     );
   }
@@ -57,7 +56,7 @@ export class UserCreateComponent implements OnInit {
       },
       (error: HttpErrorResponse) => {
         console.error(error);
-        this.toastrService.error(error.message);
+        this.toastrService.error(error.error);
       }
     );
 

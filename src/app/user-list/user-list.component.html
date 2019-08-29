@@ -71,10 +71,19 @@
 
       <div class="ui-g-12">
         <div class="ui-g-4">
-          <label for="status">Username</label>
+          <label for="username">Username</label>
         </div>
         <div class="ui-g-8">
-          <input pInputText id="status" [(ngModel)]="selectedUser.username" style="width:200px;" disabled/>
+          <input pInputText id="username" [(ngModel)]="selectedUser.username" style="width:200px;" disabled/>
+        </div>
+      </div>
+
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="password">Password</label>
+        </div>
+        <div class="ui-g-8">
+          <input pInputText id="password" [(ngModel)]="selectedUser.password" style="width:200px;" type="password"/>
         </div>
       </div>
 
