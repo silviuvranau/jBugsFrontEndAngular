@@ -10,6 +10,7 @@ import { RoleService } from '../service/role.service';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../service/user.service';
 import {executeBrowserBuilder} from "@angular-devkit/build-angular";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-user-list',
@@ -22,7 +23,7 @@ export class UserListComponent implements OnInit {
 
   constructor(private backendService: BackendService, private excelservice: ExcelService,
             private roleService: RoleService, private toastrService: ToastrService,
-            private userService: UserService) {
+            private userService: UserService, private translateService: TranslateService) {
   }
 
   arrUsers: User[];
@@ -145,7 +146,7 @@ export class UserListComponent implements OnInit {
         console.log("CAN DEACTIVATE: " + canDeactivate);
         if((!canDeactivate) && (this.selectedUser.status === true)) {
           console.log("cannot deactivate");
-          this.toastrService.error("Cannot deactivate user because they have assigned bugs.");
+          this.toastrService.error(this.translateService.instant('NOTIFICATION.ASSIGNEDBUGS'));
           return;
         }
 
@@ -168,7 +169,7 @@ export class UserListComponent implements OnInit {
 
     this.userService.editUser(this.selectedUser).subscribe(
       () => {
-        this.toastrService.success("User edited succesfully");
+        this.toastrService.success(this.translateService.instant('NOTIFICATION.USEREDITSUCCESS'));
         this.getAllUsers();
       },
       (error: HttpErrorResponse) => {

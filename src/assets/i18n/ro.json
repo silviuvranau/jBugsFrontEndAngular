@@ -16,7 +16,19 @@
 
     "INVALID_CAPTCHA": "Captcha nu este valid",
     "INVALID_CREDENTIALS": "Credentialele nu sunt valide",
-    "LOGIN_SUCCESS": "Autentificare cu succes"
+    "LOGIN_SUCCESS": "Autentificare cu succes",
+    "USEREDITSUCCESS": "Utilizator editat cu succes",
+    "ASSIGNEDBUGS": "Nu se poate dezactiva utlizator(are bugs asignati lui)",
+    "USERCREATESUCCESS": "Utilizator creat cu succes,",
+    "FIRSTNAMEREQUIRED": "*Prenume obligatoriu",
+    "LASTNAMEREQUIRED": "*Nume obligatoriu",
+    "EMAILREQUIRED": "*Email obligatoriu",
+    "MOBILENUMBERREQUIRED": "*Telefon mobil obligatoriu",
+    "PASSWORDREQUIRED": "*Parola obligatoriu",
+    "INVALIDFIRSTNAME": "*Prenume invalid",
+    "INVALIDLASTNAME": "*Nume invalid",
+    "INVALIDEMAIL": "*Email invalid",
+    "INVALIDMOBILENUMBER": "*Telefon mobil invalid"
 
 
   },

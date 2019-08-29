@@ -52,7 +52,7 @@ export class UserCreateComponent implements OnInit {
 
     this.userService.insertUser(userToInsert).subscribe(
       () => {
-        this.toastrService.success("User created succesfully");
+        this.toastrService.success(this.translateService.instant('NOTIFICATION.USERCREATESUCCESS'));
       },
       (error: HttpErrorResponse) => {
         console.error(error);

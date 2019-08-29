@@ -17,7 +17,21 @@
 
     "INVALID_CAPTCHA": "Invalid Captcha",
     "INVALID_CREDENTIALS": "Invalid Credentials",
-    "LOGIN_SUCCESS": "Login Successful"
+    "LOGIN_SUCCESS": "Login Successful",
+    "USEREDITSUCCESS": "User successfully edited ",
+    "ASSIGNEDBUGS": "Can not deactivate user because he has assigned bugs",
+    "USERCREATESUCCESS": "User successfully created",
+    "FIRSTNAMEREQUIRED": "*First name is required",
+    "LASTNAMEREQUIRED": "*Last name is required",
+    "EMAILREQUIRED": "*Email is required",
+    "MOBILENUMBERREQUIRED": "*Mobile number is required",
+    "PASSWORDREQUIRED": "*Password is required",
+    "INVALIDFIRSTNAME": "*Invalid first name",
+    "INVALIDLASTNAME": "*Invalid last name",
+    "INVALIDEMAIL": "*Invalid email",
+    "INVALIDMOBILENUMBER": "*Invalid mobile number"
+
+
 
 
   },
