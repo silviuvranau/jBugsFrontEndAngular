@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, Input} from '@angular/core';
 import {BugsService} from './bugs.service';
 import {Bug, BugToShow, Severity, Status} from '../models/bug.model';
 import {SelectItem, SortEvent} from 'primeng/api';
@@ -13,6 +13,7 @@ import {PermissionCheckerService} from '../utils/permissionCheckerService';
 import {ExcelBugsService} from './excel-bugs.service';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-bugs',
@@ -20,6 +21,9 @@ import 'jspdf-autotable';
   styleUrls: ['./bugs.component.css']
 })
 export class BugsComponent implements OnInit {
+
+  @Input()
+  selectedBugId: number;
 
   displayBugPopUp: boolean;
   loggedInUser: string;
@@ -54,7 +58,7 @@ export class BugsComponent implements OnInit {
   dt: Table;
 
   constructor(private bugsService: BugsService, private permissionChecker: PermissionCheckerService, private datePipe: DatePipe, private toastrService: ToastrService,
-              private cookieService: CookieService, private excelbugservice: ExcelBugsService) {
+              private cookieService: CookieService, private excelbugservice: ExcelBugsService, private route: ActivatedRoute) {
   }
 
   ngOnInit() {
@@ -157,6 +161,40 @@ export class BugsComponent implements OnInit {
     this.transitionsFromStatusClosed = [
       {label: 'CLOSED', value: 'CLOSED'},
     ];
+
+    this.route.queryParams.subscribe(params => {
+      this.selectedBugId = +params['bugId'];
+  });
+
+    if(this.selectedBugId !== undefined){
+      let bug: Bug;
+      this.getBugById(this.selectedBugId);
+      console.log("BUG" + this.openedBug);
+    }
+
+
+  }
+
+  openedBug: Bug;
+  
+
+  getBugById(id: number) {
+    // let result: Bug;
+    this.bugsService.getABug(id).toPromise().then(
+      (res: Bug) =>
+      {
+        console.log(res);
+        this.openedBug = res;
+        this.popUpBug = this.bugToBugToShow(this.openedBug);
+        this.displayBugPopUp = true;
+      },
+      (error) =>
+      {
+        console.log(error.error);
+      }
+    )
+    // console.log("RESULT"+result);
+    // return result;
   }
 
   initializeData() {
@@ -193,6 +231,7 @@ export class BugsComponent implements OnInit {
    * @param event
    */
   onRowSelect(event) {
+    // console.log(event);
     this.checkStatusType(this.selectedBug.status);
     this.popUpBug = this.cloneBug(event.data);
     this.selectedBugDate = new Date(this.popUpBug.targetDate);
@@ -213,6 +252,27 @@ export class BugsComponent implements OnInit {
   cloneBug(b: BugToShow): BugToShow {
     const bug = Object.assign({}, b);
     return bug;
+  }
+
+  bugToBugToShow(bug: Bug): BugToShow{
+    const bugToView = {} as BugToShow;
+    bugToView.id = bug.id;
+    bugToView.title = bug.title;
+    bugToView.description = bug.description;
+    bugToView.version = bug.version;
+    bugToView.targetDate = bug.targetDate;
+    bugToView.fixedVersion = bug.fixedVersion;
+    bugToView.createdId = bug.createdId.username;
+    bugToView.status = bug.status;
+    bugToView.severity = bug.severity;
+
+    if (bug.assignedId === null) {
+      bugToView.assignedId = '';
+    } else {
+      bugToView.assignedId = bug.assignedId.username;
+    }
+
+    return bugToView;
   }
 
   /**
