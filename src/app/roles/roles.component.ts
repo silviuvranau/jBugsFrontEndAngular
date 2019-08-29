@@ -19,6 +19,7 @@ export class RolesComponent implements OnInit {
   permissions: Permission[];
   rolePermission: RolePermission;
   loggedInUser: string;
+  isDisabled = false;
 
   constructor(private toastrService: ToastrService, private roleService: RolesService, private cookieService: CookieService, private permissionChecker: PermissionCheckerService) {
   }
@@ -37,6 +38,8 @@ export class RolesComponent implements OnInit {
     });
 
     this.loggedInUser = this.cookieService.get('username');
+
+    this.checkIfUserHasPermission();
   }
 
   public checkIfRoleHasPermission(perm: Permission, permissions: Permission[]) {
@@ -67,15 +70,12 @@ export class RolesComponent implements OnInit {
    * to check whether the current user has the given permission.
    * @param requiredPermission
    */
-  checkIfUserHasPermission(requiredPermission: string) {
-    this.permissionChecker.checkIfUserHasPermission(this.loggedInUser, requiredPermission).subscribe(
+  checkIfUserHasPermission() {
+    this.permissionChecker.checkIfUserHasPermission(this.loggedInUser, 'PERMISSION_MANAGEMENT').subscribe(
       (obj) => {
-        if (requiredPermission === 'PERMISSION_MANAGEMENT') {
-          this.userHasManagementPermission = obj;
-        } else if (requiredPermission === 'BUG_CLOSE') {
-          this.userHasBugClosePermission = obj;
-        }
-        // return obj;
+        this.isDisabled = obj;
+        console.log(this.isDisabled);
+        console.log(this.loggedInUser);
       },
       (error: HttpErrorResponse) => {
         console.error(error);
