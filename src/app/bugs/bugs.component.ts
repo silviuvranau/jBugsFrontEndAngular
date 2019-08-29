@@ -11,9 +11,10 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {CookieService} from 'ngx-cookie-service';
 import {PermissionCheckerService} from '../utils/permissionCheckerService';
 import {ExcelBugsService} from './excel-bugs.service';
-import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import {TranslateService} from "@ngx-translate/core";
+
+declare let jsPDF;
 
 @Component({
   selector: 'app-bugs',
