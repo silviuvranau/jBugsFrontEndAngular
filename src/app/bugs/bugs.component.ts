@@ -11,7 +11,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {CookieService} from 'ngx-cookie-service';
 import {PermissionCheckerService} from '../utils/permissionCheckerService';
 import {ExcelBugsService} from './excel-bugs.service';
-import * as jsPDF from 'jspdf'
+declare let jsPDF;
 import 'jspdf-autotable';
 import {TranslateService} from "@ngx-translate/core";
 

@@ -52,7 +52,7 @@
       </td>
       <td class="checkBoxColumn" *ngFor="let per of permissions" >
         <p-checkbox [ngModel]="checkIfRoleHasPermission(per, role.permissions)" binary="true"
-                    (onChange)="onCheckboxClick(per, role)"></p-checkbox>
+                    (onChange)="onCheckboxClick(per, role)" [disabled]="!isDisabled"></p-checkbox>
       </td>
     </tr>
   </ng-template>
