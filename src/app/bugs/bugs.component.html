@@ -34,7 +34,11 @@
                     (onSelect)="dt.filter($event, col.field, 'dateFilter')"></p-calendar>
 
         <p-dropdown  [style]="{'width':'90px'}" *ngSwitchCase="'status'" [options]="statusTypes"
-                    (onChange)="dt.filter($event.value, col.field, 'equals')"  ></p-dropdown>
+                    (onChange)="dt.filter($event.value, col.field, 'equals')"  >
+
+
+
+        </p-dropdown>
 
         <input *ngSwitchCase="'fixedVersion'" pInputText type="text"
                (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" [ngStyle]="{'width':'50px'}">
@@ -73,7 +77,7 @@
 </p-table>
 
 
-<p-dialog header="Bug Details" [(visible)]="displayDialog" [responsive]="true" [modal]="true"
+<p-dialog header="{{'BDETAIL.DET' | translate}}" [(visible)]="displayDialog" [responsive]="true" [modal]="true"
           [style]="{width: '1000px', height: '1100px'}">
   <form #editBugForm="ngForm" (ngSubmit)=editBug(editBugForm)>
 
@@ -81,7 +85,7 @@
 
       <div class="ui-g-12">
         <div class="ui-g-4">
-          <label for="title">Title</label>
+          <label for="title">{{'BDETAILS.TITLE' | translate}}</label>
         </div>
         <div class="ui-g-8">
           <input pInputText
@@ -106,7 +110,7 @@
 
       <div class="ui-g-12">
         <div class="ui-g-4">
-          <label for="description">Description</label>
+          <label for="description">{{'BDETAILS.DESC' | translate}}</label>
         </div>
         <div class="ui-g-8">
           <textarea required
@@ -131,7 +135,7 @@
 
       <div class="ui-g-12">
         <div class="ui-g-4">
-          <label for="version">Version</label>
+          <label for="version">{{'BDETAILS.VERSION' | translate}}</label>
         </div>
         <div class="ui-g-8">
           <input pInputText
@@ -156,7 +160,7 @@
 
       <div class="ui-g-12">
         <div class="ui-g-4">
-          <label for="targetDate">Target Date</label>
+          <label for="targetDate">{{'BDETAILS.TARGETDATE' | translate}}</label>
         </div>
         <div class="ui-g-8">
           <p-calendar ngModel name="targetDate" id="targetDate" #targetDate="ngModel" [style]="{'width': '300px'}"
@@ -166,7 +170,7 @@
 
       <div class="ui-g-12">
         <div class="ui-g-4">
-          <label for="status">Status</label>
+          <label for="status">{{'BDETAILS.STATUS' | translate}}</label>
         </div>
         <div class="ui-g-8">
           <p-dropdown id="status" name="status" [options]="getTransitionOptions(bug.status)"
@@ -176,7 +180,7 @@
 
       <div class="ui-g-12">
         <div class="ui-g-4">
-          <label for="fixedVersion">Fixed Version</label>
+          <label for="fixedVersion">{{'BDETAILS.FXVERSION' | translate}}</label>
         </div>
         <div class="ui-g-8">
           <input pInputText
@@ -201,7 +205,7 @@
 
       <div class="ui-g-12">
         <div class="ui-g-4">
-          <label for="severity">Severity</label>
+          <label for="severity">{{'BDETAILS.SEVERITY' | translate}}</label>
         </div>
         <div class="ui-g-8">
           <p-dropdown id="severity" name="severity" [options]="severityTypes" [(ngModel)]="bug.severity"></p-dropdown>
@@ -210,7 +214,7 @@
 
       <div class="ui-g-12">
         <div class="ui-g-4">
-          <label for="createdId">Created by</label>
+          <label for="createdId">{{'BDETAILS.CREATEDBY' | translate}}</label>
         </div>
         <div class="ui-g-8">
           <input pInputText id="createdId" name="createdId" [disabled]="true" [(ngModel)]="bug.createdId"/>
@@ -219,7 +223,7 @@
 
       <div class="ui-g-12">
         <div class="ui-g-4">
-          <label for="assignedId">Assigned to</label>
+          <label for="assignedId">{{'BDETAILS.ASSIGNEDTO' | translate}}</label>
         </div>
         <div class="ui-g-8">
           <p-dropdown id="assignedId" name="assignedId" [options]="createdByUsernames"
@@ -228,7 +232,7 @@
       </div>
   </div>
 
-    <button class="btn btn-primary" style="margin-top:3%" [disabled]="editBugForm.invalid">Edit Bug</button>
+    <button class="btn btn-primary" style="margin-top:3%" [disabled]="editBugForm.invalid">{{'BDETAILS.BTNEDIT' | translate}}</button>
 
   </form>
 </p-dialog>

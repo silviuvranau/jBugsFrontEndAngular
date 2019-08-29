@@ -109,7 +109,34 @@
     "Assigned Username": "Utilizator Asignat"
 
 
+  },
+  "STATUS":{
+
+    "NEW": "NOU",
+    "IN_PROGRESS": "IN_PROCES",
+    "FIXED": "REPARAT",
+    "CLOSED": "INCHIS",
+    "REJECTED": "RESPINS",
+    "INFO_NEEDED": "INFO_NECESARE"
+
+  },
+
+  "BDETAILS": {
+    "DET": "Detalii bug",
+    "TITLE":"Titlu",
+    "DESC": "Descriere",
+    "VERSION": "Versiune",
+    "TARGETDATE": "Data marcata",
+    "STATUS": "Status",
+    "FXVERSION": "Versiune Stabila",
+    "SEVERITY": "Severitate",
+    "CREATEDBY": "Creat de",
+    "ASSIGNEDTO": "Asignat lui",
+    "BTNEDIT": "Editare bug"
+
+
   }
+
 
 
 }

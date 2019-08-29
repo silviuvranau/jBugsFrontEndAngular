@@ -111,6 +111,33 @@
     "Assigned Username": "Assigned Username"
 
 
+  },
+
+
+  "STATUS":{
+
+    "NEW": "NEW",
+    "IN_PROGRESS": "IN_PROGRESS",
+    "FIXED": "FIXED",
+    "CLOSED": "CLOSED",
+    "REJECTED": "REJECTED",
+    "INFO_NEEDED": "INFO_NEEDED"
+
+  },
+  "BDETAILS": {
+    "DET": "Bug Details",
+    "TITLE":"Title",
+    "DESC": "Description",
+    "VERSION": "Version",
+    "TARGETDATE": "Target Date",
+    "STATUS": "Status",
+    "FXVERSION": "Fixed Version",
+    "SEVERITY": "Severity",
+    "CREATEDBY": "Created by",
+    "ASSIGNEDTO": "Assigned to",
+    "BTNEDIT": "Edit bug"
+
+
   }
 
 

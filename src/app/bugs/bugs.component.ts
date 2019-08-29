@@ -8,6 +8,7 @@ import {DatePipe} from "@angular/common";
 import {NgForm} from "@angular/forms";
 import {ToastrService} from "ngx-toastr";
 import {HttpErrorResponse} from "@angular/common/http";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-bugs',
@@ -50,7 +51,7 @@ export class BugsComponent implements OnInit {
   @ViewChild('dt', {static: true})
   dt: Table;
 
-  constructor(private bugsService: BugsService, private datePipe: DatePipe, private toastrService: ToastrService) {
+  constructor(private bugsService: BugsService, private datePipe: DatePipe, private toastrService: ToastrService, private translateService: TranslateService) {
   }
 
   ngOnInit() {
