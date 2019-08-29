@@ -33,34 +33,29 @@
                     *ngSwitchCase="'targetDate'" [defaultDate]="" [readonlyInput]="false" dateFormat="yy-MM-dd"
                     (onSelect)="dt.filter($event, col.field, 'dateFilter')"></p-calendar>
 
-        <p-dropdown *ngSwitchCase="'status'" [options]="statusTypes"
-                    (onChange)="dt.filter($event.value, col.field, 'equals')"></p-dropdown>
+        <p-multiSelect *ngSwitchCase="'status'" [options]="statusTypes" defaultLabel="All Types"
+                       (onChange)="dt.filter($event.value, col.field, 'in')"></p-multiSelect>
 
         <input *ngSwitchCase="'fixedVersion'" pInputText type="text"
                (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" [ngStyle]="{'width':'50px'}">
 
-        <p-dropdown *ngSwitchCase="'severity'" [options]="severityTypes"
+        <p-multiSelect *ngSwitchCase="'severity'" [options]="severityTypes" defaultLabel="All Types"
+                       (onChange)="dt.filter($event.value, col.field, 'in')"></p-multiSelect>
+
+        <p-dropdown *ngSwitchCase="'createdId'" [options]="usernamesForFilter"
                     (onChange)="dt.filter($event.value, col.field, 'equals')"></p-dropdown>
 
-        <p-dropdown *ngSwitchCase="'createdId'" [options]="username"
+        <p-dropdown *ngSwitchCase="'assignedId'" [options]="usernamesForFilter"
                     (onChange)="dt.filter($event.value, col.field, 'equals')"></p-dropdown>
-
-        <p-dropdown *ngSwitchCase="'assignedId'" [options]="username"
-                    (onChange)="dt.filter($event.value, col.field, 'equals')"></p-dropdown>
-
       </th>
-
-
     </tr>
-
   </ng-template>
+
 
   <ng-template pTemplate="body" let-rowData let-bugsToView>
     <tr [pSelectableRow]="rowData">
       <td>{{bugsToView.title}}</td>
-
       <td><textarea>{{bugsToView.description}}</textarea></td>
-
       <td>{{bugsToView.version}}</td>
       <td>{{bugsToView.targetDate | date:'yyyy-MM-dd'}}</td>
       <td>{{bugsToView.status}}</td>
@@ -73,11 +68,11 @@
 </p-table>
 
 
-<p-dialog header="Bug Details" [(visible)]="displayDialog" [responsive]="true" [modal]="true"
+<p-dialog header="Bug Details" [(visible)]="displayBugPopUp" [responsive]="true" [modal]="true"
           [style]="{width: '1000px', height: '1100px'}">
   <form #editBugForm="ngForm" (ngSubmit)=editBug(editBugForm)>
 
-    <div class="ui-g ui-fluid" *ngIf="bug">
+    <div class="ui-g ui-fluid" *ngIf="popUpBug">
 
       <div class="ui-g-12">
         <div class="ui-g-4">
@@ -91,7 +86,8 @@
                  name="title"
                  class="form-control"
                  #title="ngModel"
-                 [(ngModel)]="bug.title"
+                 [disabled]="!userHasManagementPermission"
+                 [(ngModel)]="popUpBug.title"
           />
           <div *ngIf="title.touched && title.invalid">
             <div *ngIf="title.errors.required" style="color:red">
@@ -116,7 +112,8 @@
                     class="form-control"
                     #description="ngModel"
                     rows="5" cols="50"
-                    [(ngModel)]="bug.description">
+                    [disabled]="!userHasManagementPermission"
+                    [(ngModel)]="popUpBug.description">
           </textarea>
           <div *ngIf="description.touched && description.invalid">
             <div *ngIf="description.errors.required" style="color:red">
@@ -141,7 +138,8 @@
                  name="version"
                  class="form-control"
                  #version="ngModel"
-                 [(ngModel)]="bug.version"
+                 [disabled]="!userHasManagementPermission"
+                 [(ngModel)]="popUpBug.version"
           />
           <div *ngIf="version.touched && version.invalid">
             <div *ngIf="version.errors.required" style="color:red">
@@ -160,6 +158,7 @@
         </div>
         <div class="ui-g-8">
           <p-calendar ngModel name="targetDate" id="targetDate" #targetDate="ngModel" [style]="{'width': '300px'}"
+                      [disabled]="!userHasManagementPermission"
                       [(ngModel)]="selectedBugDate" dateFormat="yy-MM-dd"></p-calendar>
         </div>
       </div>
@@ -169,8 +168,13 @@
           <label for="status">Status</label>
         </div>
         <div class="ui-g-8">
-          <p-dropdown id="status" name="status" [options]="getTransitionOptions(bug.status)"
-                      [(ngModel)]="bug.status"></p-dropdown>
+          <p-dropdown id="status" name="status" [options]="getTransitionOptions(popUpBug.status)"
+                      [disabled]="((
+                      !((userHasBugClosePermission && !userHasManagementPermission) && (isStatusFixed || isStatusRejected)) &&
+                      !((!userHasBugClosePermission && userHasManagementPermission) && !(isStatusFixed || isStatusRejected)) ) &&
+                      !(userHasBugClosePermission && userHasManagementPermission)
+                      )"
+                      [(ngModel)]="popUpBug.status"></p-dropdown>
         </div>
       </div>
 
@@ -186,12 +190,10 @@
                  name="fixedVersion"
                  class="form-control"
                  #fixedVersion="ngModel"
-                 [(ngModel)]="bug.fixedVersion"
+                 [disabled]="!userHasManagementPermission"
+                 [(ngModel)]="popUpBug.fixedVersion"
           />
           <div *ngIf="fixedVersion.touched && fixedVersion.invalid">
-            <!--            <div *ngIf = "fixedVersion.errors.required" style = "color:red">-->
-            <!--              *Version is required.-->
-            <!--            </div>-->
             <div *ngIf="fixedVersion.errors.pattern" style="color:red">
               *Invalid version. Versions must be of the form '1.1.1'
             </div>
@@ -204,7 +206,8 @@
           <label for="severity">Severity</label>
         </div>
         <div class="ui-g-8">
-          <p-dropdown id="severity" name="severity" [options]="severityTypes" [(ngModel)]="bug.severity"></p-dropdown>
+          <p-dropdown id="severity" name="severity" [options]="severityTypes" [(ngModel)]="popUpBug.severity"
+                      [disabled]="!userHasManagementPermission"></p-dropdown>
         </div>
       </div>
 
@@ -213,7 +216,7 @@
           <label for="createdId">Created by</label>
         </div>
         <div class="ui-g-8">
-          <input pInputText id="createdId" name="createdId" [disabled]="true" [(ngModel)]="bug.createdId"/>
+          <input pInputText id="createdId" name="createdId" [disabled]="true" [(ngModel)]="popUpBug.createdId"/>
         </div>
       </div>
 
@@ -222,17 +225,18 @@
           <label for="assignedId">Assigned to</label>
         </div>
         <div class="ui-g-8">
-          <p-dropdown id="assignedId" name="assignedId" [options]="createdByUsernames"
-                      [(ngModel)]="bug.assignedId"></p-dropdown>
+          <p-dropdown id="assignedId" name="assignedId" [options]="createdByUsernamesForDropDown"
+                      [disabled]="!userHasManagementPermission"
+                      [(ngModel)]="popUpBug.assignedId"></p-dropdown>
         </div>
       </div>
   </div>
 
-    <button class="btn btn-primary" style="margin-top:3%" [disabled]="editBugForm.invalid">Edit Bug</button>
-    <div>
-    <button class="btn btn-primary" style="margin-top:3%" (click)="downloadPdf(bug)" >Export as PDF</button>
-    </div>
+    <button class="btn btn-primary" style="margin-top:3%" [hidden]="!userHasManagementPermission"
+            [disabled]="editBugForm.invalid">Edit Bug
+    </button>
+    <button class="btn btn-primary" style="margin-top:3%" (click)="downloadPdf(popUpBug)" >Export as PDF</button>
 
   </form>
 </p-dialog>
-<button (click)="exportAsXLSX()">Export as Excel List</button>
+<button (click)="exportAsXLSX()">Export List as Excel</button>

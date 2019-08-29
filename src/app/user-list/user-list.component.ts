@@ -3,7 +3,7 @@ import {BackendService} from '../core/backend/backend.service';
 import {User} from '../models/user.model';
 import {Bug} from '../models/bug.model';
 import {ExcelService} from './excel.service';
-//import jsPDF from 'jspdf';
+import jsPDF from 'jspdf';
 import { Role } from '../models/role.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { RoleService } from '../service/role.service';
