@@ -13,6 +13,7 @@ import {PermissionCheckerService} from '../utils/permissionCheckerService';
 import {ExcelBugsService} from './excel-bugs.service';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-bugs',
@@ -54,7 +55,7 @@ export class BugsComponent implements OnInit {
   dt: Table;
 
   constructor(private bugsService: BugsService, private permissionChecker: PermissionCheckerService, private datePipe: DatePipe, private toastrService: ToastrService,
-              private cookieService: CookieService, private excelbugservice: ExcelBugsService) {
+              private cookieService: CookieService, private excelbugservice: ExcelBugsService, private translateService: TranslateService) {
   }
 
   ngOnInit() {
@@ -93,12 +94,12 @@ export class BugsComponent implements OnInit {
       {field: 'title', header: 'Title', width: '120px'},
       {field: 'description', header: 'Description', width: '200px'},
       {field: 'version', header: 'Version', width: '70px'},
-      {field: 'targetDate', header: 'Target Date', width: '300px'},
-      {field: 'status', header: 'Status', width: '200px'},
+      {field: 'targetDate', header: 'Target Date', width: '173px'},
+      {field: 'status', header: 'Status', width: '100px'},
       {field: 'fixedVersion', header: 'Fixed Version', width: '70px'},
-      {field: 'severity', header: 'Severity', width: '200px'},
-      {field: 'createdId', header: 'Created Username', width: '200px'},
-      {field: 'assignedId', header: 'Assigned Username', width: '200px'}
+      {field: 'severity', header: 'Severity', width: '150px'},
+      {field: 'createdId', header: 'Created Username', width: '150px'},
+      {field: 'assignedId', header: 'Assigned Username', width: '150px'}
     ];
 
 
@@ -169,7 +170,7 @@ export class BugsComponent implements OnInit {
       console.log('BUG CLOSE ', this.userHasBugClosePermission);
     }, ((error: HttpErrorResponse) => {
       console.error(error);
-      this.toastrService.error(error.message);
+      this.toastrService.error(error.error);
     }));
   }
 
