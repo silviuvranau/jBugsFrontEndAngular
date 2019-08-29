@@ -73,7 +73,7 @@ export class BugsComponent implements OnInit {
      * @param value
      * @param filter
      */
-    this.dt.filterConstraints.dateFilter = function inCollection(value: any, filter: any): boolean {
+    this.dt.filterConstraints['dateFilter'] = function inCollection(value: any, filter: any): boolean {
       if (filter === undefined || filter === null || (filter.length === 0 || filter === '') && value === null) {
         return true;
       }
