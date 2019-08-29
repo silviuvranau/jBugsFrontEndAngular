@@ -33,7 +33,7 @@ export class DashboardComponent implements OnInit {
   checkIfUserHasBugManagementPermission() {
     this.permissionChecker.checkIfUserHasPermission(this.loggedInUser, 'BUG_MANAGEMENT').subscribe(
       (obj) => {
-        this.userHasBugManagementPermission = obj;
+        this.userHasBugManagementPermission = JSON.parse(obj);
       },
       (error: HttpErrorResponse) => {
         console.error(error);

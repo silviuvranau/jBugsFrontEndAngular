@@ -39,12 +39,14 @@
       </a>
     </li>
 
-    <li class="nav-item" routerLinkActive="active">
-      <a class="nav-link" routerLink="bugs">
-        <i class="pi pi-exclamation-triangle"></i>
-        Bugs
-      </a>
-    </li>
+    <div *ngIf = "userHasBugManagementPermission === true">
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="bugs">
+          <i class="pi pi-exclamation-triangle"></i>
+          Bugs
+        </a>
+      </li>
+    </div>
 
     <li class="nav-item" routerLinkActive="active">
       <a class="nav-link" routerLink="notifications">
