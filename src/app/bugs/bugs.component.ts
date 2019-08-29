@@ -3,13 +3,13 @@ import {BugsService} from './bugs.service';
 import {Bug, BugToShow, Severity, Status} from '../models/bug.model';
 import {SelectItem, SortEvent} from 'primeng/api';
 import {User} from '../models/user.model';
-import {Table} from "primeng/table";
-import {DatePipe} from "@angular/common";
-import {NgForm} from "@angular/forms";
-import {ToastrService} from "ngx-toastr";
-import {HttpErrorResponse} from "@angular/common/http";
-import {CookieService} from "ngx-cookie-service";
-import {PermissionCheckerService} from "../utils/permissionCheckerService";
+import {Table} from 'primeng/table';
+import {DatePipe} from '@angular/common';
+import {NgForm} from '@angular/forms';
+import {ToastrService} from 'ngx-toastr';
+import {HttpErrorResponse} from '@angular/common/http';
+import {CookieService} from 'ngx-cookie-service';
+import {PermissionCheckerService} from '../utils/permissionCheckerService';
 import {ExcelBugsService} from './excel-bugs.service';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
@@ -46,7 +46,7 @@ export class BugsComponent implements OnInit {
   transitionsFromStatusNew: SelectItem[];
   transitionsFromStatusInProgress: SelectItem[];
   transitionsFromStatusFixed: SelectItem[];
-  transitionsFromStatusInfoNeeded: SelectItem[]
+  transitionsFromStatusInfoNeeded: SelectItem[];
   transitionsFromStatusRejected: SelectItem[];
   transitionsFromStatusClosed: SelectItem[];
 
@@ -58,7 +58,7 @@ export class BugsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loggedInUser = this.cookieService.get("username");
+    this.loggedInUser = this.cookieService.get('username');
     this.initializeData();
     this.bugsService.getAllUsers().subscribe(obj => {
       this.users = obj;
@@ -74,7 +74,7 @@ export class BugsComponent implements OnInit {
      * @param filter
      */
     this.dt.filterConstraints['dateFilter'] = function inCollection(value: any, filter: any): boolean {
-      if (filter === undefined || filter === null || (filter.length === 0 || filter === "") && value === null) {
+      if (filter === undefined || filter === null || (filter.length === 0 || filter === '') && value === null) {
         return true;
       }
       if (value === undefined || value === null || value.length === 0) {
@@ -84,7 +84,7 @@ export class BugsComponent implements OnInit {
         return true;
       }
       return false;
-    }
+    };
 
     /**
      * Initialize column header names.
@@ -165,20 +165,20 @@ export class BugsComponent implements OnInit {
       this.getBugsToView();
       this.checkIfUserHasPermission('BUG_MANAGEMENT');
       this.checkIfUserHasPermission('BUG_CLOSE');
-      console.log("BUG MANAGEMENT ", this.userHasManagementPermission);
-      console.log("BUG CLOSE ", this.userHasBugClosePermission);
+      console.log('BUG MANAGEMENT ', this.userHasManagementPermission);
+      console.log('BUG CLOSE ', this.userHasBugClosePermission);
     }, ((error: HttpErrorResponse) => {
       console.error(error);
       this.toastrService.error(error.message);
-    }))
-  };
+    }));
+  }
 
   /**
    * Adds the usernames of users for the filter and edit bug functionality.
    */
   createUsernameLabels() {
     this.createdByUsernamesForDropDown = [
-      {label: "No one", value: null}
+      {label: 'No one', value: null}
     ];
     for (let i = 0; i < this.users.length; i++) {
       this.usernamesForFilter.push({label: this.users[i].username, value: this.users[i].username});
@@ -221,7 +221,7 @@ export class BugsComponent implements OnInit {
   getBugsToView() {
     this.bugsToView = new Array<BugToShow>();
     for (let i = 0; i < this.bugs.length; i++) {
-      var bugToView = {} as BugToShow;
+      const bugToView = {} as BugToShow;
       bugToView.id = this.bugs[i].id;
       bugToView.title = this.bugs[i].title;
       bugToView.description = this.bugs[i].description;
@@ -233,7 +233,7 @@ export class BugsComponent implements OnInit {
       bugToView.severity = this.bugs[i].severity;
 
       if (this.bugs[i].assignedId === null) {
-        bugToView.assignedId = "";
+        bugToView.assignedId = '';
       } else {
         bugToView.assignedId = this.bugs[i].assignedId.username;
       }
@@ -287,7 +287,7 @@ export class BugsComponent implements OnInit {
         } else if (requiredPermission === 'BUG_CLOSE') {
           this.userHasBugClosePermission = obj;
         }
-        //return obj;
+        // return obj;
       },
       (error: HttpErrorResponse) => {
         console.error(error);
@@ -303,7 +303,7 @@ export class BugsComponent implements OnInit {
    * @param editBugForm
    */
   editBug(editBugForm: NgForm) {
-    let bugToInsert: Bug = {} as Bug;
+    const bugToInsert: Bug = {} as Bug;
     bugToInsert.id = this.popUpBug.id;
     bugToInsert.title = editBugForm.controls.title.value;
     bugToInsert.description = editBugForm.controls.description.value;
@@ -313,11 +313,11 @@ export class BugsComponent implements OnInit {
     bugToInsert.status = editBugForm.controls.status.value;
     bugToInsert.severity = editBugForm.controls.severity.value;
 
-    //User-entities will be assigned to the created bug entity given the
-    //username selected in the user-interface
-    let createdUsername = editBugForm.controls.createdId.value;
-    let createdByUser = this.findUserWithUsername(createdUsername);
-    let assignedUsername = editBugForm.controls.assignedId.value;
+    // User-entities will be assigned to the created bug entity given the
+    // username selected in the user-interface
+    const createdUsername = editBugForm.controls.createdId.value;
+    const createdByUser = this.findUserWithUsername(createdUsername);
+    const assignedUsername = editBugForm.controls.assignedId.value;
     let assignedToUser = {} as User;
     if (assignedUsername != null) {
       assignedToUser = this.findUserWithUsername(assignedUsername);
@@ -331,18 +331,18 @@ export class BugsComponent implements OnInit {
     this.bugsService.editBug(bugToInsert.id, bugToInsert).subscribe(
       () => {
         this.initializeData();
-        this.toastrService.success("Bug edited successfully");
+        this.toastrService.success('Bug edited successfully');
 
       },
       (error: HttpErrorResponse) => {
         console.error(error);
         this.toastrService.error(error.message);
       }
-    )
+    );
   }
 
   findUserWithUsername(username: String): User {
-    for (let user of this.users) {
+    for (const user of this.users) {
       if (user.username === username) {
         return user;
       }
@@ -371,11 +371,9 @@ export class BugsComponent implements OnInit {
       }
     }
   }
-
   exportAsXLSX(): void {
     this.excelbugservice.exportAsExcelFile(this.bugs, 'bugs');
   }
-
   downloadPdf(bug: BugToShow) {
     const doc = new jsPDF();
     const col = ['Title', 'Description', 'Target Date', 'Version', 'Status', 'Fixed Version', 'Severity', 'Createfd By', 'Assigned to'];
