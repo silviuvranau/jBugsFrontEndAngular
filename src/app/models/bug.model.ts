@@ -1,10 +1,10 @@
 import {User} from './user.model';
 
 export enum Severity {
-    LOW,
-    MEDIUM,
-    HIGH,
-    CRITICAL
+  LOW = 'LOW',
+  MEDIUM = 'MEDIUM',
+  HIGH = 'HIGH',
+  CRITICAL = 'CRITICAL'
 }
 
 export enum Status {

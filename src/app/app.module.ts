@@ -36,6 +36,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker'
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatInputModule} from '@angular/material/input';
+import {PermissionCheckerService} from "./utils/permissionCheckerService";
 
 @NgModule({
   declarations: [
@@ -72,7 +73,7 @@ import {MatInputModule} from '@angular/material/input';
     DropdownModule,
     CalendarModule
   ],
-  providers: [BugsService, RolesService, LoginService, AuthGuardService, ExcelService,
+  providers: [BugsService, RolesService, LoginService, PermissionCheckerService, AuthGuardService, ExcelService,
     CookieService, DatePipe],
   bootstrap: [AppComponent]
 })
