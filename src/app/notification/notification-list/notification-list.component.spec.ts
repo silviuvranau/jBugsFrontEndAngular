@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { NotificationListComponent } from './notification-list.component';
+import {NotificationListComponent} from './notification-list.component';
 
 describe('NotificationListComponent', () => {
   let component: NotificationListComponent;
@@ -8,9 +8,9 @@ describe('NotificationListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NotificationListComponent ]
+      declarations: [NotificationListComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

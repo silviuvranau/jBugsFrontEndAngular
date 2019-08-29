@@ -2,9 +2,10 @@
 <div style="text-align:left;width:500px;">
 
 
-  <p-table  id="user_table" [columns]="cols" [value]="arrUsers"  [paginator]="true" [rows]="5" (onRowSelect)="onRowSelect($event)"
-           selectionMode="single" [(selection)]="selectedUser" [style]="{width: '100%' }" >
-    <ng-template pTemplate="header" let-columns >
+  <p-table id="user_table" [columns]="cols" [value]="arrUsers" [paginator]="true" [rows]="5"
+           (onRowSelect)="onRowSelect($event)"
+           selectionMode="single" [(selection)]="selectedUser" [style]="{width: '100%' }">
+    <ng-template pTemplate="header" let-columns>
       <tr>
         <th *ngFor="let col of cols" [pSortableColumn]="col.field" pResizableColumn pReorderableColumn [ngStyle]="{'width': col.width}">
           {{col.header}}
@@ -30,10 +31,10 @@
         </div>
         <div class="ui-g-8">
           <input pInputText
-           id="firstName"
-           [(ngModel)]="selectedUser.firstName"
-           style = "width:200px;"
-           pattern = "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$"/>
+                 id="firstName"
+                 [(ngModel)]="selectedUser.firstName"
+                 style="width:200px;"
+                 pattern="^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$"/>
         </div>
       </div>
 
@@ -42,7 +43,7 @@
           <label for="description">Last Name</label>
         </div>
         <div class="ui-g-8">
-          <input pInputText id="description" [(ngModel)]="selectedUser.lastName" style = "width:200px;"/>
+          <input pInputText id="description" [(ngModel)]="selectedUser.lastName" style="width:200px;"/>
         </div>
       </div>
 
@@ -51,7 +52,7 @@
           <label for="version">Email</label>
         </div>
         <div class="ui-g-8">
-          <input pInputText id="version" [(ngModel)]="selectedUser.email" style = "width:200px;"/>
+          <input pInputText id="version" [(ngModel)]="selectedUser.email" style="width:200px;"/>
           <br>
           *Must be of the form <br> address@msggroup.com
         </div>
@@ -62,7 +63,7 @@
           <label for="targetDate">Mobile Number</label>
         </div>
         <div class="ui-g-8">
-          <input pInputText id="targetDate" [(ngModel)]="selectedUser.mobileNumber" style = "width:200px;"/>
+          <input pInputText id="targetDate" [(ngModel)]="selectedUser.mobileNumber" style="width:200px;"/>
           <br>
           *Must be a valid <br> RO / DE number
         </div>
@@ -73,7 +74,7 @@
           <label for="username">Username</label>
         </div>
         <div class="ui-g-8">
-          <input pInputText id="username" [(ngModel)]="selectedUser.username" style = "width:200px;" disabled/>
+          <input pInputText id="username" [(ngModel)]="selectedUser.username" style="width:200px;" disabled/>
         </div>
       </div>
 
@@ -82,7 +83,7 @@
           <label for="password">Password</label>
         </div>
         <div class="ui-g-8">
-          <input pInputText id="password" [(ngModel)]="selectedUser.password" style = "width:200px;" type = "password"/>
+          <input pInputText id="password" [(ngModel)]="selectedUser.password" style="width:200px;" type="password"/>
         </div>
       </div>
 
@@ -92,40 +93,39 @@
         </div>
         <div class="ui-g-8">
 
-          <input type = "checkbox" id="fixedVersion" [(ngModel)]="selectedUser.status" >
-
+          <input type="checkbox" id="fixedVersion" [(ngModel)]="selectedUser.status">
 
 
         </div>
       </div>
-      <div class = "ui-g-12">
-          <div class = "ui-g-4">
-            Roles
-          </div>
-      </div>
-      <div class = "ui-g-12">
-          <div *ngFor = "let role of roles" class = "checkbox" class = "ui-g-2">
-              <label>
-                  <input type = "checkbox"
-                  [(ngModel)] = "role.checked"
-                  name = "role"
-                  id = "role{{role.id}}"
-                  [value] = "role.id">
-                  {{role.type}}
-              </label>
-          </div>
-      </div>
-      <div class = "ui-g-12">
-        <div class = "ui-g-4">
-          <button class = "btn btn-primary" style = "margin-top:3%" (click) = "onEditClick()">Edit User</button>
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          Roles
         </div>
       </div>
-      
+      <div class="ui-g-12">
+        <div *ngFor="let role of roles" class="checkbox" class="ui-g-2">
+          <label>
+            <input type="checkbox"
+                   [(ngModel)]="role.checked"
+                   name="role"
+                   id="role{{role.id}}"
+                   [value]="role.id">
+            {{role.type}}
+          </label>
+        </div>
+      </div>
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <button class="btn btn-primary" style="margin-top:3%" (click)="onEditClick()">Edit User</button>
+        </div>
+      </div>
+
     </div>
   </p-dialog>
   <div></div>
-  <button (click)="exportAsXLSX()"><i class="fa fa-file-excel-o" style="font-size:20px;color:green">Export List As Excel</i></button>
-  <button (click)="downloadPdf()">Export as PDF</button>
+  <button (click)="exportAsXLSX()"><i class="fa fa-file-excel-o" style="font-size:20px;color:green">Export List As
+    Excel</i></button>
   <div></div>
 
 </div>

@@ -1,15 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {BackendService} from '../core/backend/backend.service';
 import {User} from '../models/user.model';
-import {Bug} from '../models/bug.model';
 import {ExcelService} from './excel.service';
-//import jsPDF from 'jspdf';
-import { Role } from '../models/role.model';
-import { HttpErrorResponse } from '@angular/common/http';
-import { RoleService } from '../service/role.service';
-import { ToastrService } from 'ngx-toastr';
-import { UserService } from '../service/user.service';
-import {executeBrowserBuilder} from "@angular-devkit/build-angular";
+import {Role} from '../models/role.model';
+import {HttpErrorResponse} from '@angular/common/http';
+import {RoleService} from '../service/role.service';
+import {ToastrService} from 'ngx-toastr';
+import {UserService} from '../service/user.service';
 
 @Component({
   selector: 'app-user-list',
@@ -21,8 +18,8 @@ export class UserListComponent implements OnInit {
   title = 'JSON to Table Example';
 
   constructor(private backendService: BackendService, private excelservice: ExcelService,
-            private roleService: RoleService, private toastrService: ToastrService,
-            private userService: UserService) {
+              private roleService: RoleService, private toastrService: ToastrService,
+              private userService: UserService) {
   }
 
   arrUsers: User[];
@@ -50,7 +47,7 @@ export class UserListComponent implements OnInit {
 
   }
 
-  findAllRoles(){
+  findAllRoles() {
     this.roleService.getAllRoles().subscribe(
       (roles: Role[]) => {
         this.roles = roles;
@@ -81,9 +78,9 @@ export class UserListComponent implements OnInit {
     this.selectedUser = this.cloneUser(event.data);
     this.displayDialog = true;
     console.log(this.selectedUser);
-    for(let role of this.roles){
-      for(let id of this.selectedUser.roleIds)
-        if(role.id === id)
+    for (let role of this.roles) {
+      for (let id of this.selectedUser.roleIds)
+        if (role.id === id)
           role.checked = true;
     }
   }
@@ -102,48 +99,45 @@ export class UserListComponent implements OnInit {
     // doc.save('a4.pdf');
   }
 
-  onEditClick(){
+  onEditClick() {
     this.selectedUser.roleIds = [];
 
     let nameRegex = new RegExp("^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$");
-    if(!nameRegex.test(this.selectedUser.firstName)){
+    if (!nameRegex.test(this.selectedUser.firstName)) {
       this.toastrService.error("Invalid first name.");
       return;
     }
 
-    if(!nameRegex.test(this.selectedUser.lastName)){
+    if (!nameRegex.test(this.selectedUser.lastName)) {
       this.toastrService.error("Invalid last name.")
       return;
     }
 
     let emailRegex = new RegExp("^[a-zA-Z0-9_.+-]+@msggroup\.com$");
-    if(!emailRegex.test(this.selectedUser.email)){
+    if (!emailRegex.test(this.selectedUser.email)) {
       this.toastrService.error("Invalid email.")
       return;
     }
-    
+
     let mobileRegex = new RegExp("^(\\+4[0][7][0-9]{8})|(\\(?\\+\\(?49\\)?[ ()]?([- ()]?\\d[- ()]?){10}){1}$");
-    if(!mobileRegex.test(this.selectedUser.mobileNumber)){
+    if (!mobileRegex.test(this.selectedUser.mobileNumber)) {
       this.toastrService.error("Invalid mobile number")
       return;
     }
-
-
-
 
 
     //////////////////CHECK FOR IF ONE CAN DEACTIVATE A USER/////////////////////////////
 
     let canDeactivate: boolean;
     this.userService.checkIfCanDeactivate(this.selectedUser).toPromise().then(response => {
-        if(response.toString() === "true")
+        if (response.toString() === "true")
           canDeactivate = true;
         else
           canDeactivate = false;
 
         console.log("STATUS:" + this.selectedUser.status);
         console.log("CAN DEACTIVATE: " + canDeactivate);
-        if((!canDeactivate) && (this.selectedUser.status === true)) {
+        if ((!canDeactivate) && (this.selectedUser.status === true)) {
           console.log("cannot deactivate");
           this.toastrService.error("Cannot deactivate user because they have assigned bugs.");
           return;
@@ -157,11 +151,10 @@ export class UserListComponent implements OnInit {
         this.toastrService.error(error.message);
       });
 ////////////////////////////////////////////////////////////////////////////////////////////////
-    
 
 
-    for(let role of this.roles){
-      if(role.checked){
+    for (let role of this.roles) {
+      if (role.checked) {
         this.selectedUser.roleIds.push(role.id);
       }
     }

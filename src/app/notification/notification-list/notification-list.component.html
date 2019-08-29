@@ -1,19 +1,20 @@
-<p-table  id="user_table" [columns]="cols" [value]="notifications"  [paginator]="true" [rows]="10"
- (onRowSelect)="onRowSelect($event)"
-selectionMode="single" [(selection)]="selectedNotification" [style]="{width: '100%' }" >
-    <ng-template pTemplate="header" let-columns >
-        <tr>
-            <th *ngFor="let col of cols" [pSortableColumn]="col.field" pResizableColumn pReorderableColumn [ngStyle]="{'width': col.width}">
-            {{col.header}}
-                <p-sortIcon [field]="col.field"></p-sortIcon>
-            </th>
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-rowData let-columns="columns">
-        <tr [pSelectableRow]="rowData">
-            <td *ngFor="let col of cols">
-            {{rowData[col.field]}}
-            </td>
-        </tr>
-    </ng-template>
+<p-table id="user_table" [columns]="cols" [value]="notifications" [paginator]="true" [rows]="10"
+         (onRowSelect)="onRowSelect($event)"
+         selectionMode="single" [(selection)]="selectedNotification" [style]="{width: '100%' }">
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th *ngFor="let col of cols" [pSortableColumn]="col.field" pResizableColumn pReorderableColumn
+          [ngStyle]="{'width': col.width}">
+        {{col.header}}
+        <p-sortIcon [field]="col.field"></p-sortIcon>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+    <tr [pSelectableRow]="rowData">
+      <td *ngFor="let col of cols">
+        {{rowData[col.field]}}
+      </td>
+    </tr>
+  </ng-template>
 </p-table>

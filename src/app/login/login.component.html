@@ -5,10 +5,10 @@
 <script src="bootstrap-auto-dismiss-alert.js"></script>
 
 <body>
-<form #f = 'ngForm' (ngSubmit) = 'login(username,password,captcha)' [style.background-image]="'url(' ++ ')'"  >
+<form #f='ngForm' (ngSubmit)='login(username,password,captcha)' [style.background-image]="'url(' ++ ')'">
 
 
-  <h2 align="center" >LOGIN</h2>
+  <h2 align="center">LOGIN</h2>
   <div class="padd">
     <div class = "form-group input-group-lg">
 
@@ -31,7 +31,7 @@
       >
 
 
-      <div  *ngIf= "username.touched && username.invalid">
+      <div *ngIf="username.touched && username.invalid">
 
         <div *ngIf="username.errors.required" style="color: palevioletred">
           *The field is required
@@ -86,11 +86,11 @@
         </label>
 
         <div >
-          <label  >{{text}}</label>
+          <label>{{text}}</label>
 
         </div>
 
-        <div   >
+        <div>
 
 
           <input
@@ -107,10 +107,7 @@
           >
 
 
-
-
-
-          <div  *ngIf="captcha.touched && captcha.invalid">
+          <div *ngIf="captcha.touched && captcha.invalid">
 
             <div *ngIf="captcha.errors.required" style="color: palevioletred">
               *The field is required

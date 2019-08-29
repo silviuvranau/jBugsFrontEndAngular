@@ -24,6 +24,7 @@ export class DashboardComponent implements OnInit {
     this.loggedInUser = this.cookieService.get("username");
     this.checkIfUserHasBugManagementPermission();
   }
+
   logout() {
     console.log('You ve been logout');
     this.router.navigate(['/login']);

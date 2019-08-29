@@ -3,6 +3,7 @@ import {Role} from '../models/role.model';
 import {Permission} from '../models/permission.model';
 import {RolesService} from './roles.service';
 import {RolePermission} from './role.permission';
+import {CookieService} from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-roles',
@@ -15,7 +16,7 @@ export class RolesComponent implements OnInit {
   permissions: Permission[];
   rolePermission: RolePermission;
 
-  constructor(private roleService: RolesService) {
+  constructor(private roleService: RolesService, private cookieService: CookieService) {
   }
 
   ngOnInit() {
@@ -53,6 +54,10 @@ export class RolesComponent implements OnInit {
     this.roleService.sendData(this.rolePermission).subscribe((data: {}) => {
       console.log(data);
     });
+  }
+
+  isCheckboxDisabled() {
+
   }
 
 }
