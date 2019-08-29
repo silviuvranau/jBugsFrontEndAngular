@@ -20,7 +20,7 @@ export class NotificationListComponent implements OnInit {
     this.cols = [
       {field: 'type', header: 'Type', width: '90px'},
       {field: 'message', header: 'Message', width: '120px'},
-      {field: 'date', header: 'Message', width: '120px'},
+      {field: 'date', header: 'Date', width: '120px'},
       {field: 'url', header: 'Url', width: '270px'}
     ];
 
