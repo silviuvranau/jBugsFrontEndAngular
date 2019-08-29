@@ -9,6 +9,7 @@ import {NgForm} from "@angular/forms";
 import {ToastrService} from "ngx-toastr";
 import {HttpErrorResponse} from "@angular/common/http";
 import {CookieService} from "ngx-cookie-service";
+import {PermissionCheckerService} from "../utils/permissionCheckerService";
 
 @Component({
   selector: 'app-bugs',
@@ -42,14 +43,14 @@ export class BugsComponent implements OnInit {
   transitionsFromStatusNew: SelectItem[];
   transitionsFromStatusInProgress: SelectItem[];
   transitionsFromStatusFixed: SelectItem[];
-  tranisitionsFromStatusInfoNeeded: SelectItem[]
+  transitionsFromStatusInfoNeeded: SelectItem[]
   transitionsFromStatusRejected: SelectItem[];
   transitionsFromStatusClosed: SelectItem[];
 
   @ViewChild('dt', {static: true})
   dt: Table;
 
-  constructor(private bugsService: BugsService, private datePipe: DatePipe, private toastrService: ToastrService,
+  constructor(private bugsService: BugsService, private permissionChecker: PermissionCheckerService, private datePipe: DatePipe, private toastrService: ToastrService,
               private cookieService: CookieService) {
   }
 
@@ -140,7 +141,7 @@ export class BugsComponent implements OnInit {
       {label: 'CLOSED', value: 'CLOSED'},
     ];
 
-    this.tranisitionsFromStatusInfoNeeded = [
+    this.transitionsFromStatusInfoNeeded = [
       {label: 'INFO_NEEDED', value: 'INFO_NEEDED'},
       {label: 'IN_PROGRESS', value: 'IN_PROGRESS'},
     ];
@@ -258,13 +259,14 @@ export class BugsComponent implements OnInit {
    * @param requiredPermission
    */
   checkIfUserHasPermission(requiredPermission: string) {
-    this.bugsService.checkIfUserHasPermission(this.loggedInUser, requiredPermission).subscribe(
+    this.permissionChecker.checkIfUserHasPermission(this.loggedInUser, requiredPermission).subscribe(
       (obj) => {
         if (requiredPermission === 'BUG_MANAGEMENT') {
           this.userHasManagementPermission = obj;
         } else if (requiredPermission === 'BUG_CLOSE') {
           this.userHasBugClosePermission = obj;
         }
+        //return obj;
       },
       (error: HttpErrorResponse) => {
         console.error(error);
@@ -338,7 +340,7 @@ export class BugsComponent implements OnInit {
         return this.transitionsFromStatusFixed;
       }
       case Status.INFO_NEEDED: {
-        return this.tranisitionsFromStatusInfoNeeded;
+        return this.transitionsFromStatusInfoNeeded;
       }
       case Status.REJECTED: {
         return this.transitionsFromStatusRejected;
