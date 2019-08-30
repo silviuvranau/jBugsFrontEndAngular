@@ -11,10 +11,10 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {CookieService} from 'ngx-cookie-service';
 import {PermissionCheckerService} from '../utils/permissionCheckerService';
 import {ExcelBugsService} from './excel-bugs.service';
-import 'jspdf-autotable';
 import {TranslateService} from "@ngx-translate/core";
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
-declare let jsPDF;
 
 @Component({
   selector: 'app-bugs',
@@ -27,6 +27,7 @@ export class BugsComponent implements OnInit {
   loggedInUser: string;
   userHasManagementPermission: boolean;
   userHasBugClosePermission: boolean;
+  userHasExportPermission: boolean;
   isStatusFixed: boolean;
   isStatusRejected: boolean;
 
@@ -167,6 +168,7 @@ export class BugsComponent implements OnInit {
       this.getBugsToView();
       this.checkIfUserHasPermission('BUG_MANAGEMENT');
       this.checkIfUserHasPermission('BUG_CLOSE');
+      this.checkIfUserHasPermission('BUG_EXPORT_PDF');
       console.log('BUG MANAGEMENT ', this.userHasManagementPermission);
       console.log('BUG CLOSE ', this.userHasBugClosePermission);
     }, ((error: HttpErrorResponse) => {
@@ -284,6 +286,8 @@ export class BugsComponent implements OnInit {
           this.userHasManagementPermission = obj;
         } else if (requiredPermission === 'BUG_CLOSE') {
           this.userHasBugClosePermission = obj;
+        } else if (requiredPermission === 'BUG_EXPORT_PDF') {
+          this.userHasExportPermission = obj;
         }
         // return obj;
       },

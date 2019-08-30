@@ -237,15 +237,16 @@
       </div>
   </div>
 
-
-
     <button class="btn btn-primary" style="margin-top:3%" [disabled]="editBugForm.invalid"
             [hidden]="!userHasManagementPermission"
             [disabled]="editBugForm.invalid"
     >{{'BDETAILS.BTNEDIT' | translate}}
     </button>
-    <button class="btn btn-primary" style="margin-top:3%" (click)="downloadPdf(popUpBug)">Export as PDF</button>
+
+    <button class="btn btn-primary" type="button" style="margin-top:3%; margin-left:3px"
+            [hidden]="!userHasExportPermission" (click)="downloadPdf(popUpBug)">Export as PDF
+    </button>
 
   </form>
 </p-dialog>
-<button (click)="exportAsXLSX()">Export List as Excel</button>
+<button class="btn btn-primary" style="margin-top:3%" (click)="exportAsXLSX()">Export List as Excel</button>

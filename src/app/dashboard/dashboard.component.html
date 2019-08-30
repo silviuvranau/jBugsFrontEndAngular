@@ -48,11 +48,14 @@
       </li>
       </div>
 
-      <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" routerLink="create-bug">
-          Create Bug
-        </a>
-      </li>
+      <div *ngIf="userHasBugManagementPermission === true">
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" routerLink="create-bug">
+            <i class="pi pi-plus"></i>
+            Create Bug
+          </a>
+        </li>
+      </div>
 
       <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" routerLink="notifications">
