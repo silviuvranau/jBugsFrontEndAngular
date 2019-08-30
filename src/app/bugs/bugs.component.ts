@@ -12,8 +12,9 @@ import {CookieService} from 'ngx-cookie-service';
 import {PermissionCheckerService} from '../utils/permissionCheckerService';
 import {ExcelBugsService} from './excel-bugs.service';
 import {TranslateService} from "@ngx-translate/core";
-import jsPDF from 'jspdf';
+// import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import * as jsPDF from 'jspdf'
 
 
 @Component({
@@ -386,7 +387,15 @@ export class BugsComponent implements OnInit {
     rows.push(temp);
 
 
-    doc.autoTable(col, rows, {startY: 10});
+    doc.autoTable(col, rows, {
+      startY: 10,
+      styles: {
+        cellWidth: 'wrap'
+      },
+      columnStyles: {
+        1: {columnWidth: 'auto'}
+      }
+    });
     doc.save('Bug-' + bug.title + '.pdf');
   }
 }
