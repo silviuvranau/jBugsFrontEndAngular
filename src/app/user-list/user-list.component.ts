@@ -9,8 +9,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { RoleService } from '../service/role.service';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../service/user.service';
-import {executeBrowserBuilder} from "@angular-devkit/build-angular";
-import {TranslateService} from "@ngx-translate/core";
+import {executeBrowserBuilder} from '@angular-devkit/build-angular';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-user-list',
