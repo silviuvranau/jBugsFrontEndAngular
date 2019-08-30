@@ -5,16 +5,22 @@
     <tr>
       <th *ngFor="let col of cols" [pSortableColumn]="col.field" pResizableColumn pReorderableColumn
           [ngStyle]="{'width': col.width}">
-        {{col.header}}
+        {{'NOTIFICATIONCOMP.'+ col.header | translate}}
         <p-sortIcon [field]="col.field"></p-sortIcon>
       </th>
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-rowData let-columns="columns">
+  <ng-template pTemplate="body" let-rowData let-selectedNotification>
     <tr [pSelectableRow]="rowData">
-      <td *ngFor="let col of cols">
-        {{rowData[col.field]}}
-      </td>
+
+
+
+      <td>{{"MSG." + selectedNotification.type | translate}}</td>
+      <td>{{selectedNotification.message}}</td>
+      <td>{{selectedNotification.date}}</td>
+      <td>{{selectedNotification.url}}</td>
+<!--        {{rowData[col.field]}}-->
+
     </tr>
   </ng-template>
 </p-table>

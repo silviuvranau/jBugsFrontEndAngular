@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, Input} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {BugsService} from './bugs.service';
 import {Bug, BugToShow, Severity, Status} from '../models/bug.model';
 import {SelectItem, SortEvent} from 'primeng/api';
@@ -11,10 +11,11 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {CookieService} from 'ngx-cookie-service';
 import {PermissionCheckerService} from '../utils/permissionCheckerService';
 import {ExcelBugsService} from './excel-bugs.service';
-import jsPDF from 'jspdf';
+import {TranslateService} from "@ngx-translate/core";
+// import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import { ActivatedRoute } from '@angular/router';
-import { SendNotificationsService } from '../service/send-notifications.service';
+
 
 @Component({
   selector: 'app-bugs',
@@ -23,15 +24,14 @@ import { SendNotificationsService } from '../service/send-notifications.service'
 })
 export class BugsComponent implements OnInit {
 
-  @Input()
-  selectedBugId: number;
-
   displayBugPopUp: boolean;
   loggedInUser: string;
   userHasManagementPermission: boolean;
   userHasBugClosePermission: boolean;
+  userHasExportPermission: boolean;
   isStatusFixed: boolean;
   isStatusRejected: boolean;
+  selectedBugId: number;
 
   users: User[];
   bugs: Bug[];
@@ -59,8 +59,8 @@ export class BugsComponent implements OnInit {
   dt: Table;
 
   constructor(private bugsService: BugsService, private permissionChecker: PermissionCheckerService, private datePipe: DatePipe, private toastrService: ToastrService,
-              private cookieService: CookieService, private excelbugservice: ExcelBugsService, private route: ActivatedRoute,
-              private sendNotificationService: SendNotificationsService) {
+              private cookieService: CookieService, private excelbugservice: ExcelBugsService, private translateService: TranslateService,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit() {
@@ -99,12 +99,12 @@ export class BugsComponent implements OnInit {
       {field: 'title', header: 'Title', width: '120px'},
       {field: 'description', header: 'Description', width: '200px'},
       {field: 'version', header: 'Version', width: '70px'},
-      {field: 'targetDate', header: 'Target Date', width: '300px'},
-      {field: 'status', header: 'Status', width: '200px'},
+      {field: 'targetDate', header: 'Target Date', width: '173px'},
+      {field: 'status', header: 'Status', width: '100px'},
       {field: 'fixedVersion', header: 'Fixed Version', width: '70px'},
-      {field: 'severity', header: 'Severity', width: '200px'},
-      {field: 'createdId', header: 'Created Username', width: '200px'},
-      {field: 'assignedId', header: 'Assigned Username', width: '200px'}
+      {field: 'severity', header: 'Severity', width: '150px'},
+      {field: 'createdId', header: 'Created Username', width: '150px'},
+      {field: 'assignedId', header: 'Assigned Username', width: '150px'}
     ];
 
 
@@ -166,19 +166,16 @@ export class BugsComponent implements OnInit {
 
     this.route.queryParams.subscribe(params => {
       this.selectedBugId = +params['bugId'];
-  });
+    });
 
     if(this.selectedBugId !== undefined){
       let bug: Bug;
       this.getBugById(this.selectedBugId);
       console.log("BUG" + this.openedBug);
     }
-
-
   }
 
   openedBug: Bug;
-  
 
   getBugById(id: number) {
     // let result: Bug;
@@ -195,11 +192,29 @@ export class BugsComponent implements OnInit {
         console.log(error.error);
       }
     )
-    // console.log("RESULT"+result);
-    // return result;
-    // this.sendMsg();
   }
 
+  
+  bugToBugToShow(bug: Bug): BugToShow{
+    const bugToView = {} as BugToShow;
+    bugToView.id = bug.id;
+    bugToView.title = bug.title;
+    bugToView.description = bug.description;
+    bugToView.version = bug.version;
+    bugToView.targetDate = bug.targetDate;
+    bugToView.fixedVersion = bug.fixedVersion;
+    bugToView.createdId = bug.createdId.username;
+    bugToView.status = bug.status;
+    bugToView.severity = bug.severity;
+
+    if (bug.assignedId === null) {
+      bugToView.assignedId = '';
+    } else {
+      bugToView.assignedId = bug.assignedId.username;
+    }
+
+    return bugToView;
+  }
 
   initializeData() {
     this.bugsService.getAllBugs().subscribe((obj) => {
@@ -207,11 +222,12 @@ export class BugsComponent implements OnInit {
       this.getBugsToView();
       this.checkIfUserHasPermission('BUG_MANAGEMENT');
       this.checkIfUserHasPermission('BUG_CLOSE');
+      this.checkIfUserHasPermission('BUG_EXPORT_PDF');
       console.log('BUG MANAGEMENT ', this.userHasManagementPermission);
       console.log('BUG CLOSE ', this.userHasBugClosePermission);
     }, ((error: HttpErrorResponse) => {
       console.error(error);
-      this.toastrService.error(error.message);
+      this.toastrService.error(error.error);
     }));
   }
 
@@ -235,7 +251,6 @@ export class BugsComponent implements OnInit {
    * @param event
    */
   onRowSelect(event) {
-    // console.log(event);
     this.checkStatusType(this.selectedBug.status);
     this.popUpBug = this.cloneBug(event.data);
     this.selectedBugDate = new Date(this.popUpBug.targetDate);
@@ -256,27 +271,6 @@ export class BugsComponent implements OnInit {
   cloneBug(b: BugToShow): BugToShow {
     const bug = Object.assign({}, b);
     return bug;
-  }
-
-  bugToBugToShow(bug: Bug): BugToShow{
-    const bugToView = {} as BugToShow;
-    bugToView.id = bug.id;
-    bugToView.title = bug.title;
-    bugToView.description = bug.description;
-    bugToView.version = bug.version;
-    bugToView.targetDate = bug.targetDate;
-    bugToView.fixedVersion = bug.fixedVersion;
-    bugToView.createdId = bug.createdId.username;
-    bugToView.status = bug.status;
-    bugToView.severity = bug.severity;
-
-    if (bug.assignedId === null) {
-      bugToView.assignedId = '';
-    } else {
-      bugToView.assignedId = bug.assignedId.username;
-    }
-
-    return bugToView;
   }
 
   /**
@@ -301,10 +295,6 @@ export class BugsComponent implements OnInit {
       } else {
         bugToView.assignedId = this.bugs[i].assignedId.username;
       }
-
-      // bugToView = new BugToShow(this.bugs[i].id, this.bugs[i].title, this.bugs[i].description, this.bugs[i].version, this.bugs[i].targetDate,
-      //   this.bugs[i].fixedVersion, this.bugs[i].createdId.username, this.bugs[i].assignedId.username, this.bugs[i].status,
-      //   this.bugs[i].severity);
       this.bugsToView.push(bugToView);
     }
   }
@@ -350,6 +340,8 @@ export class BugsComponent implements OnInit {
           this.userHasManagementPermission = obj;
         } else if (requiredPermission === 'BUG_CLOSE') {
           this.userHasBugClosePermission = obj;
+        } else if (requiredPermission === 'BUG_EXPORT_PDF') {
+          this.userHasExportPermission = obj;
         }
         // return obj;
       },
@@ -439,7 +431,7 @@ export class BugsComponent implements OnInit {
     this.excelbugservice.exportAsExcelFile(this.bugs, 'bugs');
   }
   downloadPdf(bug: BugToShow) {
-    const doc = new jsPDF();
+    // const doc = new jsPDF();
     const col = ['Title', 'Description', 'Target Date', 'Version', 'Status', 'Fixed Version', 'Severity', 'Createfd By', 'Assigned to'];
     const rows = [];
 
@@ -448,8 +440,8 @@ export class BugsComponent implements OnInit {
     rows.push(temp);
 
 
-    doc.autoTable(col, rows, {startY: 10});
-    doc.save('Bug-' + bug.title + '.pdf');
+    // doc.autoTable(col, rows, {startY: 10});
+    // doc.save('Bug-' + bug.title + '.pdf');
   }
 }
 

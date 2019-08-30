@@ -28,7 +28,7 @@ export class DashboardComponent implements OnInit {
     this.sendNotificationsService.messages.subscribe(msg => {
       console.log("Response is: " + msg.page + " " + msg.id);
       this.toastrService.success(msg.page).onTap.subscribe(() =>{
-        this.router.navigate(['/dashboard/bugs'], { queryParams: { bugId: msg.id } });
+        this.router.navigate(['/dashboard/notifications']);
       })
     });    
   }

@@ -1,12 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {Role} from '../models/role.model';
-import {RoleService} from '../service/role.service';
-import {ToastrService} from 'ngx-toastr';
-import {HttpErrorResponse} from '@angular/common/http';
-import {NgForm} from '@angular/forms';
-import {User} from '../models/user.model';
-import {UserService} from '../service/user.service';
-import { SendNotificationsService } from '../service/send-notifications.service';
+import { Component, OnInit } from '@angular/core';
+import { Role } from '../models/role.model';
+import { RoleService } from '../service/role.service';
+import { ToastrService } from 'ngx-toastr';
+import { HttpErrorResponse } from '@angular/common/http';
+import { FormGroup, NgForm } from '@angular/forms';
+import { User } from '../models/user.model';
+import { UserService } from '../service/user.service';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-user-create',
@@ -17,8 +17,7 @@ export class UserCreateComponent implements OnInit {
 
   roles: Role[];
 
-  constructor(private roleService: RoleService, private userService: UserService, private toastrService: ToastrService,
-    private sendNotificationsService: SendNotificationsService) { }
+  constructor(private roleService: RoleService, private userService: UserService, private toastrService: ToastrService, private translateService: TranslateService) { }
 
   ngOnInit() {
     this.findAllRoles();
@@ -54,7 +53,7 @@ export class UserCreateComponent implements OnInit {
 
     this.userService.insertUser(userToInsert).subscribe(
       () => {
-        this.toastrService.success("User created succesfully");
+        this.toastrService.success(this.translateService.instant('NOTIFICATION.USERCREATESUCCESS'));
       },
       (error: HttpErrorResponse) => {
         console.error(error);

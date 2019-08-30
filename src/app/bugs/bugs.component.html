@@ -4,7 +4,7 @@
 
   <ng-template pTemplate="caption">
     <div style="text-align: right">
-      <input type="text" pInputText size="50" placeholder="Global Filter"
+      <input type="text" pInputText size="50" placeholder="{{'BUGS.FILTER' | translate}}"
              (input)="dt.filterGlobal($event.target.value, 'contains')"
              [ngStyle]="{'width':'800px'}">
     </div>
@@ -13,7 +13,7 @@
   <ng-template pTemplate="header" let-columns>
     <tr>
       <th *ngFor="let col of cols" [pSortableColumn]="col.field" pResizableColumn pReorderableColumn [ngStyle]="{'width':col.width}">
-        {{col.header}}
+        {{'BUGS.'+col.header | translate}}
         <p-sortIcon [field]="col.field"></p-sortIcon>
       </th>
     </tr>
@@ -29,33 +29,38 @@
         <input *ngSwitchCase="'version'" pInputText type="text"
                (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" [ngStyle]="{'width':'50px'}">
 
-        <p-calendar #cal=ngModel ngModel name="calendar" id="calendar" [style]="{'width': '300px'}"
+        <p-calendar #cal=ngModel ngModel name="calendar" id="calendar" [style]="{'width': '199px'}"
                     *ngSwitchCase="'targetDate'" [defaultDate]="" [readonlyInput]="false" dateFormat="yy-MM-dd"
                     (onSelect)="dt.filter($event, col.field, 'dateFilter')"></p-calendar>
 
-        <p-multiSelect *ngSwitchCase="'status'" [options]="statusTypes" defaultLabel="All Types"
-                       (onChange)="dt.filter($event.value, col.field, 'in')"></p-multiSelect>
+        <p-multiSelect [style]="{'width':'90px'}" *ngSwitchCase="'status'" [options]="statusTypes" defaultLabel="All Types"
+                    (onChange)="dt.filter($event.value, col.field, 'equals')"></p-multiSelect>
 
         <input *ngSwitchCase="'fixedVersion'" pInputText type="text"
                (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" [ngStyle]="{'width':'50px'}">
 
         <p-multiSelect *ngSwitchCase="'severity'" [options]="severityTypes" defaultLabel="All Types"
-                       (onChange)="dt.filter($event.value, col.field, 'in')"></p-multiSelect>
+                    (onChange)="dt.filter($event.value, col.field, 'in')"></p-multiSelect>
 
         <p-dropdown *ngSwitchCase="'createdId'" [options]="usernamesForFilter"
                     (onChange)="dt.filter($event.value, col.field, 'equals')"></p-dropdown>
 
         <p-dropdown *ngSwitchCase="'assignedId'" [options]="usernamesForFilter"
                     (onChange)="dt.filter($event.value, col.field, 'equals')"></p-dropdown>
-      </th>
-    </tr>
-  </ng-template>
 
+      </th>
+
+
+    </tr>
+
+  </ng-template>
 
   <ng-template pTemplate="body" let-rowData let-bugsToView>
     <tr [pSelectableRow]="rowData">
       <td>{{bugsToView.title}}</td>
+
       <td><textarea>{{bugsToView.description}}</textarea></td>
+
       <td>{{bugsToView.version}}</td>
       <td>{{bugsToView.targetDate | date:'yyyy-MM-dd'}}</td>
       <td>{{bugsToView.status}}</td>
@@ -68,7 +73,7 @@
 </p-table>
 
 
-<p-dialog header="Bug Details" [(visible)]="displayBugPopUp" [responsive]="true" [modal]="true"
+<p-dialog header="{{'BDETAIL.DET' | translate}}" [(visible)]="displayBugPopUp" [responsive]="true" [modal]="true"
           [style]="{width: '1000px', height: '1100px'}">
   <form #editBugForm="ngForm" (ngSubmit)=editBug(editBugForm)>
 
@@ -76,7 +81,7 @@
 
       <div class="ui-g-12">
         <div class="ui-g-4">
-          <label for="title">Title</label>
+          <label for="title">{{'BDETAILS.TITLE' | translate}}</label>
         </div>
         <div class="ui-g-8">
           <input pInputText
@@ -102,7 +107,7 @@
 
       <div class="ui-g-12">
         <div class="ui-g-4">
-          <label for="description">Description</label>
+          <label for="description">{{'BDETAILS.DESC' | translate}}</label>
         </div>
         <div class="ui-g-8">
           <textarea required
@@ -128,7 +133,7 @@
 
       <div class="ui-g-12">
         <div class="ui-g-4">
-          <label for="version">Version</label>
+          <label for="version">{{'BDETAILS.VERSION' | translate}}</label>
         </div>
         <div class="ui-g-8">
           <input pInputText
@@ -154,7 +159,7 @@
 
       <div class="ui-g-12">
         <div class="ui-g-4">
-          <label for="targetDate">Target Date</label>
+          <label for="targetDate">{{'BDETAILS.TARGETDATE' | translate}}</label>
         </div>
         <div class="ui-g-8">
           <p-calendar ngModel name="targetDate" id="targetDate" #targetDate="ngModel" [style]="{'width': '300px'}"
@@ -165,7 +170,7 @@
 
       <div class="ui-g-12">
         <div class="ui-g-4">
-          <label for="status">Status</label>
+          <label for="status">{{'BDETAILS.STATUS' | translate}}</label>
         </div>
         <div class="ui-g-8">
           <p-dropdown id="status" name="status" [options]="getTransitionOptions(popUpBug.status)"
@@ -180,7 +185,7 @@
 
       <div class="ui-g-12">
         <div class="ui-g-4">
-          <label for="fixedVersion">Fixed Version</label>
+          <label for="fixedVersion">{{'BDETAILS.FXVERSION' | translate}}</label>
         </div>
         <div class="ui-g-8">
           <input pInputText
@@ -203,7 +208,7 @@
 
       <div class="ui-g-12">
         <div class="ui-g-4">
-          <label for="severity">Severity</label>
+          <label for="severity">{{'BDETAILS.SEVERITY' | translate}}</label>
         </div>
         <div class="ui-g-8">
           <p-dropdown id="severity" name="severity" [options]="severityTypes" [(ngModel)]="popUpBug.severity"
@@ -213,7 +218,7 @@
 
       <div class="ui-g-12">
         <div class="ui-g-4">
-          <label for="createdId">Created by</label>
+          <label for="createdId">{{'BDETAILS.CREATEDBY' | translate}}</label>
         </div>
         <div class="ui-g-8">
           <input pInputText id="createdId" name="createdId" [disabled]="true" [(ngModel)]="popUpBug.createdId"/>
@@ -222,7 +227,7 @@
 
       <div class="ui-g-12">
         <div class="ui-g-4">
-          <label for="assignedId">Assigned to</label>
+          <label for="assignedId">{{'BDETAILS.ASSIGNEDTO' | translate}}</label>
         </div>
         <div class="ui-g-8">
           <p-dropdown id="assignedId" name="assignedId" [options]="createdByUsernamesForDropDown"
@@ -230,13 +235,18 @@
                       [(ngModel)]="popUpBug.assignedId"></p-dropdown>
         </div>
       </div>
-    </div>
+  </div>
 
-    <button class="btn btn-primary" style="margin-top:3%" [hidden]="!userHasManagementPermission"
-            [disabled]="editBugForm.invalid">Edit Bug
+    <button class="btn btn-primary" style="margin-top:3%" [disabled]="editBugForm.invalid"
+            [hidden]="!userHasManagementPermission"
+            [disabled]="editBugForm.invalid"
+    >{{'BDETAILS.BTNEDIT' | translate}}
     </button>
-    <button class="btn btn-primary" style="margin-top:3%" (click)="downloadPdf(popUpBug)">Export as PDF</button>
+
+    <button class="btn btn-primary" type="button" style="margin-top:3%; margin-left:3px"
+            [hidden]="!userHasExportPermission" (click)="downloadPdf(popUpBug)">Export as PDF
+    </button>
 
   </form>
 </p-dialog>
-<button (click)="exportAsXLSX()">Export List as Excel</button>
+<button class="btn btn-primary" style="margin-top:3%" (click)="exportAsXLSX()">Export List as Excel</button>

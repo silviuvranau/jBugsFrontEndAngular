@@ -39,6 +39,18 @@ import {MatInputModule} from '@angular/material/input';
 import {PermissionCheckerService} from "./utils/permissionCheckerService";
 import {ExcelBugsService} from './bugs/excel-bugs.service';
 import {NotificationListComponent} from "./notification/notification-list/notification-list.component";
+import {CreateBugComponent} from './create-bug/create-bug.component';
+
+
+import {HttpClient} from '@angular/common/http';
+import {TranslateModule, TranslateLoader, TranslateService} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { SendNotificationsService } from './service/send-notifications.service';
+
+
+export function HttpLoaderFactory(httpClient: HttpClient) {
+  return new TranslateHttpLoader(httpClient);
+}
 
 
 @NgModule({
@@ -52,7 +64,8 @@ import {NotificationListComponent} from "./notification/notification-list/notifi
     UserCreateComponent,
     UserListComponent,
     BugsComponent,
-    NotificationListComponent
+    NotificationListComponent,
+    CreateBugComponent
   ],
   imports: [
     BrowserModule,
@@ -75,10 +88,17 @@ import {NotificationListComponent} from "./notification/notification-list/notifi
     MatInputModule,
     MultiSelectModule,
     DropdownModule,
-    CalendarModule
+    CalendarModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    })
   ],
   providers: [BugsService, RolesService, LoginService, PermissionCheckerService, AuthGuardService, ExcelService,
-    CookieService, DatePipe, ExcelBugsService],
+    CookieService, DatePipe, ExcelBugsService, SendNotificationsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

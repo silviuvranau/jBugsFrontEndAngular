@@ -12,63 +12,72 @@
 
 
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#1F70E8">
-  <a class="navbar-brand" routerLink="/">
-    JBugs
-  </a>
-
-  <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-
-    <li class="nav-item" routerLinkActive="active">
-      <a class="nav-link" routerLink="user-list">
-        <i class="pi pi-user"></i>
-        Users List
-      </a>
-    </li>
-
-    <li class="nav-item" routerLinkActive="active">
-      <a class="nav-link" routerLink="add-user">
-        <i class="pi pi-user-plus"></i>
-        Create User
-      </a>
-    </li>
-
-    <li class="nav-item" routerLinkActive="active">
-      <a class="nav-link" routerLink="changePermissions">
-        <i class="pi pi-table"></i>
-        Role Permissions
-      </a>
-    </li>
-
-    <div *ngIf = "userHasBugManagementPermission === true">
+    <a class="navbar-brand" routerLink="/">
+      {{'DASHBOARD.JBUGS' | translate}}
+    </a>
+    
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      
       <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" routerLink="bugs">
-          <i class="pi pi-exclamation-triangle"></i>
-          Bugs
+        <a class="nav-link" routerLink="user-list">
+          <i class = "pi pi-user"></i>
+          {{'DASHBOARD.USERLIST' | translate}}
         </a>
       </li>
-    </div>
 
-    <li class="nav-item" routerLinkActive="active">
-      <a class="nav-link" routerLink="notifications">
-        <i class="pi pi-globe"></i>
-        Notifications
-      </a>
-    </li>
+      <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" routerLink="add-user">
+            <i class = "pi pi-user-plus"></i>
+            {{'DASHBOARD.CREATEUSER' | translate}}
+          </a>
+      </li>
 
-  </ul>
+      <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" routerLink="changePermissions">
+            <i class = "pi pi-table"></i>
+            {{'DASHBOARD.ROLEPERMISSION' | translate}}
+          </a>
+      </li>
 
-  <ul class="navbar-nav nav-bar-right">
+      <div *ngIf = "userHasBugManagementPermission === true">
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" routerLink="bugs">
+            <i class = "pi pi-exclamation-triangle"></i>
+            {{'DASHBOARD.BUGS' | translate}}
+          </a>
+      </li>
+      </div>
 
-    <li class="nav-item" routerLinkActive="active">
-      <a class="nav-link" routerLink="/">
-        <i class="pi pi-sign-out" (click)="logout()"></i>
-        Log Out
-      </a>
-    </li>
+      <div *ngIf="userHasBugManagementPermission === true">
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" routerLink="create-bug">
+            <i class="pi pi-plus"></i>
+            Create Bug
+          </a>
+        </li>
+      </div>
 
-  </ul>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="notifications">
+          <i class="pi pi-globe"></i>
+          {{'DASHBOARD.NOT' | translate}}
+        </a>
+      </li>
+    
+    </ul>
+
+    <ul class="navbar-nav nav-bar-right">
+    
+        <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link" routerLink="/">
+              <i class = "pi pi-sign-out" (click)="logout()"></i>
+              {{'DASHBOARD.LOGOUT' | translate}}
+            </a>
+        </li>
+
+    </ul>
 </nav>
 
-<div class="container-fluid main--container" style="margin-top: 2%;">
+<div class="container-fluid main--container" style = "margin-top: 2%;">
   <router-outlet></router-outlet>
 </div>
