@@ -1,0 +1,159 @@
+<div style="margin-left:30%; width: 550px;">
+  <p-card header="Add a new bug" subheader="">
+    <form #createBugForm="ngForm" (ngSubmit)=addBug(createBugForm)>
+      <div class="form-style">
+        <label for="title">Title</label>
+        <input
+          required
+          pattern="^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$"
+          id="title"
+          name="title"
+          class="form-control"
+          #title="ngModel"
+          ngModel
+        >
+        <div style="width:400px" *ngIf="title.touched && title.invalid">
+          <div *ngIf="title.errors.required" style="color:red">
+            *Title is required.
+          </div>
+          <div *ngIf="title.errors.pattern" style="color:red">
+            *Invalid title.
+          </div>
+        </div>
+      </div>
+
+
+      <div class="form-style">
+        <label for="description">Description</label>
+        <textarea required
+                  minlength=250
+                  id="description"
+                  name="description"
+                  class="form-control"
+                  #description="ngModel"
+                  rows="5" cols="50"
+                  ngModel>
+            </textarea>
+        <div *ngIf="description.touched && description.invalid">
+          <div *ngIf="description.errors.required" style="color:red">
+            *Description is required.
+          </div>
+          <div *ngIf="description.errors.minlength" style="color:red">
+            *Invalid description. Description must have a minimum of 250 characters.
+          </div>
+        </div>
+
+      </div>
+
+      <div class="form-style">
+        <label for="description">Version</label>
+        <input pInputText
+               required
+               pattern="^[0-9.]*$"
+               id="version"
+               name="version"
+               class="form-control"
+               #version="ngModel"
+               ngModel
+        />
+        <div *ngIf="version.touched && version.invalid">
+          <div *ngIf="version.errors.required" style="color:red">
+            *Version is required.
+          </div>
+          <div *ngIf="version.errors.pattern" style="color:red">
+            *Invalid version. Versions must be of the form '1.1.1'
+          </div>
+        </div>
+      </div>
+
+      <div class="form-style">
+        <label for="targetDate">Target Date</label>
+        <div>
+          <p-calendar ngModel name="targetDate" id="targetDate" [style]="{'width': '300px'}"
+                      [minDate]="currentDate"
+                      dateFormat="yy-MM-dd"></p-calendar>
+        </div>
+      </div>
+
+      <div class="form-style">
+        <label for="status">Status</label>
+        <input pInputText
+               id="status"
+               name="status"
+               class="form-control"
+               #status="ngModel"
+               ngModel="NEW"
+               [disabled]="true"
+        />
+      </div>
+
+      <div class="form-style">
+        <label for="fixedVersion">Fixed Version</label>
+        <input pInputText
+               required
+               pattern="^[0-9.]*$"
+               id="fixedVersion"
+               name="fixedVersion"
+               class="form-control"
+               #version="ngModel"
+               ngModel
+        />
+        <div *ngIf="version.touched && version.invalid">
+          <div *ngIf="version.errors.required" style="color:red">
+            *Version is required.
+          </div>
+          <div *ngIf="version.errors.pattern" style="color:red">
+            *Invalid version. Versions must be of the form '1.1.1'
+          </div>
+        </div>
+      </div>
+
+      <div class="form-style">
+        <label for="severity">Severity</label>
+        <div>
+          <p-dropdown id="severity"
+                      name="severity"
+                      ngModel
+                      [options]="severityTypes"></p-dropdown>
+        </div>
+      </div>
+
+      <div class="form-style">
+        <label for="createdBy">Created by</label>
+        <input pInputText
+               id="createdBy"
+               name="createdBy"
+               class="form-control"
+               #status="ngModel"
+               [ngModel]="loggedInUser"
+               [disabled]="true"
+        />
+      </div>
+
+      <div class="form-style">
+        <label for="assignedTo">Assigned to</label>
+        <div>
+          <p-dropdown id="assignedTo" name="assignedTo" [options]="assignedToUsernamesForDropDown"
+                      #assignedTo="ngModel" ngModel></p-dropdown>
+        </div>
+      </div>
+
+      <div class="form-style">
+        <label for="attachment">Attachment</label>
+        <div>
+          <input
+            id="attachment"
+            name="attachment"
+            type="file"
+            accept=".pdf,.doc,.odf,.xlsx,.xls"
+            #attachment="ngModel"
+            ngModel
+          >
+        </div>
+      </div>
+
+      <button class="btn btn-primary" style="margin-top:3%" [disabled]="createBugForm.invalid">Add Bug</button>
+    </form>
+
+  </p-card>
+</div>
