@@ -24,6 +24,7 @@ export class DashboardComponent implements OnInit {
     this.loggedInUser = this.cookieService.get("username");
     this.checkIfUserHasBugManagementPermission();
   }
+
   logout() {
     console.log('You ve been logout');
     this.router.navigate(['/login']);
@@ -32,7 +33,7 @@ export class DashboardComponent implements OnInit {
   checkIfUserHasBugManagementPermission() {
     this.permissionChecker.checkIfUserHasPermission(this.loggedInUser, 'BUG_MANAGEMENT').subscribe(
       (obj) => {
-        this.userHasBugManagementPermission = obj;
+        this.userHasBugManagementPermission = JSON.parse(obj);
       },
       (error: HttpErrorResponse) => {
         console.error(error);

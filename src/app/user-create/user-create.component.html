@@ -3,10 +3,10 @@
 </div> -->
 
 <div style = "margin-left:30%; width: 550px;">
-<p-card header="Add a new user" subheader="">
+<p-card header="{{'CREATE.ADD' | translate}}" subheader="">
     <form #createUserForm="ngForm" (ngSubmit) = addUser(createUserForm)>
         <div class = "form-style">
-            <label for="firstName">First Name</label>
+            <label for="firstName">{{'CREATE.FIRSTNAME' | translate}}</label>
             <input
             required
             pattern = "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$"
@@ -19,14 +19,16 @@
         </div>
         <div style="width:400px" *ngIf="firstName.touched && firstName.invalid">
             <div *ngIf = "firstName.errors.required" style = "color:red">
-                *First name is required.
+              {{'NOTIFICATION.FIRSTNAMEREQUIRED' | translate}}
+
             </div>
             <div *ngIf = "firstName.errors.pattern" style = "color:red">
-                *Invalid first name.
+              {{'NOTIFICATION.INVALIDFIRSTNAME' | translate}}
+
             </div>
         </div>
         <div class = "form-style">
-            <label for="lastName">Last Name</label>
+            <label for="lastName">{{'CREATE.LASTNAME' | translate}}</label>
             <input
             required
             pattern = "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$"
@@ -39,13 +41,15 @@
         </div>
         <div style="width:400px" *ngIf="lastName.touched && lastName.invalid">
             <div *ngIf = "lastName.errors.required" style = "color:red">
-                *Last name is required.
+              {{'NOTIFICATION.LASTNAMEREQUIRED' | translate}}
+
             </div>
             <div *ngIf = "lastName.errors.pattern" style = "color:red">
-                *Invalid last name.
+              {{'NOTIFICATION.INVALIDLASTNAME' | translate}}
+
             </div>
         </div>
-        <label for="email" class = "form-style">Email</label>
+        <label for="email" class = "form-style">{{'CREATE.EMAIL' | translate}}</label>
         <div class = "form-inline">
         <!-- <div style="width:400px"> -->
             <input
@@ -68,14 +72,18 @@
         </div>
         <div style="width:400px" *ngIf="email.touched && email.invalid">
             <div *ngIf = "email.errors.required" style = "color:red">
-                *Email is required.
+
+              {{'NOTIFICATION.EMAILREQUIRED' | translate}}
+
             </div>
             <div *ngIf = "email.errors.pattern" style = "color:red">
-                *Invalid email.
+
+              {{'NOTIFICATION.INVALIDEMAIL' | translate}}
+
             </div>
         </div>
         <div class = "form-style">
-            <label for="mobileNumber">Mobile Number</label>
+            <label for="mobileNumber">{{'CREATE.MOBILENUMBER' | translate}}</label>
             <input
             pattern = "[+]407[0-9]{8}"
             required
@@ -88,14 +96,17 @@
         </div>
         <div style="width:400px" *ngIf="mobileNumber.touched && mobileNumber.invalid">
             <div *ngIf = "mobileNumber.errors.required" style = "color:red">
-                *Mobile number is required.
+              {{'NOTIFICATION.MOBILENUMBERREQUIRED' | translate}}
+
             </div>
             <div *ngIf = "mobileNumber.errors.pattern" style = "color:red">
-                *Invalid mobile number.
+
+              {{'NOTIFICATION.INVALIDMOBILENUMBER' | translate}}
+
             </div>
         </div>
         <div class = "form-style">
-            <label for="password">Password</label>
+            <label for="password">{{'CREATE.PASSWORD' | translate}}</label>
             <input
             required
             id = "password"
@@ -108,10 +119,11 @@
         </div>
         <div style="width:400px" *ngIf="password.touched && password.invalid">
             <div *ngIf = "password.errors.required" style = "color:red">
-                *Password is required.
+              {{'NOTIFICATION.PASSWORDREQUIRED' | translate}}
+
             </div>
         </div>
-        <p style = "margin-top: 25px; margin-bottom: 2%; font-weight: bold;">Roles</p>
+        <p style = "margin-top: 25px; margin-bottom: 2%; font-weight: bold;">{{'CREATE.ROLES' | translate}}</p>
         <div *ngFor = "let role of roles" class = "checkbox">
             <label>
                 <input type = "checkbox"
@@ -123,7 +135,7 @@
             </label>
         </div>
                   
-        <button class = "btn btn-primary" style = "margin-top:3%" [disabled]="createUserForm.invalid">Add User</button>
+        <button class = "btn btn-primary" style = "margin-top:3%" [disabled]="createUserForm.invalid">{{'CREATE.ADDUSER' | translate}}</button>
     </form>
 
 </p-card>

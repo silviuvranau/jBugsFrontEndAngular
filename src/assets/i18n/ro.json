@@ -1,0 +1,178 @@
+{
+  "HOME": {
+    "TITLE": "LOGARE",
+    "SELECT": "Schimba Limba"
+  },
+  "LOGIN": {
+
+    "USERNAME": "Utilizator",
+    "PASSWORD": "Parola",
+    "CAPTCHA": "Introduceti codul",
+    "LOGBUTTON": "Autentificare"
+
+  },
+
+  "NOTIFICATION": {
+
+    "INVALID_CAPTCHA": "Captcha nu este valid",
+    "INVALID_CREDENTIALS": "Credentialele nu sunt valide",
+    "LOGIN_SUCCESS": "Autentificare cu succes",
+    "USEREDITSUCCESS": "Utilizator editat cu succes",
+    "ASSIGNEDBUGS": "Nu se poate dezactiva utlizator(are bugs asignati lui)",
+    "USERCREATESUCCESS": "Utilizator creat cu succes,",
+    "FIRSTNAMEREQUIRED": "*Prenume obligatoriu",
+    "LASTNAMEREQUIRED": "*Nume obligatoriu",
+    "EMAILREQUIRED": "*Email obligatoriu",
+    "MOBILENUMBERREQUIRED": "*Telefon mobil obligatoriu",
+    "PASSWORDREQUIRED": "*Parola obligatoriu",
+    "INVALIDFIRSTNAME": "*Prenume invalid",
+    "INVALIDLASTNAME": "*Nume invalid",
+    "INVALIDEMAIL": "*Email invalid",
+    "INVALIDMOBILENUMBER": "*Telefon mobil invalid",
+    "USERNAMEREQUIRED": "*Utilizator obligatoriu",
+    "CAPTCHAREQUIRED": "*Captcha obligatoriu"
+
+
+  },
+  "MSG": {
+    "WELCOME_NEW_USER" : "BUN VENIT UTILIZATOR NOU",
+    "USER_UPDATED" :"UTILIZATOR ACTUALIZAT",
+    "USER_DELETED": "UTILIZATOR STERS" ,
+    "BUG_UPDATED":"BUG ACTUALIZAT" ,
+    "BUG_STATUS_UPDATED": "BUG STATUS ACTUALIZAT",
+    "BUG_CLOSED": "BUG DEZACTIVAT",
+    "USER_DEACTIVATED": "UTILIZATOR DEZACTIVAT"
+
+  },
+
+
+  "NOTIFICATIONCOMP": {
+
+    "Type": "Tip",
+    "Message": "Mesaj",
+    "Date": "Data",
+    "Url": "Url"
+
+
+  },
+
+  "DASHBOARD": {
+    "JBUGS": "JBugs",
+    "USERLIST": "Lista utilizatori",
+    "CREATEUSER": "Creare utilizator",
+    "ROLEPERMISSION": "Permisiunea rolului",
+    "BUGS": "Bugs",
+    "LOGOUT": "Delogare",
+    "NOT": "Notificari"
+
+  },
+
+  "USERLIST": {
+
+    "FirstName":"Prenume" ,
+    "LastName":"Nume" ,
+    "Email": "Email",
+    "Mobile":"Telefon" ,
+    "Username": "Utilizator",
+    "Status": "Status",
+    "ACTIVATED": "Activ",
+    "DEACTIVATED":"Inactiv"
+  },
+
+  "USERDETAILS": {
+    "USERDETAIL":"Detalii utilizator",
+    "FIRSTNAME": "Prenume",
+    "LASTNAME": "Nume",
+    "EMAIL": "Email",
+    "MOBILENUMBER": "Telefon mobil",
+    "USERNAME": "Nume utilizator",
+    "PASSWORD": "Parola",
+    "BLOCKED": "Blocat",
+    "ROLES": "Roluri",
+    "EDIT": "Editare utilizator",
+    "EMAILSTAR":"*Trebuie sa fie de forma",
+    "EMAILSTAR2":"adresa@msggroup.com" ,
+    "MOBILESTAR": "*Trebuie sa fie un numar valid de ",
+    "MOBILESTAR2":" RO / DE"
+
+
+
+  },
+
+  "CREATE": {
+    "ADD": "Adauga utilizator nou",
+    "FIRSTNAME": "Prenume",
+    "LASTNAME": "Nume",
+    "EMAIL": "Email",
+    "MOBILENUMBER": "Telefon mobil",
+    "PASSWORD": "Parola",
+    "ROLES": "Roluri",
+    "ADDUSER": "Adauga Utilizator"
+
+
+  },
+  "ROLES1": {
+
+    "USER_MANAGEMENT": "Gestionare Utilizator",
+    "BUG_MANAGEMENT": "Gestionare Bug",
+    "BUG_CLOSE": "Dezactivare Bug",
+    "PERMISSION_MANAGEMENT": "Gestionare Permisiuni",
+    "BUG_EXPORT_PDF": "Exportare Bug Pdf"
+
+
+
+  },
+  "ROLES2": {
+
+    "ADM": "Administrator",
+    "PM": "Manager de Proiect",
+    "TM": "Manager de Test",
+    "DEV": "Programator",
+    "TEST": "Tester"
+
+  },
+
+  "BUGS": {
+    "FILTER": "Filtru global",
+    "Title": "Titlu",
+    "Description" :"Descriere" ,
+    "Version": "Versiune",
+    "Target Date":"Data marcata" ,
+    "Status" :"Status",
+    "Fixed Version" :"Versiune stabila" ,
+    "Severity":"Severitate",
+    "Created Username": "Bug creat de",
+    "Assigned Username": "Utilizator Asignat"
+
+
+  },
+  "STATUS":{
+
+    "NEW": "NOU",
+    "IN_PROGRESS": "IN_PROCES",
+    "FIXED": "REPARAT",
+    "CLOSED": "INCHIS",
+    "REJECTED": "RESPINS",
+    "INFO_NEEDED": "INFO_NECESARE"
+
+  },
+
+  "BDETAILS": {
+    "DET": "Detalii bug",
+    "TITLE":"Titlu",
+    "DESC": "Descriere",
+    "VERSION": "Versiune",
+    "TARGETDATE": "Data marcata",
+    "STATUS": "Status",
+    "FXVERSION": "Versiune Stabila",
+    "SEVERITY": "Severitate",
+    "CREATEDBY": "Creat de",
+    "ASSIGNEDTO": "Asignat lui",
+    "BTNEDIT": "Editare bug"
+
+
+  }
+
+
+
+}

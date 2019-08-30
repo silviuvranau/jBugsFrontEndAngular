@@ -7,6 +7,9 @@ import {ToastrComponentlessModule, ToastrService} from "ngx-toastr";
 import {LoginService} from "../service/login.service";
 import {AuthService} from "../service/auth.serice";
 import { CookieService } from 'ngx-cookie-service';
+import {$} from "protractor";
+import {FilterMetadata} from "primeng/api";
+import {TranslateService} from "@ngx-translate/core";
 
 
 @Component({
@@ -28,7 +31,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private router: Router, private loginService: LoginService,
      private toasterService: ToastrService, private authService: AuthService,
-     private cookieService: CookieService) {
+     private cookieService: CookieService, private translateService: TranslateService) {
 
 
   }
@@ -69,7 +72,7 @@ export class LoginComponent implements OnInit {
     };
 
     if (this.text.toString() !== captcha.value.toString()) {
-      this.toasterService.error("Invalid Captcha");
+      this.toasterService.error(this.translateService.instant('NOTIFICATION.INVALID_CAPTCHA'));
       return;
     }
 
@@ -82,7 +85,7 @@ export class LoginComponent implements OnInit {
           console.log("response is ", response);
 
 
-            this.toasterService.success("Login Successful");
+          this.toasterService.success(this.translateService.instant('NOTIFICATION.LOGIN_SUCCESS'));
             this.router.navigate(['/dashboard']);
             this.authService.loggedInSetter();
 

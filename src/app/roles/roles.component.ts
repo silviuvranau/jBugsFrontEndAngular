@@ -3,6 +3,10 @@ import {Role} from '../models/role.model';
 import {Permission} from '../models/permission.model';
 import {RolesService} from './roles.service';
 import {RolePermission} from './role.permission';
+import {CookieService} from 'ngx-cookie-service';
+import {PermissionCheckerService} from "../utils/permissionCheckerService";
+import {HttpErrorResponse} from "@angular/common/http";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-roles',
@@ -14,8 +18,10 @@ export class RolesComponent implements OnInit {
   roles: Role[];
   permissions: Permission[];
   rolePermission: RolePermission;
+  loggedInUser: string;
+  isDisabled = false;
 
-  constructor(private roleService: RolesService) {
+  constructor(private toastrService: ToastrService, private roleService: RolesService, private cookieService: CookieService, private permissionChecker: PermissionCheckerService) {
   }
 
   ngOnInit() {
@@ -30,6 +36,10 @@ export class RolesComponent implements OnInit {
       this.permissions = obj;
       console.log(this.permissions.length);
     });
+
+    this.loggedInUser = this.cookieService.get('username');
+
+    this.checkIfUserHasPermission();
   }
 
   public checkIfRoleHasPermission(perm: Permission, permissions: Permission[]) {
@@ -54,5 +64,26 @@ export class RolesComponent implements OnInit {
       console.log(data);
     });
   }
+
+  /**
+   * Method sends a request to the backend service
+   * to check whether the current user has the given permission.
+   * @param requiredPermission
+   */
+  checkIfUserHasPermission() {
+    this.permissionChecker.checkIfUserHasPermission(this.loggedInUser, 'PERMISSION_MANAGEMENT').subscribe(
+      (obj) => {
+        this.isDisabled = obj;
+        console.log(this.isDisabled);
+        console.log(this.loggedInUser);
+      },
+      (error: HttpErrorResponse) => {
+        console.error(error);
+        this.toastrService.error(error.message);
+      }
+    );
+    return false;
+  }
+
 
 }

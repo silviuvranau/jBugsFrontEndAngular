@@ -10,6 +10,7 @@ import { RoleService } from '../service/role.service';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../service/user.service';
 import {executeBrowserBuilder} from "@angular-devkit/build-angular";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-user-list',
@@ -22,7 +23,7 @@ export class UserListComponent implements OnInit {
 
   constructor(private backendService: BackendService, private excelservice: ExcelService,
             private roleService: RoleService, private toastrService: ToastrService,
-            private userService: UserService) {
+            private userService: UserService, private translateService: TranslateService) {
   }
 
   arrUsers: User[];
@@ -40,11 +41,11 @@ export class UserListComponent implements OnInit {
     //   console.log(data);
     // });
     this.cols = [
-      { field: 'firstName', header: 'FirstName', width: '90px' },
-      {field: 'lastName', header: 'LastName', width: '120px' },
+      { field: 'firstName', header: 'FirstName', width: '120px' },
+      {field: 'lastName', header: 'LastName', width: '150px' },
       { field: 'email', header: 'Email', width: '270px' },
       { field: 'mobileNumber', header: 'Mobile', width: '120px'},
-      { field: 'username', header: 'Username', width: '100px'},
+      { field: 'username', header: 'Username', width: '150px'},
       { field: 'status', header: 'Status', width: '100px'},
     ];
 
@@ -81,6 +82,7 @@ export class UserListComponent implements OnInit {
     this.selectedUser = this.cloneUser(event.data);
     this.displayDialog = true;
     console.log(this.selectedUser);
+    this.selectedUser.password = '';
     for(let role of this.roles){
       for(let id of this.selectedUser.roleIds)
         if(role.id === id)
@@ -128,6 +130,11 @@ export class UserListComponent implements OnInit {
       return;
     }
 
+    if(this.selectedUser.password === ''){
+      this.toastrService.error("Password cannot be empty");
+      return;
+    }
+
 
 
 
@@ -145,9 +152,27 @@ export class UserListComponent implements OnInit {
         console.log("CAN DEACTIVATE: " + canDeactivate);
         if((!canDeactivate) && (this.selectedUser.status === true)) {
           console.log("cannot deactivate");
-          this.toastrService.error("Cannot deactivate user because they have assigned bugs.");
+          this.toastrService.error(this.translateService.instant('NOTIFICATION.ASSIGNEDBUGS'));
           return;
         }
+
+        for(let role of this.roles){
+          if(role.checked){
+            this.selectedUser.roleIds.push(role.id);
+          }
+        }
+
+        this.userService.editUser(this.selectedUser).subscribe(
+          () => {
+            this.toastrService.success(this.translateService.instant('NOTIFICATION.USEREDITSUCCESS'));
+            this.getAllUsers();
+          },
+          (error: HttpErrorResponse) => {
+            console.error(error);
+            this.toastrService.error(error.error);
+          }
+        );
+
 
         /////////restul
 
@@ -160,22 +185,22 @@ export class UserListComponent implements OnInit {
     
 
 
-    for(let role of this.roles){
-      if(role.checked){
-        this.selectedUser.roleIds.push(role.id);
-      }
-    }
-
-    this.userService.editUser(this.selectedUser).subscribe(
-      () => {
-        this.toastrService.success("User edited succesfully");
-        this.getAllUsers();
-      },
-      (error: HttpErrorResponse) => {
-        console.error(error);
-        this.toastrService.error(error.error);
-      }
-    );
+    // for(let role of this.roles){
+    //   if(role.checked){
+    //     this.selectedUser.roleIds.push(role.id);
+    //   }
+    // }
+    //
+    // this.userService.editUser(this.selectedUser).subscribe(
+    //   () => {
+    //     this.toastrService.success(this.translateService.instant('NOTIFICATION.USEREDITSUCCESS'));
+    //     this.getAllUsers();
+    //   },
+    //   (error: HttpErrorResponse) => {
+    //     console.error(error);
+    //     this.toastrService.error(error.error);
+    //   }
+    // );
   }
 
 

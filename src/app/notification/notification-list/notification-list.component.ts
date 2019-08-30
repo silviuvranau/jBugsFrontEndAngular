@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { NotificationService } from '../notification.service';
-import { CookieService } from 'ngx-cookie-service';
+import {Component, OnInit} from '@angular/core';
+import {NotificationService} from '../notification.service';
+import {CookieService} from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-notification-list',
@@ -13,21 +13,22 @@ export class NotificationListComponent implements OnInit {
   selectedNotification: Notification;
   notifications: Notification[];
 
-  constructor(private notificationService: NotificationService, private cookieService: CookieService) { }
+  constructor(private notificationService: NotificationService, private cookieService: CookieService) {
+  }
 
   ngOnInit() {
     this.cols = [
-      { field: 'type', header: 'Type', width: '90px' },
-      {field: 'message', header: 'Message', width: '120px' },
-      {field: 'date', header: 'Message', width: '120px' },
-      { field: 'url', header: 'Url', width: '270px' }
+      {field: 'type', header: 'Type', width: '90px'},
+      {field: 'message', header: 'Message', width: '120px'},
+      {field: 'date', header: 'Date', width: '120px'},
+      {field: 'url', header: 'Url', width: '270px'}
     ];
 
     this.getAllNotifications();
-    
+
     console.log(this.notifications);
 
-   
+
   }
 
   getAllNotifications() {

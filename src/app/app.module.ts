@@ -37,8 +37,20 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatInputModule} from '@angular/material/input';
 import {PermissionCheckerService} from "./utils/permissionCheckerService";
+import {ExcelBugsService} from './bugs/excel-bugs.service';
 import {NotificationListComponent} from "./notification/notification-list/notification-list.component";
 import {CreateBugComponent} from './create-bug/create-bug.component';
+
+
+import {HttpClient} from '@angular/common/http';
+import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+
+
+export function HttpLoaderFactory(httpClient: HttpClient) {
+  return new TranslateHttpLoader(httpClient);
+}
+
 
 @NgModule({
   declarations: [
@@ -75,10 +87,17 @@ import {CreateBugComponent} from './create-bug/create-bug.component';
     MatInputModule,
     MultiSelectModule,
     DropdownModule,
-    CalendarModule
+    CalendarModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    })
   ],
-  providers: [BugsService, RolesService, PermissionCheckerService, LoginService, AuthGuardService, ExcelService,
-  CookieService, DatePipe],
+  providers: [BugsService, RolesService, LoginService, PermissionCheckerService, AuthGuardService, ExcelService,
+    CookieService, DatePipe, ExcelBugsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
