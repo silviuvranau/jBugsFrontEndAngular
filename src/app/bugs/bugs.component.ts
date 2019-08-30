@@ -14,7 +14,8 @@ import {ExcelBugsService} from './excel-bugs.service';
 import 'jspdf-autotable';
 import {TranslateService} from "@ngx-translate/core";
 
-declare let jsPDF;
+//declare let jsPDF;
+import jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-bugs',
