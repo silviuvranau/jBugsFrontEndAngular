@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {NotificationService} from '../notification.service';
 import {CookieService} from 'ngx-cookie-service';
+import {Router} from '@angular/router';
+import {NotificationService} from '../notification.service';
 
 @Component({
   selector: 'app-notification-list',
@@ -13,7 +14,7 @@ export class NotificationListComponent implements OnInit {
   selectedNotification: Notification;
   notifications: Notification[];
 
-  constructor(private notificationService: NotificationService, private cookieService: CookieService) {
+  constructor(private notificationService: NotificationService, private cookieService: CookieService, private router: Router) {
   }
 
   ngOnInit() {
@@ -27,9 +28,19 @@ export class NotificationListComponent implements OnInit {
     this.getAllNotifications();
 
     console.log(this.notifications);
-
+    // this.goToBug(1);
 
   }
+
+  onRowSelect(event) {
+    if (event.data.url !== undefined) {
+      console.log(event.data.url.split("http://localhost:4200/dashboard/bugs?bugId=")[1]);
+      let id = event.data.url.split("http://localhost:4200/dashboard/bugs?bugId=")[1];
+      this.goToBug(id);
+    }
+  }
+
+
 
   getAllNotifications() {
     this.notificationService.getAllNotificationsForUser(this.cookieService.get("username")).subscribe(
@@ -38,6 +49,10 @@ export class NotificationListComponent implements OnInit {
       }
     );
 
+  }
+
+  goToBug(id: number) {
+    this.router.navigate(['/dashboard/bugs'], {queryParams: {bugId: id}});
   }
 
 }

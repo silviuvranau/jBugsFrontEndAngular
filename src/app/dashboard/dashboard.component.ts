@@ -4,6 +4,7 @@ import {CookieService} from "ngx-cookie-service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {PermissionCheckerService} from "../utils/permissionCheckerService";
 import {ToastrService} from "ngx-toastr";
+import {SendNotificationsService} from '../service/send-notifications.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,12 +18,19 @@ export class DashboardComponent implements OnInit {
 
 
   constructor(private router: Router, private cookieService: CookieService, private permissionChecker: PermissionCheckerService,
-              private toastrService: ToastrService) {
+              private toastrService: ToastrService, private sendNotificationsService: SendNotificationsService) {  
   }
 
   ngOnInit() {
     this.loggedInUser = this.cookieService.get("username");
     this.checkIfUserHasBugManagementPermission();
+
+    this.sendNotificationsService.messages.subscribe(msg => {
+      console.log("Response is: " + msg.page + " " + msg.id);
+      this.toastrService.success(msg.page).onTap.subscribe(() => {
+        this.router.navigate(['/dashboard/notifications']);
+      })
+    });    
   }
 
   logout() {
