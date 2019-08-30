@@ -39,6 +39,7 @@ import {MatInputModule} from '@angular/material/input';
 import {PermissionCheckerService} from "./utils/permissionCheckerService";
 import {ExcelBugsService} from './bugs/excel-bugs.service';
 import {NotificationListComponent} from "./notification/notification-list/notification-list.component";
+import {CreateBugComponent} from './create-bug/create-bug.component';
 
 
 import {HttpClient} from '@angular/common/http';
@@ -62,7 +63,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     UserCreateComponent,
     UserListComponent,
     BugsComponent,
-    NotificationListComponent
+    NotificationListComponent,
+    CreateBugComponent
   ],
   imports: [
     BrowserModule,

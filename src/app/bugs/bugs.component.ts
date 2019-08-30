@@ -11,11 +11,10 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {CookieService} from 'ngx-cookie-service';
 import {PermissionCheckerService} from '../utils/permissionCheckerService';
 import {ExcelBugsService} from './excel-bugs.service';
-import 'jspdf-autotable';
 import {TranslateService} from "@ngx-translate/core";
-
-//declare let jsPDF;
 import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+
 
 @Component({
   selector: 'app-bugs',
@@ -28,6 +27,7 @@ export class BugsComponent implements OnInit {
   loggedInUser: string;
   userHasManagementPermission: boolean;
   userHasBugClosePermission: boolean;
+  userHasExportPermission: boolean;
   isStatusFixed: boolean;
   isStatusRejected: boolean;
 
@@ -39,6 +39,7 @@ export class BugsComponent implements OnInit {
   selectedBugDate = new Date();
 
   usernamesForFilter: SelectItem[];
+
   createdByUsernamesForDropDown: SelectItem[];
 
 
@@ -66,7 +67,7 @@ export class BugsComponent implements OnInit {
     this.bugsService.getAllUsers().subscribe(obj => {
       this.users = obj;
       this.usernamesForFilter = [
-        {label: 'All', value: null}
+        {label: this.translateService.instant('BDETAILS.ALL'), value: null}
       ];
       this.createUsernameLabels();
     });
@@ -168,6 +169,7 @@ export class BugsComponent implements OnInit {
       this.getBugsToView();
       this.checkIfUserHasPermission('BUG_MANAGEMENT');
       this.checkIfUserHasPermission('BUG_CLOSE');
+      this.checkIfUserHasPermission('BUG_EXPORT_PDF');
       console.log('BUG MANAGEMENT ', this.userHasManagementPermission);
       console.log('BUG CLOSE ', this.userHasBugClosePermission);
     }, ((error: HttpErrorResponse) => {
@@ -183,6 +185,9 @@ export class BugsComponent implements OnInit {
     this.createdByUsernamesForDropDown = [
       {label: 'No one', value: null}
     ];
+
+
+
     for (let i = 0; i < this.users.length; i++) {
       this.usernamesForFilter.push({label: this.users[i].username, value: this.users[i].username});
       this.createdByUsernamesForDropDown.push({label: this.users[i].username, value: this.users[i].username});
@@ -240,10 +245,6 @@ export class BugsComponent implements OnInit {
       } else {
         bugToView.assignedId = this.bugs[i].assignedId.username;
       }
-
-      // bugToView = new BugToShow(this.bugs[i].id, this.bugs[i].title, this.bugs[i].description, this.bugs[i].version, this.bugs[i].targetDate,
-      //   this.bugs[i].fixedVersion, this.bugs[i].createdId.username, this.bugs[i].assignedId.username, this.bugs[i].status,
-      //   this.bugs[i].severity);
       this.bugsToView.push(bugToView);
     }
   }
@@ -289,6 +290,8 @@ export class BugsComponent implements OnInit {
           this.userHasManagementPermission = obj;
         } else if (requiredPermission === 'BUG_CLOSE') {
           this.userHasBugClosePermission = obj;
+        } else if (requiredPermission === 'BUG_EXPORT_PDF') {
+          this.userHasExportPermission = obj;
         }
         // return obj;
       },

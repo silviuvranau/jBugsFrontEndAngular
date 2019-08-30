@@ -7,12 +7,6 @@ table, th, td {
   text-align: center;
 }
 
-/*:host{*/
-/*::ng-deep .prime-dialog-override{*/
-/*  width: 500px;*/
-/*  background-color: lightgrey;*/
-/*}*/
-/*}*/
 
 .bugPopUp {
   width: 500px;
@@ -23,6 +17,3 @@ table, th, td {
   font-weight: bold;
 }
 
-button {
-  color: green;
-}

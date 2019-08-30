@@ -33,13 +33,13 @@
                     *ngSwitchCase="'targetDate'" [defaultDate]="" [readonlyInput]="false" dateFormat="yy-MM-dd"
                     (onSelect)="dt.filter($event, col.field, 'dateFilter')"></p-calendar>
 
-        <p-multiSelect [style]="{'width':'90px'}" *ngSwitchCase="'status'" [options]="statusTypes" defaultLabel="All Types"
+        <p-multiSelect [style]="{'width':'90px'}" *ngSwitchCase="'status'" [options]="statusTypes" defaultLabel="{{'BDETAILS.ALLTYPES' | translate}}"
                     (onChange)="dt.filter($event.value, col.field, 'equals')"></p-multiSelect>
 
         <input *ngSwitchCase="'fixedVersion'" pInputText type="text"
                (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" [ngStyle]="{'width':'50px'}">
 
-        <p-multiSelect *ngSwitchCase="'severity'" [options]="severityTypes" defaultLabel="All Types"
+        <p-multiSelect *ngSwitchCase="'severity'" [options]="severityTypes" defaultLabel="{{'BDETAILS.ALLTYPES' | translate}}"
                     (onChange)="dt.filter($event.value, col.field, 'in')"></p-multiSelect>
 
         <p-dropdown *ngSwitchCase="'createdId'" [options]="usernamesForFilter"
@@ -96,10 +96,10 @@
           />
           <div *ngIf="title.touched && title.invalid">
             <div *ngIf="title.errors.required" style="color:red">
-              *Title is required.
+              {{'BDETAILS.TITLEREQUIRED' | translate}}
             </div>
             <div *ngIf="title.errors.pattern" style="color:red">
-              *Invalid title.
+              {{'BDETAILS.TITLEINVALID' | translate}}
             </div>
           </div>
         </div>
@@ -122,10 +122,10 @@
           </textarea>
           <div *ngIf="description.touched && description.invalid">
             <div *ngIf="description.errors.required" style="color:red">
-              *Description is required.
+              {{'BDETAILS.DESCREQUIRED' | translate}}
             </div>
             <div *ngIf="description.errors.minlength" style="color:red">
-              *Invalid description. Description must have a minimum of 250 characters.
+              {{'BDETAILS.DESCINVALID' | translate}}
             </div>
           </div>
         </div>
@@ -148,10 +148,10 @@
           />
           <div *ngIf="version.touched && version.invalid">
             <div *ngIf="version.errors.required" style="color:red">
-              *Version is required.
+              {{'BDETAILS.VERSIONREQUIRED' | translate}}
             </div>
             <div *ngIf="version.errors.pattern" style="color:red">
-              *Invalid version. Versions must be of the form '1.1.1'
+              {{'BDETAILS.VERSIONINVALID' | translate}}
             </div>
           </div>
         </div>
@@ -200,7 +200,7 @@
           />
           <div *ngIf="fixedVersion.touched && fixedVersion.invalid">
             <div *ngIf="fixedVersion.errors.pattern" style="color:red">
-              *Invalid version. Versions must be of the form '1.1.1'
+              {{'BDETAILS.VERSIONINVALID' | translate}}
             </div>
           </div>
         </div>
@@ -237,15 +237,16 @@
       </div>
   </div>
 
-
-
     <button class="btn btn-primary" style="margin-top:3%" [disabled]="editBugForm.invalid"
             [hidden]="!userHasManagementPermission"
             [disabled]="editBugForm.invalid"
     >{{'BDETAILS.BTNEDIT' | translate}}
     </button>
-    <button class="btn btn-primary" style="margin-top:3%" (click)="downloadPdf(popUpBug)">Export as PDF</button>
+
+    <button class="btn btn-primary" type="button" style="margin-top:3%; margin-left:3px"
+            [hidden]="!userHasExportPermission" (click)="downloadPdf(popUpBug)">{{'BDETAILS.EXPPDF' | translate}}
+    </button>
 
   </form>
 </p-dialog>
-<button (click)="exportAsXLSX()">Export List as Excel</button>
+<button class="btn btn-primary" style="margin-top:3%" (click)="exportAsXLSX()">{{'BDETAILS.EXPEXCEL' | translate}}</button>

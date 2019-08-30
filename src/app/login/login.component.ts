@@ -95,6 +95,18 @@ export class LoginComponent implements OnInit {
         },
         (error) => {
           console.log(error);
+
+          if(error.error === 'User not found !') {
+
+            this.toasterService.error(this.translateService.instant('LOGIN.USERNOTFOUND'));
+            return;
+          }
+          else if(error.error === 'Invalid credentials') {
+
+            this.toasterService.error(this.translateService.instant('LOGIN.CREDENTIALSINVALID'));
+            return;
+          }
+
           this.toasterService.error(error.error);
         });
 
