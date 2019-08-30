@@ -7,6 +7,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {RoleService} from '../service/role.service';
 import {ToastrService} from 'ngx-toastr';
 import {UserService} from '../service/user.service';
+import { SendNotificationsService } from '../service/send-notifications.service';
 
 @Component({
   selector: 'app-user-list',
@@ -19,7 +20,7 @@ export class UserListComponent implements OnInit {
 
   constructor(private backendService: BackendService, private excelservice: ExcelService,
               private roleService: RoleService, private toastrService: ToastrService,
-              private userService: UserService) {
+              private userService: UserService, private sendNotificationsService: SendNotificationsService) {
   }
 
   arrUsers: User[];
@@ -44,7 +45,16 @@ export class UserListComponent implements OnInit {
       { field: 'username', header: 'Username', width: '100px'},
       { field: 'status', header: 'Status', width: '100px'},
     ];
+    // this.sendMsg();
+  }
 
+  sendMsg() {
+    console.log('msg sent');
+    let message = {
+      page: 'bug',
+      id: '1'
+    }
+    this.sendNotificationsService.messages.next(message);
   }
 
   findAllRoles() {
@@ -90,7 +100,8 @@ export class UserListComponent implements OnInit {
     return user;
   }
   exportAsXLSX(): void {
-    this.excelservice.exportAsExcelFile(this.arrUsers, 'sample');
+    // this.excelservice.exportAsExcelFile(this.arrUsers, 'sample');
+    this.sendMsg();
   }
   downloadPdf() {
     //const doc = new jsPDF();

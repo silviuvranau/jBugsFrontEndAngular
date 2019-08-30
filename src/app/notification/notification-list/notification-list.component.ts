@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {NotificationService} from '../notification.service';
 import {CookieService} from 'ngx-cookie-service';
 import { Router } from '@angular/router';
+import { SendNotificationsService } from 'src/app/service/send-notifications.service';
+import { NotificationService } from '../notification.service';
 
 @Component({
   selector: 'app-notification-list',
@@ -28,9 +29,11 @@ export class NotificationListComponent implements OnInit {
     this.getAllNotifications();
 
     console.log(this.notifications);
-    this.goToBug(1);
+    // this.goToBug(1);
 
   }
+
+
 
   getAllNotifications() {
     this.notificationService.getAllNotificationsForUser(this.cookieService.get("username")).subscribe(

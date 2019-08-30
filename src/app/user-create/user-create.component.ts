@@ -6,6 +6,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {NgForm} from '@angular/forms';
 import {User} from '../models/user.model';
 import {UserService} from '../service/user.service';
+import { SendNotificationsService } from '../service/send-notifications.service';
 
 @Component({
   selector: 'app-user-create',
@@ -16,7 +17,8 @@ export class UserCreateComponent implements OnInit {
 
   roles: Role[];
 
-  constructor(private roleService: RoleService, private userService: UserService, private toastrService: ToastrService) { }
+  constructor(private roleService: RoleService, private userService: UserService, private toastrService: ToastrService,
+    private sendNotificationsService: SendNotificationsService) { }
 
   ngOnInit() {
     this.findAllRoles();

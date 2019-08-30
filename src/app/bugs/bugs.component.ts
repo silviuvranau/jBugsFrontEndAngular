@@ -14,6 +14,7 @@ import {ExcelBugsService} from './excel-bugs.service';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import { ActivatedRoute } from '@angular/router';
+import { SendNotificationsService } from '../service/send-notifications.service';
 
 @Component({
   selector: 'app-bugs',
@@ -58,7 +59,8 @@ export class BugsComponent implements OnInit {
   dt: Table;
 
   constructor(private bugsService: BugsService, private permissionChecker: PermissionCheckerService, private datePipe: DatePipe, private toastrService: ToastrService,
-              private cookieService: CookieService, private excelbugservice: ExcelBugsService, private route: ActivatedRoute) {
+              private cookieService: CookieService, private excelbugservice: ExcelBugsService, private route: ActivatedRoute,
+              private sendNotificationService: SendNotificationsService) {
   }
 
   ngOnInit() {
@@ -195,7 +197,9 @@ export class BugsComponent implements OnInit {
     )
     // console.log("RESULT"+result);
     // return result;
+    // this.sendMsg();
   }
+
 
   initializeData() {
     this.bugsService.getAllBugs().subscribe((obj) => {
