@@ -34,4 +34,8 @@ export class BugsService {
   getABug(id: number): Observable<Bug>{
     return this.backendService.get('http://localhost:8080/jbugs/api/bugs/'+id);
   }
+
+  deleteCurrentAttachment(id:number){
+    return this.backendService.delete('http://localhost:8080/jbugs/api/attachments/'+id);
+  }
 }

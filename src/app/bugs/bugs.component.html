@@ -284,16 +284,13 @@
             *File can't be larger than 25MB.
           </div>
 
-          <div styl>
+
             <div style="color:dimgrey; font-style: italic">
               <label>Current Attachment: {{assignedAttachment}}</label>
             </div>
-          </div>
-          <div class="form-inline">
             <div *ngIf="assignedAttachment !== 'None'">
-              <button class="deleteAttButton">Delete current attachment</button>
+              <button class="deleteAttButton" type="button" (click)="deleteCurrentAttachment()">Delete current attachment</button>
             </div>
-          </div>
 
         </div>
       </div>

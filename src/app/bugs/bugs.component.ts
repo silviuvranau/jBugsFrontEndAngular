@@ -35,6 +35,7 @@ export class BugsComponent implements OnInit {
   userHasExportPermission: boolean;
   isStatusFixed: boolean;
   assignedAttachment: string;
+  assignedAttachmentId: number;
 
   isStatusRejected: boolean;
   users: User[];
@@ -226,6 +227,12 @@ export class BugsComponent implements OnInit {
 
 
   initializeData() {
+    this.bugsService.getAllAttachments().subscribe((obj) => {
+      this.attachments = obj;
+    }, ((error: HttpErrorResponse) => {
+      this.toastrService.error("Couldn't load bug attachment.");
+    }));
+
     this.bugsService.getAllBugs().subscribe((obj) => {
       this.bugs = obj;
       this.getBugsToView();
@@ -236,18 +243,15 @@ export class BugsComponent implements OnInit {
       this.toastrService.error("Couldn't load bug table.");
     }));
 
-    this.bugsService.getAllAttachments().subscribe((obj) => {
-      this.attachments = obj;
-    }, ((error: HttpErrorResponse) => {
-      this.toastrService.error("Couldn't load bug attachment.");
-    }));
+    console.log(this.attachments);
   }
 
  attachmentOfBug(bug: Bug){
+   this.assignedAttachment = "";
    for(let i = 0; i < this.attachments.length; i++){
      if(this.attachments[i].bug.id === bug.id){
-       console.log(this.attachments[i].attContent)
        this.assignedAttachment = this.attachments[i].attContent.substring(9);
+       this.assignedAttachmentId = this.attachments[i].id;
      }
    }
    if (this.assignedAttachment === "") {
@@ -459,6 +463,18 @@ export class BugsComponent implements OnInit {
     attachmentToInsert.bug = null;
 
     return attachmentToInsert;
+  }
+
+  deleteCurrentAttachment() {
+    this.bugsService.deleteCurrentAttachment(this.assignedAttachmentId).subscribe(
+      () => {
+          this.toastrService.success("Attachment deleted.")
+      },
+      (error: HttpErrorResponse) => {
+        this.toastrService.error("Your request could not be completed.");
+      }
+    );
+    this.initializeData();
   }
 
   createBugAttachmentWrapper(bug: Bug, attachment: Attachment): BugAttachmentWrapper {
