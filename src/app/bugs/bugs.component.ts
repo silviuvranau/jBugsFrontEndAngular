@@ -14,9 +14,14 @@ import {ExcelBugsService} from './excel-bugs.service';
 import {TranslateService} from "@ngx-translate/core";
 import {Attachment} from "../models/attachment.model";
 import {BugAttachmentWrapper} from "../models/bugAttachmentWrapper.model";
+import { ActivatedRoute, Router } from '@angular/router';
+import { SendNotificationsService } from '../service/send-notifications.service';
 // import jsPDF from 'jspdf';
 // import * as jsPDF from 'jspdf'
 // import 'jspdf-autotable';
+
+var jsPDF = require('jspdf');
+require('jspdf-autotable');
 
 
 @Component({
@@ -61,7 +66,8 @@ export class BugsComponent implements OnInit {
   dt: Table;
 
   constructor(private bugsService: BugsService, private permissionChecker: PermissionCheckerService, private datePipe: DatePipe, private toastrService: ToastrService,
-              private cookieService: CookieService, private excelbugservice: ExcelBugsService, private translateService: TranslateService) {
+              private cookieService: CookieService, private excelbugservice: ExcelBugsService, private translateService: TranslateService,
+              private route: ActivatedRoute, private router: Router, private sendNotificationsService: SendNotificationsService) {
   }
 
   ngOnInit() {
@@ -165,7 +171,61 @@ export class BugsComponent implements OnInit {
     this.transitionsFromStatusClosed = [
       {label: 'CLOSED', value: 'CLOSED'},
     ];
+
+    this.route.queryParams.subscribe(params => {
+      this.selectedBugId = +params['bugId'];
+    });
+
+    if(this.selectedBugId !== undefined && this.selectedBugId != NaN){
+      let bug: Bug;
+      this.getBugById(this.selectedBugId);
+      console.log("BUG" + this.openedBug);
+    }
   }
+
+  selectedBugId: number;
+  openedBug: Bug;
+
+  getBugById(id: number) {
+    // let result: Bug;
+    this.bugsService.getABug(id).toPromise().then(
+      (res: Bug) =>
+      {
+        console.log(res);
+        this.openedBug = res;
+        this.attachmentOfBug(this.openedBug);
+        this.popUpBug = this.bugToBugToShow(this.openedBug);
+        this.displayBugPopUp = true;
+      },
+      (error) =>
+      {
+        console.log(error.error);
+      }
+    )
+  }
+
+  
+  bugToBugToShow(bug: Bug): BugToShow{
+    const bugToView = {} as BugToShow;
+    bugToView.id = bug.id;
+    bugToView.title = bug.title;
+    bugToView.description = bug.description;
+    bugToView.version = bug.version;
+    bugToView.targetDate = bug.targetDate;
+    bugToView.fixedVersion = bug.fixedVersion;
+    bugToView.createdId = bug.createdId.username;
+    bugToView.status = bug.status;
+    bugToView.severity = bug.severity;
+
+    if (bug.assignedId === null) {
+      bugToView.assignedId = '';
+    } else {
+      bugToView.assignedId = bug.assignedId.username;
+    }
+
+    return bugToView;
+  }
+
 
   initializeData() {
     this.bugsService.getAllBugs().subscribe((obj) => {
@@ -357,7 +417,11 @@ export class BugsComponent implements OnInit {
     this.bugsService.editBug(bugAttWrapper).subscribe(
       () => {
         this.initializeData();
-        this.toastrService.success('Bug edited successfully');
+        let message = {
+          type: 'SENT',
+          text: 'Your bug was just updated.'
+        }
+        this.sendNotificationsService.messages.next(message);
 
       },
       (error: HttpErrorResponse) => {

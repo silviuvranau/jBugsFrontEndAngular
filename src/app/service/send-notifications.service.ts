@@ -8,8 +8,8 @@ export const environment = {
 }
 
 export interface Message{
-  page: string,
-  id: string;
+  type: string;
+  text: string;
 }
 
 @Injectable({
@@ -26,8 +26,8 @@ export class SendNotificationsService {
       .map((response: MessageEvent): Message => {
         let data = JSON.parse(response.data);
         return {
-          page: data.page,
-          id: data.id
+          type: data.type,
+          text: data.text
         }
       })
    }

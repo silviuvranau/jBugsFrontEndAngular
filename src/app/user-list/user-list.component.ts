@@ -24,8 +24,7 @@ export class UserListComponent implements OnInit {
 
   constructor(private backendService: BackendService, private excelservice: ExcelService,
             private roleService: RoleService, private toastrService: ToastrService,
-            private userService: UserService, private translateService: TranslateService,
-            private sendNotificationService: SendNotificationsService) {
+            private userService: UserService, private translateService: TranslateService) {
   }
 
   arrUsers: User[];
@@ -96,26 +95,9 @@ export class UserListComponent implements OnInit {
     const user = Object.assign({}, u);
     return user;
   }
-  exportAsXLSX(): void {
-    // this.excelservice.exportAsExcelFile(this.arrUsers, 'sample');
-    this.sendMsg();
-  }
 
-  sendMsg() {
-    console.log('msg sent');
-    let message = {
-      page: 'bug',
-      id: '1'
-    }
-    this.sendNotificationService.messages.next(message);
-  }
 
-  downloadPdf() {
-    //const doc = new jsPDF();
 
-    // doc.text(this.arrUsers);
-    // doc.save('a4.pdf');
-  }
 
   onEditClick(){
     this.selectedUser.roleIds = [];

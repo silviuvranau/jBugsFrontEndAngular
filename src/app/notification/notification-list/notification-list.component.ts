@@ -15,7 +15,8 @@ export class NotificationListComponent implements OnInit {
   selectedNotification: Notification;
   notifications: Notification[];
 
-  constructor(private notificationService: NotificationService, private cookieService: CookieService, private router: Router) {
+  constructor(private notificationService: NotificationService, private cookieService: CookieService, private router: Router,
+    private sendNotificationsService: SendNotificationsService) {
   }
 
   ngOnInit() {
@@ -30,6 +31,12 @@ export class NotificationListComponent implements OnInit {
 
     console.log(this.notifications);
     // this.goToBug(1);
+    let message = {
+      type: 'READ',
+      text: 'Notifications read'
+    }
+
+    this.sendNotificationsService.messages.next(message);
 
   }
 
@@ -47,6 +54,7 @@ export class NotificationListComponent implements OnInit {
     this.notificationService.getAllNotificationsForUser(this.cookieService.get("username")).subscribe(
       (notificationList) => {
         this.notifications = notificationList;
+        this.notifications.reverse();
       }
     );
 
