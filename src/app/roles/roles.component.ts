@@ -60,9 +60,14 @@ export class RolesComponent implements OnInit {
     // create Wrapper with role and permission given from table
     this.rolePermission = new RolePermission(role, per);
 
-    this.roleService.sendData(this.rolePermission).subscribe((data: {}) => {
-      console.log(data);
-    });
+    this.roleService.sendData(this.rolePermission).subscribe(
+      () => {
+        this.toastrService.success("Permission changed.")
+      },
+      (error: HttpErrorResponse) => {
+        this.toastrService.error("Your request could not be carried out.");
+      }
+    );
   }
 
   /**
