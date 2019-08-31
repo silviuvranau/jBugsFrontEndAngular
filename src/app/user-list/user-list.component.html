@@ -1,8 +1,8 @@
 
-<!--<div style="  text-align:left;width:500px;">-->
+<div style="text-align:left;">
 
 
-  <p-table  id="user_table" [columns]="cols" [value]="arrUsers"  [paginator]="true" [rows]="5" (onRowSelect)="onRowSelect($event)"
+  <p-table  id="user_table" [columns]="cols" [value]="arrUsers"  [paginator]="true" [rows]="10" (onRowSelect)="onRowSelect($event)"
            selectionMode="single" [(selection)]="selectedUser" [style]="{width: '100%' }" >
     <ng-template pTemplate="header" let-columns >
       <tr>
@@ -41,83 +41,161 @@
 
   </p-table>
   <p-dialog header = "{{'USERDETAILS.USERDETAIL' | translate}}" [(visible)]="displayDialog" [responsive]="true" [modal]="true"
-            [style]="{width: '500px', background: 'lightgrey'}">
+            [style]="{width: '700px', background: 'lightgrey'}">
     <div class="ui-g ui-fluid" *ngIf="selectedUser">
+
+      <form #editUserForm="ngForm">
 
       <div class="ui-g-12">
         <div class="ui-g-4">
           <label styleClass="bugPopUpLabels" for="title">{{'USERDETAILS.FIRSTNAME' | translate}}</label>
         </div>
         <div class="ui-g-8">
-          <input pInputText
-           id="firstName"
-           [(ngModel)]="selectedUser.firstName"
-           style = "width:200px;"
-           pattern = "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$"/>
+            <input pInputText
+            required
+            pattern = "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$"
+            id = "firstName"
+            name = "firstName"
+            class = "form-control"
+            #firstName = "ngModel"
+            [(ngModel)]="selectedUser.firstName"
+            >
+            <div style="width:400px" *ngIf="firstName.touched && firstName.invalid">
+                <div *ngIf = "firstName.errors.required" style = "color:red">
+                  {{'NOTIFICATION.FIRSTNAMEREQUIRED' | translate}}
+    
+                </div>
+                <div *ngIf = "firstName.errors.pattern" style = "color:red">
+                  {{'NOTIFICATION.INVALIDFIRSTNAME' | translate}}
+    
+                </div>
+          </div>
         </div>
       </div>
 
       <div class="ui-g-12">
-        <div class="ui-g-4">
-          <label for="description">{{'USERDETAILS.LASTNAME' | translate}}</label>
+          <div class="ui-g-4">
+            <label for="description">{{'USERDETAILS.LASTNAME' | translate}}</label>
+          </div>
+          <div class="ui-g-8">
+              <input
+              required
+              pattern = "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$"
+              id = "lastName"
+              name = "lastName"
+              class = "form-control"
+              #lastName = "ngModel"
+              [(ngModel)]="selectedUser.lastName"
+              >
+              <div style="width:400px" *ngIf="lastName.touched && lastName.invalid">
+                  <div *ngIf = "lastName.errors.required" style = "color:red">
+                    {{'NOTIFICATION.LASTNAMEREQUIRED' | translate}}
+      
+                  </div>
+                  <div *ngIf = "lastName.errors.pattern" style = "color:red">
+                    {{'NOTIFICATION.INVALIDLASTNAME' | translate}}
+      
+                  </div>
+              </div>
+          </div>
         </div>
-        <div class="ui-g-8">
-          <input pInputText id="description" [(ngModel)]="selectedUser.lastName" style = "width:200px;"/>
-        </div>
-      </div>
 
-      <div class="ui-g-12">
-        <div class="ui-g-4">
-          <label for="version">{{'USERDETAILS.EMAIL' | translate}}</label>
-        </div>
-        <div class="ui-g-8">
-          <input pInputText id="version" [(ngModel)]="selectedUser.email" style = "width:200px;"/>
-          <br>
-          {{'USERDETAILS.EMAILSTAR' | translate}} <br>  {{'USERDETAILS.EMAILSTAR2' | translate}}
-        </div>
-      </div>
+        <div class="ui-g-12">
+            <div class="ui-g-4">
+              <label for="version">{{'USERDETAILS.EMAIL' | translate}}</label>
+            </div>
+            <div class="ui-g-8">
+              <input
+              required
+              pattern = "^[a-zA-Z0-9_.+-]+@msggroup.com$"
+              id = "email"
+              name = "email"
+              class = "form-control"
+              #email = "ngModel"
+              [(ngModel)]="selectedUser.email"
+              >
+              <div style="width:400px" *ngIf="email.touched && email.invalid">
+                  <div *ngIf = "email.errors.required" style = "color:red">
+      
+                    {{'NOTIFICATION.EMAILREQUIRED' | translate}}
+      
+                  </div>
+                  <div *ngIf = "email.errors.pattern" style = "color:red">
+      
+                    {{'NOTIFICATION.INVALIDEMAIL' | translate}}
+      
+                  </div>
+              </div>
+            </div>
+          </div>
 
+      
       <div class="ui-g-12">
         <div class="ui-g-4">
           <label for="targetDate">{{'USERDETAILS.MOBILENUMBER' | translate}}</label>
         </div>
         <div class="ui-g-8">
-          <input pInputText id="targetDate" [(ngModel)]="selectedUser.mobileNumber" style = "width:200px;"/>
-          <br>
-          {{'USERDETAILS.MOBILESTAR' | translate}} <br>  {{'USERDETAILS.MOBILESTAR2' | translate}}
+            <input
+            pattern = "(\+4[0][7][0-9]{8})|(\(?\+\(?49\)?[ ()]?([- ()]?\d[- ()]?){10})"
+            required
+            id = "mobileNumber"
+            name = "mobileNumber"
+            class = "form-control"
+            #mobileNumber = "ngModel"
+            [(ngModel)]="selectedUser.mobileNumber"
+            >
+         <div style="width:400px" *ngIf="mobileNumber.touched && mobileNumber.invalid">
+            <div *ngIf = "mobileNumber.errors.required" style = "color:red">
+              {{'NOTIFICATION.MOBILENUMBERREQUIRED' | translate}}
+
+            </div>
+            <div *ngIf = "mobileNumber.errors.pattern" style = "color:red">
+
+              {{'NOTIFICATION.INVALIDMOBILENUMBER' | translate}}
+
+            </div>
+        </div>
         </div>
       </div>
 
       <div class="ui-g-12">
-        <div class="ui-g-4">
-          <label for="username">{{'USERDETAILS.USERNAME' | translate}}</label>
-        </div>
-        <div class="ui-g-8">
-          <input pInputText id="username" [(ngModel)]="selectedUser.username" style = "width:200px;" disabled/>
-        </div>
+          <div class="ui-g-4">
+            <label for="username">{{'USERDETAILS.USERNAME' | translate}}</label>
+          </div>
+          <div class="ui-g-8">
+            <input class = "form-control" id="username" value="{{selectedUser.username}}" disabled/>
+          </div>
       </div>
 
       <div class="ui-g-12">
-        <div class="ui-g-4">
-          <label for="password">{{'USERDETAILS.PASSWORD' | translate}}</label>
+          <div class="ui-g-4">
+            <label for="password">{{'USERDETAILS.PASSWORD' | translate}}</label>
+          </div>
+          <div class="ui-g-8">
+              <input
+              id = "password"
+              name = "password"
+              class = "form-control"
+              type = "password"
+              #password = "ngModel"
+              [(ngModel)]="selectedUser.password"
+              >
+          </div>
         </div>
-        <div class="ui-g-8">
-          <input pInputText id="password" [(ngModel)]="selectedUser.password" style = "width:200px;" type = "password"/>
-        </div>
+
+        <div class="ui-g-12">
+          <div class="ui-g-4">
+            <label for="status">{{'USERDETAILS.BLOCKED' | translate}}</label>
+          </div>
+          <div class="ui-g-8">
+                <input type = "checkbox"
+                [(ngModel)] = "selectedUser.status"
+                name = "status"
+                id = status
+                [disabled] = "selectedUser.username === loggedInUser">
+          </div>
       </div>
-
-      <div class="ui-g-12">
-        <div class="ui-g-4">
-          <label for="fixedVersion">{{'USERDETAILS.BLOCKED' | translate}}</label>
-        </div>
-        <div class="ui-g-8">
-
-          <input type = "checkbox" id="fixedVersion" [(ngModel)]="selectedUser.status" >
-
-
-
-        </div>
-      </div>
+      
       <div class = "ui-g-12">
           <div class = "ui-g-4">
             {{'USERDETAILS.ROLES' | translate}}
@@ -135,15 +213,20 @@
               </label>
           </div>
       </div>
+  
+
       <div class = "ui-g-12">
         <div class = "ui-g-4">
-          <button class = "btn btn-primary" style = "margin-top:3%;width: 155px" (click) = "onEditClick()">{{'USERDETAILS.EDIT' | translate}}</button>
+          <button class = "btn btn-primary" style = "margin-top:3%;width: 155px" (click) = "onEditClick()"
+          [disabled]="editUserForm.invalid">{{'USERDETAILS.EDIT' | translate}}</button>
         </div>
       </div>
-      
+
+
+      </form>
     </div>
   </p-dialog>
 
 
-<!--</div>-->
+</div>
 
