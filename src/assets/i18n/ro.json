@@ -10,7 +10,8 @@
     "CAPTCHA": "Introduceti codul",
     "LOGBUTTON": "Autentificare",
     "USERNOTFOUND": "Utilizator inexistent!",
-    "CREDENTIALSINVALID": "Date invalide !"
+    "CREDENTIALSINVALID": "Date invalide !",
+    "ACCBLOCKED": "Utilizator blocat !"
 
   },
 

@@ -12,7 +12,7 @@ import {CookieService} from 'ngx-cookie-service';
 import {PermissionCheckerService} from '../utils/permissionCheckerService';
 import {ExcelBugsService} from './excel-bugs.service';
 import {TranslateService} from "@ngx-translate/core";
-import jsPDF from 'jspdf';
+// import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 
 
@@ -380,18 +380,18 @@ export class BugsComponent implements OnInit {
   exportAsXLSX(): void {
     this.excelbugservice.exportAsExcelFile(this.bugs, 'bugs');
   }
-  downloadPdf(bug: BugToShow) {
-    const doc = new jsPDF();
-    const col = ['Title', 'Description', 'Target Date', 'Version', 'Status', 'Fixed Version', 'Severity', 'Createfd By', 'Assigned to'];
-    const rows = [];
-
-    /* The following array of object as response from the API req  */
-    const temp = [bug.title, bug.description, bug.targetDate, bug.version, bug.status, bug.fixedVersion, bug.severity, bug.createdId, bug.assignedId];
-    rows.push(temp);
-
-
-    doc.autoTable(col, rows, {startY: 10});
-    doc.save('Bug-' + bug.title + '.pdf');
-  }
+  // downloadPdf(bug: BugToShow) {
+  //   const doc = new jsPDF();
+  //   const col = ['Title', 'Description', 'Target Date', 'Version', 'Status', 'Fixed Version', 'Severity', 'Createfd By', 'Assigned to'];
+  //   const rows = [];
+  //
+  //   /* The following array of object as response from the API req  */
+  //   const temp = [bug.title, bug.description, bug.targetDate, bug.version, bug.status, bug.fixedVersion, bug.severity, bug.createdId, bug.assignedId];
+  //   rows.push(temp);
+  //
+  //
+  //   doc.autoTable(col, rows, {startY: 10});
+  //   doc.save('Bug-' + bug.title + '.pdf');
+  // }
 }
 

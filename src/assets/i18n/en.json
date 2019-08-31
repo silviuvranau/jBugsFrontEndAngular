@@ -9,7 +9,8 @@
     "CAPTCHA": "Enter Code",
     "LOGBUTTON": "Login",
     "USERNOTFOUND": "User not found !",
-    "CREDENTIALSINVALID": "Invalid credentials !"
+    "CREDENTIALSINVALID": "Invalid credentials !",
+    "ACCBLOCKED": "Account is blocked !"
   },
   "NOTIFICATION": {
     "INVALID_CAPTCHA": "Invalid Captcha",
