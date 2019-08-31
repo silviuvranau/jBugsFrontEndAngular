@@ -9,8 +9,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { RoleService } from '../service/role.service';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../service/user.service';
-import {executeBrowserBuilder} from '@angular-devkit/build-angular';
-import {TranslateService} from '@ngx-translate/core';
+import {executeBrowserBuilder} from "@angular-devkit/build-angular";
+import {TranslateService} from "@ngx-translate/core";
+import { SendNotificationsService } from '../service/send-notifications.service';
 
 @Component({
   selector: 'app-user-list',
@@ -41,8 +42,8 @@ export class UserListComponent implements OnInit {
     //   console.log(data);
     // });
     this.cols = [
-      { field: 'firstName', header: 'FirstName', width: '120px' },
-      {field: 'lastName', header: 'LastName', width: '150px' },
+      { field: 'firstName', header: 'FirstName', width: '200px' },
+      {field: 'lastName', header: 'LastName', width: '200px' },
       { field: 'email', header: 'Email', width: '270px' },
       { field: 'mobileNumber', header: 'Mobile', width: '120px'},
       { field: 'username', header: 'Username', width: '150px'},
@@ -100,9 +101,7 @@ export class UserListComponent implements OnInit {
   downloadPdf() {
     //const doc = new jsPDF();
 
-    // doc.text(this.arrUsers);
-    // doc.save('a4.pdf');
-  }
+
 
   onEditClick(){
     this.selectedUser.roleIds = [];
@@ -131,8 +130,7 @@ export class UserListComponent implements OnInit {
     }
 
     if(this.selectedUser.password === ''){
-      this.toastrService.error("Password cannot be empty");
-      return;
+      this.selectedUser.password = null;
     }
 
 

@@ -3,9 +3,12 @@
     <form #createBugForm="ngForm" (ngSubmit)=addBug(createBugForm)>
       <div class="form-style">
         <label for="title">Title</label>
+      </div>
         <input
           required
           pattern="^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$"
+          minlength=3
+          maxlength=25
           id="title"
           name="title"
           class="form-control"
@@ -16,17 +19,21 @@
           <div *ngIf="title.errors.required" style="color:red">
             *Title is required.
           </div>
+          <div *ngIf="title.errors.minlength" style="color:red">
+            *Invalid title. Title must have a minimum of 3 characters.
+          </div>
           <div *ngIf="title.errors.pattern" style="color:red">
             *Invalid title.
           </div>
         </div>
-      </div>
 
 
       <div class="form-style">
         <label for="description">Description</label>
+      </div>
         <textarea required
                   minlength=250
+                  maxlength=1000
                   id="description"
                   name="description"
                   class="form-control"
@@ -43,12 +50,12 @@
           </div>
         </div>
 
-      </div>
-
       <div class="form-style">
         <label for="description">Version</label>
+      </div>
         <input pInputText
                required
+               maxlength=10
                pattern="^[0-9.]*$"
                id="version"
                name="version"
@@ -64,19 +71,19 @@
             *Invalid version. Versions must be of the form '1.1.1'
           </div>
         </div>
-      </div>
 
       <div class="form-style">
         <label for="targetDate">Target Date</label>
+      </div>
         <div>
-          <p-calendar ngModel name="targetDate" id="targetDate" [style]="{'width': '300px'}"
+          <p-calendar required ngModel name="targetDate" id="targetDate" [style]="{'width': '300px'}"
                       [minDate]="currentDate"
                       dateFormat="yy-MM-dd"></p-calendar>
         </div>
-      </div>
 
       <div class="form-style">
         <label for="status">Status</label>
+      </div>
         <input pInputText
                id="status"
                name="status"
@@ -85,12 +92,12 @@
                ngModel="NEW"
                [disabled]="true"
         />
-      </div>
 
       <div class="form-style">
         <label for="fixedVersion">Fixed Version</label>
+      </div>
         <input pInputText
-               required
+               maxlength=10
                pattern="^[0-9.]*$"
                id="fixedVersion"
                name="fixedVersion"
@@ -99,27 +106,24 @@
                ngModel
         />
         <div *ngIf="version.touched && version.invalid">
-          <div *ngIf="version.errors.required" style="color:red">
-            *Version is required.
-          </div>
           <div *ngIf="version.errors.pattern" style="color:red">
             *Invalid version. Versions must be of the form '1.1.1'
           </div>
         </div>
-      </div>
 
       <div class="form-style">
         <label for="severity">Severity</label>
+      </div>
         <div>
           <p-dropdown id="severity"
                       name="severity"
                       ngModel
                       [options]="severityTypes"></p-dropdown>
         </div>
-      </div>
 
       <div class="form-style">
         <label for="createdBy">Created by</label>
+      </div>
         <input pInputText
                id="createdBy"
                name="createdBy"
@@ -128,29 +132,34 @@
                [ngModel]="loggedInUser"
                [disabled]="true"
         />
-      </div>
 
       <div class="form-style">
         <label for="assignedTo">Assigned to</label>
+      </div>
         <div>
           <p-dropdown id="assignedTo" name="assignedTo" [options]="assignedToUsernamesForDropDown"
                       #assignedTo="ngModel" ngModel></p-dropdown>
         </div>
-      </div>
 
       <div class="form-style">
         <label for="attachment">Attachment</label>
-        <div>
+      </div>
+        <div class = "form-inline">
           <input
+            class="form-control-file ng-touched ng-dirty ng-invalid"
             id="attachment"
             name="attachment"
             type="file"
             accept=".pdf,.doc,.odf,.xlsx,.xls"
+            [ng2FileSize]="{ max: 25000 }"
+            [fileSizeErrorMsg]="'File size must be less than 25MB.'"
             #attachment="ngModel"
             ngModel
           >
         </div>
-      </div>
+        <div style="color:dimgrey; font-style: italic; font-size:10px">
+          *File can't be larger than 25MB.
+        </div>
 
       <button class="btn btn-primary" style="margin-top:3%" [disabled]="createBugForm.invalid">Add Bug</button>
     </form>

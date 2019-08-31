@@ -11,10 +11,17 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {CookieService} from 'ngx-cookie-service';
 import {PermissionCheckerService} from '../utils/permissionCheckerService';
 import {ExcelBugsService} from './excel-bugs.service';
-import {TranslateService} from '@ngx-translate/core';
-// @ts-ignore
-import jsPDF from 'jspdf';
-import 'jspdf-autotable';
+import {TranslateService} from "@ngx-translate/core";
+import {Attachment} from "../models/attachment.model";
+import {BugAttachmentWrapper} from "../models/bugAttachmentWrapper.model";
+import {ActivatedRoute, Router} from '@angular/router';
+import {SendNotificationsService} from '../service/send-notifications.service';
+// import jsPDF from 'jspdf';
+// import * as jsPDF from 'jspdf'
+// import 'jspdf-autotable';
+
+var jsPDF = require('jspdf');
+require('jspdf-autotable');
 
 
 @Component({
@@ -30,19 +37,21 @@ export class BugsComponent implements OnInit {
   userHasBugClosePermission: boolean;
   userHasExportPermission: boolean;
   isStatusFixed: boolean;
-  isStatusRejected: boolean;
+  assignedAttachment: string;
 
+  isStatusRejected: boolean;
   users: User[];
   bugs: Bug[];
+  attachments: Attachment[];
   bugsToView: BugToShow[];
   popUpBug: BugToShow;
   selectedBug: BugToShow;
+  currentBugStatus: Status;
+
   selectedBugDate = new Date();
-
   usernamesForFilter: SelectItem[];
+
   createdByUsernamesForDropDown: SelectItem[];
-
-
   cols: any[];
   statusTypes: SelectItem[];
   severityTypes: SelectItem[];
@@ -58,7 +67,8 @@ export class BugsComponent implements OnInit {
   dt: Table;
 
   constructor(private bugsService: BugsService, private permissionChecker: PermissionCheckerService, private datePipe: DatePipe, private toastrService: ToastrService,
-              private cookieService: CookieService, private excelbugservice: ExcelBugsService, private translateService: TranslateService) {
+              private cookieService: CookieService, private excelbugservice: ExcelBugsService, private translateService: TranslateService,
+              private route: ActivatedRoute, private router: Router, private sendNotificationsService: SendNotificationsService) {
   }
 
   ngOnInit() {
@@ -67,7 +77,7 @@ export class BugsComponent implements OnInit {
     this.bugsService.getAllUsers().subscribe(obj => {
       this.users = obj;
       this.usernamesForFilter = [
-        {label: 'All', value: null}
+        {label: this.translateService.instant('BDETAILS.ALL'), value: null}
       ];
       this.createUsernameLabels();
     });
@@ -109,6 +119,7 @@ export class BugsComponent implements OnInit {
     /**
      * Initializes status types.
      */
+
     this.statusTypes = [
       {label: 'NEW', value: Status.NEW},
       {label: 'IN_PROGRESS', value: Status.IN_PROGRESS},
@@ -132,36 +143,90 @@ export class BugsComponent implements OnInit {
      * Initialize possible status transitions from each status type.
      */
     this.transitionsFromStatusNew = [
-      {label: 'NEW', value: 'NEW'},
-      {label: 'IN_PROGRESS', value: 'IN_PROGRESS'},
-      {label: 'REJECTED', value: 'REJECTED'},
+      {label: 'NEW', value: Status.NEW},
+      {label: 'IN_PROGRESS', value: Status.IN_PROGRESS},
+      {label: 'REJECTED', value: Status.REJECTED},
     ];
 
     this.transitionsFromStatusInProgress = [
-      {label: 'INFO_NEEDED', value: 'INFO_NEEDED'},
-      {label: 'REJECTED', value: 'REJECTED'},
-      {label: 'FIXED', value: 'FIXED'},
+      {label: 'IN_PROGRESS', value: Status.IN_PROGRESS},
+      {label: 'REJECTED', value: Status.REJECTED},
+      {label: 'FIXED', value: Status.FIXED},
     ];
 
     this.transitionsFromStatusFixed = [
-      {label: 'FIXED', value: 'FIXED'},
-      {label: 'CLOSED', value: 'CLOSED'},
+      {label: 'FIXED', value: Status.FIXED},
+      {label: 'CLOSED', value: Status.CLOSED},
     ];
 
     this.transitionsFromStatusInfoNeeded = [
-      {label: 'INFO_NEEDED', value: 'INFO_NEEDED'},
-      {label: 'IN_PROGRESS', value: 'IN_PROGRESS'},
+      {label: 'INFO_NEEDED', value: Status.INFO_NEEDED},
+      {label: 'IN_PROGRESS', value: Status.IN_PROGRESS},
     ];
 
     this.transitionsFromStatusRejected = [
-      {label: 'REJECTED', value: 'REJECTED'},
-      {label: 'CLOSED', value: 'CLOSED'},
+      {label: 'REJECTED', value: Status.REJECTED},
+      {label: 'CLOSED', value: Status.CLOSED},
     ];
 
     this.transitionsFromStatusClosed = [
-      {label: 'CLOSED', value: 'CLOSED'},
+      {label: 'CLOSED', value: Status.CLOSED},
     ];
+
+    this.route.queryParams.subscribe(params => {
+      this.selectedBugId = +params['bugId'];
+    });
+
+    if(this.selectedBugId !== undefined && this.selectedBugId != NaN){
+      let bug: Bug;
+      this.getBugById(this.selectedBugId);
+      console.log("BUG" + this.openedBug);
+    }
   }
+
+  selectedBugId: number;
+  openedBug: Bug;
+
+  getBugById(id: number) {
+    // let result: Bug;
+    this.bugsService.getABug(id).toPromise().then(
+      (res: Bug) =>
+      {
+        console.log(res);
+        this.openedBug = res;
+        this.attachmentOfBug(this.openedBug);
+        this.popUpBug = this.bugToBugToShow(this.openedBug);
+        this.displayBugPopUp = true;
+      },
+      (error) =>
+      {
+        console.log(error.error);
+      }
+    )
+  }
+
+
+  bugToBugToShow(bug: Bug): BugToShow{
+    const bugToView = {} as BugToShow;
+    bugToView.id = bug.id;
+    bugToView.title = bug.title;
+    bugToView.description = bug.description;
+    bugToView.version = bug.version;
+    bugToView.targetDate = bug.targetDate;
+    bugToView.fixedVersion = bug.fixedVersion;
+    bugToView.createdId = bug.createdId.username;
+    bugToView.status = bug.status;
+    bugToView.severity = bug.severity;
+
+    if (bug.assignedId === null) {
+      bugToView.assignedId = '';
+    } else {
+      bugToView.assignedId = bug.assignedId.username;
+    }
+
+    return bugToView;
+  }
+
 
   initializeData() {
     this.bugsService.getAllBugs().subscribe((obj) => {
@@ -170,13 +235,30 @@ export class BugsComponent implements OnInit {
       this.checkIfUserHasPermission('BUG_MANAGEMENT');
       this.checkIfUserHasPermission('BUG_CLOSE');
       this.checkIfUserHasPermission('BUG_EXPORT_PDF');
-      console.log('BUG MANAGEMENT ', this.userHasManagementPermission);
-      console.log('BUG CLOSE ', this.userHasBugClosePermission);
     }, ((error: HttpErrorResponse) => {
       console.error(error);
-      this.toastrService.error(error.error);
+      this.toastrService.error("Couldn't load bug table.");
+    }));
+
+    this.bugsService.getAllAttachments().subscribe((obj) => {
+      this.attachments = obj;
+    }, ((error: HttpErrorResponse) => {
+      console.error(error);
+      this.toastrService.error("Couldn't load bug attachment.");
     }));
   }
+
+ attachmentOfBug(bug: Bug){
+   for(let i = 0; i < this.attachments.length; i++){
+     if(this.attachments[i].bug.id === bug.id){
+       console.log(this.attachments[i].attContent)
+       this.assignedAttachment = this.attachments[i].attContent.substring(9);
+     }
+   }
+   if (this.assignedAttachment === "") {
+     this.assignedAttachment = "None"
+   }
+}
 
   /**
    * Adds the usernames of users for the filter and edit bug functionality.
@@ -202,6 +284,8 @@ export class BugsComponent implements OnInit {
     this.popUpBug = this.cloneBug(event.data);
     this.selectedBugDate = new Date(this.popUpBug.targetDate);
     this.displayBugPopUp = true;
+    this.currentBugStatus = this.popUpBug.status;
+    this.attachmentOfBug(event.data);
   }
 
   checkStatusType(currentStatus: Status) {
@@ -331,10 +415,42 @@ export class BugsComponent implements OnInit {
     bugToInsert.createdId = createdByUser;
     bugToInsert.assignedId = assignedToUser;
 
-    this.bugsService.editBug(bugToInsert.id, bugToInsert).subscribe(
+    let attachmentToInsert = this.createAttachment(editBugForm);
+    let bugAttWrapper = this.createBugAttachmentWrapper(bugToInsert, attachmentToInsert);
+
+    let bugHasBeenClosed: boolean;
+    let statusHasBeenUpdated:boolean;
+
+    if(editBugForm.controls.status.value === Status.CLOSED){
+      bugHasBeenClosed = true;
+    }
+
+    if((this.currentBugStatus != editBugForm.controls.status.value) && (editBugForm.controls.status.value != Status.CLOSED)){
+      statusHasBeenUpdated = true;
+    }
+
+    this.bugsService.editBug(bugAttWrapper).subscribe(
       () => {
         this.initializeData();
-        this.toastrService.success('Bug edited successfully');
+        let message = {
+          type: 'SENT',
+          text: 'Your bug was just updated.'
+        }
+        this.sendNotificationsService.messages.next(message);
+        if(bugHasBeenClosed){
+          let closedMessage = {
+            type: 'SENT',
+            text: 'Your bug has been closed.'
+          }
+          this.sendNotificationsService.messages.next(closedMessage);
+        }
+        if(statusHasBeenUpdated){
+          let statusUpdateMessage = {
+            type: 'SENT',
+            text: 'Your bug\'s status has just been updated.'
+          }
+          this.sendNotificationsService.messages.next(statusUpdateMessage);
+        }
 
       },
       (error: HttpErrorResponse) => {
@@ -342,6 +458,22 @@ export class BugsComponent implements OnInit {
         this.toastrService.error(error.message);
       }
     );
+  }
+
+  createAttachment(editBugForm: NgForm): Attachment {
+    let attachmentToInsert: Attachment = {} as Attachment;
+    attachmentToInsert.id = 0;
+    attachmentToInsert.attContent = editBugForm.controls.attachment.value;
+    attachmentToInsert.bug = null;
+
+    return attachmentToInsert;
+  }
+
+  createBugAttachmentWrapper(bug: Bug, attachment: Attachment): BugAttachmentWrapper {
+    const bugAttWrapper: BugAttachmentWrapper = {} as BugAttachmentWrapper;
+    bugAttWrapper.bugDTO = bug;
+    bugAttWrapper.attachmentDTO = attachment;
+    return bugAttWrapper;
   }
 
   findUserWithUsername(username: String): User {
@@ -377,8 +509,9 @@ export class BugsComponent implements OnInit {
   exportAsXLSX(): void {
     this.excelbugservice.exportAsExcelFile(this.bugs, 'bugs');
   }
-  downloadPdf(bug: BugToShow) {
-    const doc = new jsPDF();
+
+   downloadPdf(bug: BugToShow) {
+    const doc = new jsPDF('landscape');
     const col = ['Title', 'Description', 'Target Date', 'Version', 'Status', 'Fixed Version', 'Severity', 'Createfd By', 'Assigned to'];
     const rows = [];
 
@@ -387,8 +520,24 @@ export class BugsComponent implements OnInit {
     rows.push(temp);
 
 
-    doc.autoTable(col, rows, {startY: 10});
+    doc.autoTable(col, rows, {
+      startY: 10,
+      styles: {
+        cellWidth: 'wrap'
+      },
+      columnStyles: {
+        0: {columnWidth: 30},
+        1: {columnWidth: 50},
+        2: {columnWidth: 10},
+        3: {columnWidth: 10},
+        4: {columnWidth: 10},
+        5: {columnWidth: 10},
+        6: {columnWidth: 10},
+        7: {columnWidth: 15},
+        8: {columnWidth: 15},
+      }
+    });
     doc.save('Bug-' + bug.title + '.pdf');
-  }
+   }
 }
 

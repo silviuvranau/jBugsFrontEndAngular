@@ -17,3 +17,16 @@ table, th, td {
   font-weight: bold;
 }
 
+
+.form-style {
+  font-weight: bold;
+  color: black;
+}
+
+
+.form-control.ng-invalid.ng-touched {
+  border: 2px;
+  border-style: solid;
+  border-color: red;
+}
+
