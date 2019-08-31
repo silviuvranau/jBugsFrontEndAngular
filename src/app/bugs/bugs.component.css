@@ -7,22 +7,10 @@ table, th, td {
   text-align: center;
 }
 
-
-.bugPopUp {
-  width: 500px;
-  background-color: lightgrey;
-}
-
-.bugPopUpLabels {
-  font-weight: bold;
-}
-
-
 .form-style {
   font-weight: bold;
   color: black;
 }
-
 
 .form-control.ng-invalid.ng-touched {
   border: 2px;
