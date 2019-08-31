@@ -7,6 +7,8 @@
         <input
           required
           pattern="^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$"
+          minlength=3
+          maxlength=25
           id="title"
           name="title"
           class="form-control"
@@ -16,6 +18,9 @@
         <div style="width:400px" *ngIf="title.touched && title.invalid">
           <div *ngIf="title.errors.required" style="color:red">
             *Title is required.
+          </div>
+          <div *ngIf="title.errors.minlength" style="color:red">
+            *Invalid title. Title must have a minimum of 3 characters.
           </div>
           <div *ngIf="title.errors.pattern" style="color:red">
             *Invalid title.
@@ -28,6 +33,7 @@
       </div>
         <textarea required
                   minlength=250
+                  maxlength=1000
                   id="description"
                   name="description"
                   class="form-control"
@@ -49,6 +55,7 @@
       </div>
         <input pInputText
                required
+               maxlength=10
                pattern="^[0-9.]*$"
                id="version"
                name="version"
@@ -69,7 +76,7 @@
         <label for="targetDate">Target Date</label>
       </div>
         <div>
-          <p-calendar ngModel name="targetDate" id="targetDate" [style]="{'width': '300px'}"
+          <p-calendar required ngModel name="targetDate" id="targetDate" [style]="{'width': '300px'}"
                       [minDate]="currentDate"
                       dateFormat="yy-MM-dd"></p-calendar>
         </div>
@@ -90,6 +97,7 @@
         <label for="fixedVersion">Fixed Version</label>
       </div>
         <input pInputText
+               maxlength=10
                pattern="^[0-9.]*$"
                id="fixedVersion"
                name="fixedVersion"
@@ -138,13 +146,19 @@
       </div>
         <div class = "form-inline">
           <input
+            class="form-control-file ng-touched ng-dirty ng-invalid"
             id="attachment"
             name="attachment"
             type="file"
             accept=".pdf,.doc,.odf,.xlsx,.xls"
+            [ng2FileSize]="{ max: 25000 }"
+            [fileSizeErrorMsg]="'File size must be less than 25MB.'"
             #attachment="ngModel"
             ngModel
           >
+        </div>
+        <div style="color:dimgrey; font-style: italic; font-size:10px">
+          *File can't be larger than 25MB.
         </div>
 
       <button class="btn btn-primary" style="margin-top:3%" [disabled]="createBugForm.invalid">Add Bug</button>

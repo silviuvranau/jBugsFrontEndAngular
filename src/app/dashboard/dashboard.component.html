@@ -60,13 +60,19 @@
       <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" routerLink="notifications">
           <i class="pi pi-globe"></i>
-          {{'DASHBOARD.NOT' | translate}}
+          {{'DASHBOARD.NOT' | translate}} (Unread: {{unreadNotifications}})
         </a>
       </li>
     
     </ul>
 
     <ul class="navbar-nav nav-bar-right">
+
+        <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link">
+               Signed in as: {{loggedInUser}}
+            </a> 
+        </li>
     
         <li class="nav-item" routerLinkActive="active">
             <a class="nav-link" routerLink="/">

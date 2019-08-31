@@ -31,4 +31,8 @@ export class BugsService {
   getAllAttachments(): Observable<Attachment[]>{
     return this.backendService.get('http://localhost:8080/jbugs/api/attachments/')
   }
+
+  getABug(id: number): Observable<Bug>{
+    return this.backendService.get('http://localhost:8080/jbugs/api/bugs/'+id);
+  }
 }

@@ -1,15 +1,17 @@
 import {Component, OnInit} from '@angular/core';
 import {BackendService} from '../core/backend/backend.service';
 import {User} from '../models/user.model';
+import {Bug} from '../models/bug.model';
 import {ExcelService} from './excel.service';
 //import jsPDF from 'jspdf';
-import {Role} from '../models/role.model';
-import {HttpErrorResponse} from '@angular/common/http';
-import {RoleService} from '../service/role.service';
-import {ToastrService} from 'ngx-toastr';
-import {UserService} from '../service/user.service';
+import { Role } from '../models/role.model';
+import { HttpErrorResponse } from '@angular/common/http';
+import { RoleService } from '../service/role.service';
+import { ToastrService } from 'ngx-toastr';
+import { UserService } from '../service/user.service';
+import {executeBrowserBuilder} from "@angular-devkit/build-angular";
 import {TranslateService} from "@ngx-translate/core";
-import {SendNotificationsService} from '../service/send-notifications.service';
+import { SendNotificationsService } from '../service/send-notifications.service';
 
 @Component({
   selector: 'app-user-list',
@@ -21,9 +23,8 @@ export class UserListComponent implements OnInit {
   title = 'JSON to Table Example';
 
   constructor(private backendService: BackendService, private excelservice: ExcelService,
-              private roleService: RoleService, private toastrService: ToastrService,
-              private userService: UserService, private translateService: TranslateService,
-              private sendNotificationService: SendNotificationsService) {
+            private roleService: RoleService, private toastrService: ToastrService,
+            private userService: UserService, private translateService: TranslateService) {
   }
 
   arrUsers: User[];
@@ -94,26 +95,9 @@ export class UserListComponent implements OnInit {
     const user = Object.assign({}, u);
     return user;
   }
-  exportAsXLSX(): void {
-    // this.excelservice.exportAsExcelFile(this.arrUsers, 'sample');
-    this.sendMsg();
-  }
 
-  sendMsg() {
-    console.log('msg sent');
-    let message = {
-      page: 'bug',
-      id: '1'
-    }
-    this.sendNotificationService.messages.next(message);
-  }
 
-  downloadPdf() {
-    //const doc = new jsPDF();
 
-    // doc.text(this.arrUsers);
-    // doc.save('a4.pdf');
-  }
 
   onEditClick(){
     this.selectedUser.roleIds = [];

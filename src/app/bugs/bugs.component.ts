@@ -14,9 +14,14 @@ import {ExcelBugsService} from './excel-bugs.service';
 import {TranslateService} from "@ngx-translate/core";
 import {Attachment} from "../models/attachment.model";
 import {BugAttachmentWrapper} from "../models/bugAttachmentWrapper.model";
+import {ActivatedRoute, Router} from '@angular/router';
+import {SendNotificationsService} from '../service/send-notifications.service';
 // import jsPDF from 'jspdf';
 // import * as jsPDF from 'jspdf'
 // import 'jspdf-autotable';
+
+var jsPDF = require('jspdf');
+require('jspdf-autotable');
 
 
 @Component({
@@ -41,6 +46,7 @@ export class BugsComponent implements OnInit {
   bugsToView: BugToShow[];
   popUpBug: BugToShow;
   selectedBug: BugToShow;
+  currentBugStatus: Status;
 
   selectedBugDate = new Date();
   usernamesForFilter: SelectItem[];
@@ -61,7 +67,8 @@ export class BugsComponent implements OnInit {
   dt: Table;
 
   constructor(private bugsService: BugsService, private permissionChecker: PermissionCheckerService, private datePipe: DatePipe, private toastrService: ToastrService,
-              private cookieService: CookieService, private excelbugservice: ExcelBugsService, private translateService: TranslateService) {
+              private cookieService: CookieService, private excelbugservice: ExcelBugsService, private translateService: TranslateService,
+              private route: ActivatedRoute, private router: Router, private sendNotificationsService: SendNotificationsService) {
   }
 
   ngOnInit() {
@@ -143,7 +150,6 @@ export class BugsComponent implements OnInit {
 
     this.transitionsFromStatusInProgress = [
       {label: 'IN_PROGRESS', value: Status.IN_PROGRESS},
-      {label: 'INFO_NEEDED', value: Status.INFO_NEEDED},
       {label: 'REJECTED', value: Status.REJECTED},
       {label: 'FIXED', value: Status.FIXED},
     ];
@@ -166,7 +172,61 @@ export class BugsComponent implements OnInit {
     this.transitionsFromStatusClosed = [
       {label: 'CLOSED', value: Status.CLOSED},
     ];
+
+    this.route.queryParams.subscribe(params => {
+      this.selectedBugId = +params['bugId'];
+    });
+
+    if(this.selectedBugId !== undefined && this.selectedBugId != NaN){
+      let bug: Bug;
+      this.getBugById(this.selectedBugId);
+      console.log("BUG" + this.openedBug);
+    }
   }
+
+  selectedBugId: number;
+  openedBug: Bug;
+
+  getBugById(id: number) {
+    // let result: Bug;
+    this.bugsService.getABug(id).toPromise().then(
+      (res: Bug) =>
+      {
+        console.log(res);
+        this.openedBug = res;
+        this.attachmentOfBug(this.openedBug);
+        this.popUpBug = this.bugToBugToShow(this.openedBug);
+        this.displayBugPopUp = true;
+      },
+      (error) =>
+      {
+        console.log(error.error);
+      }
+    )
+  }
+
+  
+  bugToBugToShow(bug: Bug): BugToShow{
+    const bugToView = {} as BugToShow;
+    bugToView.id = bug.id;
+    bugToView.title = bug.title;
+    bugToView.description = bug.description;
+    bugToView.version = bug.version;
+    bugToView.targetDate = bug.targetDate;
+    bugToView.fixedVersion = bug.fixedVersion;
+    bugToView.createdId = bug.createdId.username;
+    bugToView.status = bug.status;
+    bugToView.severity = bug.severity;
+
+    if (bug.assignedId === null) {
+      bugToView.assignedId = '';
+    } else {
+      bugToView.assignedId = bug.assignedId.username;
+    }
+
+    return bugToView;
+  }
+
 
   initializeData() {
     this.bugsService.getAllBugs().subscribe((obj) => {
@@ -189,12 +249,12 @@ export class BugsComponent implements OnInit {
   }
 
  attachmentOfBug(bug: Bug){
-    for(let i = 0; i < this.attachments.length; i++){
-      if(this.attachments[i].bug.id === bug.id){
-        console.log(this.attachments[i].attContent)
-        this.assignedAttachment = this.attachments[i].attContent.substring(9);
-      }
-    }
+   for(let i = 0; i < this.attachments.length; i++){
+     if(this.attachments[i].bug.id === bug.id){
+       console.log(this.attachments[i].attContent)
+       this.assignedAttachment = this.attachments[i].attContent.substring(9);
+     }
+   }
    if (this.assignedAttachment === "") {
      this.assignedAttachment = "None"
    }
@@ -224,6 +284,7 @@ export class BugsComponent implements OnInit {
     this.popUpBug = this.cloneBug(event.data);
     this.selectedBugDate = new Date(this.popUpBug.targetDate);
     this.displayBugPopUp = true;
+    this.currentBugStatus = this.popUpBug.status;
     this.attachmentOfBug(event.data);
   }
 
@@ -357,10 +418,39 @@ export class BugsComponent implements OnInit {
     let attachmentToInsert = this.createAttachment(editBugForm);
     let bugAttWrapper = this.createBugAttachmentWrapper(bugToInsert, attachmentToInsert);
 
+    let bugHasBeenClosed: boolean;
+    let statusHasBeenUpdated:boolean;
+
+    if(editBugForm.controls.status.value === Status.CLOSED){
+      bugHasBeenClosed = true;
+    }
+
+    if((this.currentBugStatus != editBugForm.controls.status.value) && (editBugForm.controls.status.value != Status.CLOSED)){
+      statusHasBeenUpdated = true;
+    }
+
     this.bugsService.editBug(bugAttWrapper).subscribe(
       () => {
         this.initializeData();
-        this.toastrService.success('Bug edited successfully');
+        let message = {
+          type: 'SENT',
+          text: 'Your bug was just updated.'
+        }
+        this.sendNotificationsService.messages.next(message);
+        if(bugHasBeenClosed){
+          let closedMessage = {
+            type: 'SENT',
+            text: 'Your bug has been closed.'
+          }
+          this.sendNotificationsService.messages.next(closedMessage);
+        }
+        if(statusHasBeenUpdated){
+          let statusUpdateMessage = {
+            type: 'SENT',
+            text: 'Your bug\'s status has just been updated.'
+          }
+          this.sendNotificationsService.messages.next(statusUpdateMessage);
+        }
 
       },
       (error: HttpErrorResponse) => {

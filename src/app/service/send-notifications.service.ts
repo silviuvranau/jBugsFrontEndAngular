@@ -1,15 +1,15 @@
-import {Injectable} from '@angular/core';
-import {Subject} from 'rxjs/Rx';
-import {WebsocketService} from './websocket.service';
+import { Injectable } from '@angular/core';
+import { Observable, Subject} from 'rxjs/Rx';
+import { WebsocketService } from './websocket.service';
 
 export const environment = {
   production: true,
   URL: 'ws://echo.websocket.org/'
 }
 
-export interface Message {
-  page: string,
-  id: string;
+export interface Message{
+  type: string;
+  text: string;
 }
 
 @Injectable({
@@ -21,14 +21,14 @@ export class SendNotificationsService {
   public messages: Subject<Message>;
 
   constructor(private websocketService: WebsocketService) {
-    this.messages = <Subject<Message>>websocketService
+    this.messages = <Subject<Message>> websocketService
       .connect(environment.URL)
       .map((response: MessageEvent): Message => {
         let data = JSON.parse(response.data);
         return {
-          page: data.page,
-          id: data.id
+          type: data.type,
+          text: data.text
         }
       })
-  }
+   }
 }
