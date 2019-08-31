@@ -24,7 +24,6 @@ export class BugsService {
   }
 
   insertBug(bugAttWrapper: BugAttachmentWrapper) {
-    console.log(bugAttWrapper);
     return this.backendService.post("http://localhost:8080/jbugs/api/bugs", bugAttWrapper);
   }
 

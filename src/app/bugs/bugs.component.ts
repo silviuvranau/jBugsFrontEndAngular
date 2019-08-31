@@ -16,10 +16,6 @@ import {Attachment} from "../models/attachment.model";
 import {BugAttachmentWrapper} from "../models/bugAttachmentWrapper.model";
 import {ActivatedRoute, Router} from '@angular/router';
 import {SendNotificationsService} from '../service/send-notifications.service';
-// import jsPDF from 'jspdf';
-// import * as jsPDF from 'jspdf'
-// import 'jspdf-autotable';
-
 var jsPDF = require('jspdf');
 require('jspdf-autotable');
 
@@ -236,14 +232,12 @@ export class BugsComponent implements OnInit {
       this.checkIfUserHasPermission('BUG_CLOSE');
       this.checkIfUserHasPermission('BUG_EXPORT_PDF');
     }, ((error: HttpErrorResponse) => {
-      console.error(error);
       this.toastrService.error("Couldn't load bug table.");
     }));
 
     this.bugsService.getAllAttachments().subscribe((obj) => {
       this.attachments = obj;
     }, ((error: HttpErrorResponse) => {
-      console.error(error);
       this.toastrService.error("Couldn't load bug attachment.");
     }));
   }
@@ -374,11 +368,9 @@ export class BugsComponent implements OnInit {
         } else if (requiredPermission === 'BUG_EXPORT_PDF') {
           this.userHasExportPermission = obj;
         }
-        // return obj;
       },
       (error: HttpErrorResponse) => {
-        console.error(error);
-        this.toastrService.error(error.message);
+        this.toastrService.error("Internal error.");
       }
     );
     return false;
@@ -454,8 +446,7 @@ export class BugsComponent implements OnInit {
 
       },
       (error: HttpErrorResponse) => {
-        console.error(error);
-        this.toastrService.error(error.message);
+        this.toastrService.error("Your request could not be completed.");
       }
     );
   }
