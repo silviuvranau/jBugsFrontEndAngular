@@ -85,7 +85,7 @@
         <div class = "form-style">
             <label for="mobileNumber">{{'CREATE.MOBILENUMBER' | translate}}</label>
             <input
-            pattern = "[+]407[0-9]{8}"
+            pattern = "(\+4[0][7][0-9]{8})|(\(?\+\(?49\)?[ ()]?([- ()]?\d[- ()]?){10})"
             required
             id = "mobileNumber"
             name = "mobileNumber"
