@@ -71,8 +71,10 @@ export class LoginComponent implements OnInit {
       password: pass.value
     };
 
+
     if (this.text.toString() !== captcha.value.toString()) {
       this.toasterService.error(this.translateService.instant('NOTIFICATION.INVALID_CAPTCHA'));
+      this.generateNumbers();
       return;
     }
 
@@ -95,7 +97,25 @@ export class LoginComponent implements OnInit {
         },
         (error) => {
           console.log(error);
-          this.toasterService.error(error.error);
+
+          if(error.error === 'User not found !') {
+
+            this.toasterService.error(this.translateService.instant('LOGIN.USERNOTFOUND'));
+
+          }
+          else if(error.error === 'Invalid credentials') {
+
+            this.toasterService.error(this.translateService.instant('LOGIN.CREDENTIALSINVALID'));
+
+          }
+          else if(error.error === 'Account is blocked !'){
+
+            this.toasterService.error(this.translateService.instant('LOGIN.ACCBLOCKED'));
+          }
+          else{
+            this.toasterService.error(error.error);
+          }
+
         });
 
 

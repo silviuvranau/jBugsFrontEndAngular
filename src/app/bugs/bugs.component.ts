@@ -77,7 +77,7 @@ export class BugsComponent implements OnInit {
     this.bugsService.getAllUsers().subscribe(obj => {
       this.users = obj;
       this.usernamesForFilter = [
-        {label: 'All', value: null}
+        {label: this.translateService.instant('BDETAILS.ALL'), value: null}
       ];
       this.createUsernameLabels();
     });
@@ -511,25 +511,33 @@ export class BugsComponent implements OnInit {
   }
 
    downloadPdf(bug: BugToShow) {
-  //   const doc = new jsPDF();
-  //   const col = ['Title', 'Description', 'Target Date', 'Version', 'Status', 'Fixed Version', 'Severity', 'Createfd By', 'Assigned to'];
-  //   const rows = [];
-  //
-  //   /* The following array of object as response from the API req  */
-  //   const temp = [bug.title, bug.description, bug.targetDate, bug.version, bug.status, bug.fixedVersion, bug.severity, bug.createdId, bug.assignedId];
-  //   rows.push(temp);
-  //
-  //
-  //   doc.autoTable(col, rows, {
-  //     startY: 10,
-  //     styles: {
-  //       cellWidth: 'wrap'
-  //     },
-  //     columnStyles: {
-  //       1: {columnWidth: 'auto'}
-  //     }
-  //   });
-  //   doc.save('Bug-' + bug.title + '.pdf');
+    const doc = new jsPDF('landscape');
+    const col = ['Title', 'Description', 'Target Date', 'Version', 'Status', 'Fixed Version', 'Severity', 'Createfd By', 'Assigned to'];
+    const rows = [];
+
+    /* The following array of object as response from the API req  */
+    const temp = [bug.title, bug.description, bug.targetDate, bug.version, bug.status, bug.fixedVersion, bug.severity, bug.createdId, bug.assignedId];
+    rows.push(temp);
+
+
+    doc.autoTable(col, rows, {
+      startY: 10,
+      styles: {
+        cellWidth: 'wrap'
+      },
+      columnStyles: {
+        0: {columnWidth: 30},
+        1: {columnWidth: 50},
+        2: {columnWidth: 10},
+        3: {columnWidth: 10},
+        4: {columnWidth: 10},
+        5: {columnWidth: 10},
+        6: {columnWidth: 10},
+        7: {columnWidth: 15},
+        8: {columnWidth: 15},
+      }
+    });
+    doc.save('Bug-' + bug.title + '.pdf');
    }
 }
 

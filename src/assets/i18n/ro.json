@@ -8,7 +8,10 @@
     "USERNAME": "Utilizator",
     "PASSWORD": "Parola",
     "CAPTCHA": "Introduceti codul",
-    "LOGBUTTON": "Autentificare"
+    "LOGBUTTON": "Autentificare",
+    "USERNOTFOUND": "Utilizator inexistent!",
+    "CREDENTIALSINVALID": "Date invalide !",
+    "ACCBLOCKED": "Utilizator blocat !"
 
   },
 
@@ -24,7 +27,7 @@
     "LASTNAMEREQUIRED": "*Nume obligatoriu",
     "EMAILREQUIRED": "*Email obligatoriu",
     "MOBILENUMBERREQUIRED": "*Telefon mobil obligatoriu",
-    "PASSWORDREQUIRED": "*Parola obligatoriu",
+    "PASSWORDREQUIRED": "*Parola obligatorie",
     "INVALIDFIRSTNAME": "*Prenume invalid",
     "INVALIDLASTNAME": "*Nume invalid",
     "INVALIDEMAIL": "*Email invalid",
@@ -63,7 +66,8 @@
     "ROLEPERMISSION": "Permisiunea rolului",
     "BUGS": "Bugs",
     "LOGOUT": "Delogare",
-    "NOT": "Notificari"
+    "NOT": "Notificari",
+    "SIGNEDINAS": "Logat ca: "
 
   },
 
@@ -137,7 +141,7 @@
     "Title": "Titlu",
     "Description" :"Descriere" ,
     "Version": "Versiune",
-    "Target Date":"Data marcata" ,
+    "Target Date":"Data tinta" ,
     "Status" :"Status",
     "Fixed Version" :"Versiune stabila" ,
     "Severity":"Severitate",
@@ -168,7 +172,23 @@
     "SEVERITY": "Severitate",
     "CREATEDBY": "Creat de",
     "ASSIGNEDTO": "Asignat lui",
-    "BTNEDIT": "Editare bug"
+    "BTNEDIT": "Editare bug",
+    "DESCREQUIRED": "*Descriere obligatorie",
+    "DESCINVALID": "*Descriere invalida Descrierea trebuie sa aiba minimum 250 caractere",
+    "VERSIONREQUIRED": "*Versiune obligatorie",
+    "VERSIONINVALID": "*Versiune invalida. Versiunea trebuie sa fie de forma '1.1.1'",
+    "TITLEREQUIRED": "*Titlu obligatoriu",
+    "TITLEINVALID": "*Titlu invalid.",
+    "EXPEXCEL": "Exportare ca Excel",
+    "EXPPDF": "Exportare ca PDF",
+    "ALL": "Toate",
+    "ALLTYPES": "Toate tipurile",
+    "ATTACHMENT": "Atasament",
+    "CURRATTACHMENT": "Atasament curent:"
+
+
+
+
 
 
   }

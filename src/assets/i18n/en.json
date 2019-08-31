@@ -7,7 +7,10 @@
     "USERNAME": "Username",
     "PASSWORD": "Pasword",
     "CAPTCHA": "Enter Code",
-    "LOGBUTTON": "Login"
+    "LOGBUTTON": "Login",
+    "USERNOTFOUND": "User not found !",
+    "CREDENTIALSINVALID": "Invalid credentials !",
+    "ACCBLOCKED": "Account is blocked !"
   },
   "NOTIFICATION": {
     "INVALID_CAPTCHA": "Invalid Captcha",
@@ -35,7 +38,8 @@
     "ROLEPERMISSION": "Role Permissions",
     "BUGS": "Bugs",
     "LOGOUT": "Log out",
-    "NOT": "Notification"
+    "NOT": "Notification",
+    "SIGNEDINAS": "Signed in as: "
   },
   "USERLIST": {
     "FirstName": "First Name",
@@ -129,6 +133,8 @@
   },
 
 
+
+
   "STATUS":{
 
     "NEW": "NEW",
@@ -150,7 +156,19 @@
     "SEVERITY": "Severity",
     "CREATEDBY": "Created by",
     "ASSIGNEDTO": "Assigned to",
-    "BTNEDIT": "Edit bug"
+    "BTNEDIT": "Edit bug",
+    "DESCREQUIRED": "*Description is required",
+    "DESCINVALID": "*Invalid description. Description must have a minimum of 250 characters.",
+    "VERSIONREQUIRED": "*Version is required.",
+    "VERSIONINVALID": "*Invalid version. Versions must be of the form '1.1.1'",
+    "TITLEREQUIRED": "*Title is required",
+    "TITLEINVALID": "*Invalid title.",
+    "EXPEXCEL": "Export as Excel",
+    "EXPPDF": "Export as PDF",
+    "ALL": "ALL",
+    "ALLTYPES": "All Types",
+    "ATTACHMENT": "Attachment",
+    "CURRATTACHMENT": "Current Attachmnet:"
 
 
   }

@@ -42,8 +42,8 @@ export class UserListComponent implements OnInit {
     //   console.log(data);
     // });
     this.cols = [
-      { field: 'firstName', header: 'FirstName', width: '120px' },
-      {field: 'lastName', header: 'LastName', width: '150px' },
+      { field: 'firstName', header: 'FirstName', width: '200px' },
+      {field: 'lastName', header: 'LastName', width: '200px' },
       { field: 'email', header: 'Email', width: '270px' },
       { field: 'mobileNumber', header: 'Mobile', width: '120px'},
       { field: 'username', header: 'Username', width: '150px'},
