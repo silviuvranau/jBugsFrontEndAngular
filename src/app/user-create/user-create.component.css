@@ -22,3 +22,16 @@ h2{
   border-style: solid;
   border-color: red;
 }
+
+.required:after {
+  color: #ee787c;
+  content: ' *';
+  display:inline;
+  font-size:10px;
+}
+
+.requiredNote{
+  color: #ee787c;
+  font-style: italic;
+  font-size:10px;
+}

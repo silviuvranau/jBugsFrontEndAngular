@@ -5,8 +5,11 @@
 <div style = "margin-left:30%; width: 550px;">
 <p-card header="{{'CREATE.ADD' | translate}}" subheader="">
     <form #createUserForm="ngForm" (ngSubmit) = addUser(createUserForm)>
+      <div class="requiredNote">
+        * Marked fields are mandatory.
+      </div>
         <div class = "form-style">
-            <label for="firstName">{{'CREATE.FIRSTNAME' | translate}}</label>
+            <label class="required"for="firstName">{{'CREATE.FIRSTNAME' | translate}}</label>
             <input
             required
             pattern = "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$"
@@ -28,7 +31,7 @@
             </div>
         </div>
         <div class = "form-style">
-            <label for="lastName">{{'CREATE.LASTNAME' | translate}}</label>
+            <label class="required" for="lastName">{{'CREATE.LASTNAME' | translate}}</label>
             <input
             required
             pattern = "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$"
@@ -49,7 +52,7 @@
 
             </div>
         </div>
-        <label for="email" class = "form-style">{{'CREATE.EMAIL' | translate}}</label>
+        <label  for="email" class = "form-style">{{'CREATE.EMAIL' | translate}}</label>
         <div class = "form-inline">
         <!-- <div style="width:400px"> -->
             <input
@@ -83,7 +86,7 @@
             </div>
         </div>
         <div class = "form-style">
-            <label for="mobileNumber">{{'CREATE.MOBILENUMBER' | translate}}</label>
+            <label class="required" for="mobileNumber">{{'CREATE.MOBILENUMBER' | translate}}</label>
             <input
             pattern = "(\+4[0][7][0-9]{8})|(\(?\+\(?49\)?[ ()]?([- ()]?\d[- ()]?){10})"
             required
@@ -106,7 +109,7 @@
             </div>
         </div>
         <div class = "form-style">
-            <label for="password">{{'CREATE.PASSWORD' | translate}}</label>
+            <label class="required" for="password">{{'CREATE.PASSWORD' | translate}}</label>
             <input
             required
             id = "password"

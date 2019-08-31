@@ -16,6 +16,7 @@ import {Attachment} from "../models/attachment.model";
 import {BugAttachmentWrapper} from "../models/bugAttachmentWrapper.model";
 import {ActivatedRoute, Router} from '@angular/router';
 import {SendNotificationsService} from '../service/send-notifications.service';
+
 var jsPDF = require('jspdf');
 require('jspdf-autotable');
 
@@ -413,7 +414,7 @@ export class BugsComponent implements OnInit {
     let bugHasBeenClosed: boolean;
     let statusHasBeenUpdated:boolean;
 
-    if(editBugForm.controls.status.value === Status.CLOSED){
+    if(editBugForm.controls.status.value === Status.CLOSED && this.currentBugStatus != Status.CLOSED){
       bugHasBeenClosed = true;
     }
 
