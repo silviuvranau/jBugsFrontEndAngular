@@ -136,34 +136,35 @@ export class BugsComponent implements OnInit {
      * Initialize possible status transitions from each status type.
      */
     this.transitionsFromStatusNew = [
-      {label: 'NEW', value: 'NEW'},
-      {label: 'IN_PROGRESS', value: 'IN_PROGRESS'},
-      {label: 'REJECTED', value: 'REJECTED'},
+      {label: 'NEW', value: Status.NEW},
+      {label: 'IN_PROGRESS', value: Status.IN_PROGRESS},
+      {label: 'REJECTED', value: Status.REJECTED},
     ];
 
     this.transitionsFromStatusInProgress = [
-      {label: 'INFO_NEEDED', value: 'INFO_NEEDED'},
-      {label: 'REJECTED', value: 'REJECTED'},
-      {label: 'FIXED', value: 'FIXED'},
+      {label: 'IN_PROGRESS', value: Status.IN_PROGRESS},
+      {label: 'INFO_NEEDED', value: Status.INFO_NEEDED},
+      {label: 'REJECTED', value: Status.REJECTED},
+      {label: 'FIXED', value: Status.FIXED},
     ];
 
     this.transitionsFromStatusFixed = [
-      {label: 'FIXED', value: 'FIXED'},
-      {label: 'CLOSED', value: 'CLOSED'},
+      {label: 'FIXED', value: Status.FIXED},
+      {label: 'CLOSED', value: Status.CLOSED},
     ];
 
     this.transitionsFromStatusInfoNeeded = [
-      {label: 'INFO_NEEDED', value: 'INFO_NEEDED'},
-      {label: 'IN_PROGRESS', value: 'IN_PROGRESS'},
+      {label: 'INFO_NEEDED', value: Status.INFO_NEEDED},
+      {label: 'IN_PROGRESS', value: Status.IN_PROGRESS},
     ];
 
     this.transitionsFromStatusRejected = [
-      {label: 'REJECTED', value: 'REJECTED'},
-      {label: 'CLOSED', value: 'CLOSED'},
+      {label: 'REJECTED', value: Status.REJECTED},
+      {label: 'CLOSED', value: Status.CLOSED},
     ];
 
     this.transitionsFromStatusClosed = [
-      {label: 'CLOSED', value: 'CLOSED'},
+      {label: 'CLOSED', value: Status.CLOSED},
     ];
   }
 
@@ -191,10 +192,12 @@ export class BugsComponent implements OnInit {
     for(let i = 0; i < this.attachments.length; i++){
       if(this.attachments[i].bug.id === bug.id){
         console.log(this.attachments[i].attContent)
-        this.assignedAttachment = this.attachments[i].attContent;
+        this.assignedAttachment = this.attachments[i].attContent.substring(9);
       }
     }
-    return null;
+   if (this.assignedAttachment === "") {
+     this.assignedAttachment = "None"
+   }
 }
 
   /**
