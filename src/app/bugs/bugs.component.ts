@@ -12,8 +12,16 @@ import {CookieService} from 'ngx-cookie-service';
 import {PermissionCheckerService} from '../utils/permissionCheckerService';
 import {ExcelBugsService} from './excel-bugs.service';
 import {TranslateService} from "@ngx-translate/core";
+import {Attachment} from "../models/attachment.model";
+import {BugAttachmentWrapper} from "../models/bugAttachmentWrapper.model";
+import { ActivatedRoute, Router } from '@angular/router';
+import { SendNotificationsService } from '../service/send-notifications.service';
 // import jsPDF from 'jspdf';
-import 'jspdf-autotable';
+// import * as jsPDF from 'jspdf'
+// import 'jspdf-autotable';
+
+var jsPDF = require('jspdf');
+require('jspdf-autotable');
 
 
 @Component({
@@ -29,20 +37,20 @@ export class BugsComponent implements OnInit {
   userHasBugClosePermission: boolean;
   userHasExportPermission: boolean;
   isStatusFixed: boolean;
-  isStatusRejected: boolean;
+  assignedAttachment: string;
 
+  isStatusRejected: boolean;
   users: User[];
   bugs: Bug[];
+  attachments: Attachment[];
   bugsToView: BugToShow[];
   popUpBug: BugToShow;
   selectedBug: BugToShow;
-  selectedBugDate = new Date();
 
+  selectedBugDate = new Date();
   usernamesForFilter: SelectItem[];
 
   createdByUsernamesForDropDown: SelectItem[];
-
-
   cols: any[];
   statusTypes: SelectItem[];
   severityTypes: SelectItem[];
@@ -58,7 +66,8 @@ export class BugsComponent implements OnInit {
   dt: Table;
 
   constructor(private bugsService: BugsService, private permissionChecker: PermissionCheckerService, private datePipe: DatePipe, private toastrService: ToastrService,
-              private cookieService: CookieService, private excelbugservice: ExcelBugsService, private translateService: TranslateService) {
+              private cookieService: CookieService, private excelbugservice: ExcelBugsService, private translateService: TranslateService,
+              private route: ActivatedRoute, private router: Router, private sendNotificationsService: SendNotificationsService) {
   }
 
   ngOnInit() {
@@ -109,6 +118,7 @@ export class BugsComponent implements OnInit {
     /**
      * Initializes status types.
      */
+
     this.statusTypes = [
       {label: 'NEW', value: Status.NEW},
       {label: 'IN_PROGRESS', value: Status.IN_PROGRESS},
@@ -161,7 +171,61 @@ export class BugsComponent implements OnInit {
     this.transitionsFromStatusClosed = [
       {label: 'CLOSED', value: 'CLOSED'},
     ];
+
+    this.route.queryParams.subscribe(params => {
+      this.selectedBugId = +params['bugId'];
+    });
+
+    if(this.selectedBugId !== undefined && this.selectedBugId != NaN){
+      let bug: Bug;
+      this.getBugById(this.selectedBugId);
+      console.log("BUG" + this.openedBug);
+    }
   }
+
+  selectedBugId: number;
+  openedBug: Bug;
+
+  getBugById(id: number) {
+    // let result: Bug;
+    this.bugsService.getABug(id).toPromise().then(
+      (res: Bug) =>
+      {
+        console.log(res);
+        this.openedBug = res;
+        this.attachmentOfBug(this.openedBug);
+        this.popUpBug = this.bugToBugToShow(this.openedBug);
+        this.displayBugPopUp = true;
+      },
+      (error) =>
+      {
+        console.log(error.error);
+      }
+    )
+  }
+
+  
+  bugToBugToShow(bug: Bug): BugToShow{
+    const bugToView = {} as BugToShow;
+    bugToView.id = bug.id;
+    bugToView.title = bug.title;
+    bugToView.description = bug.description;
+    bugToView.version = bug.version;
+    bugToView.targetDate = bug.targetDate;
+    bugToView.fixedVersion = bug.fixedVersion;
+    bugToView.createdId = bug.createdId.username;
+    bugToView.status = bug.status;
+    bugToView.severity = bug.severity;
+
+    if (bug.assignedId === null) {
+      bugToView.assignedId = '';
+    } else {
+      bugToView.assignedId = bug.assignedId.username;
+    }
+
+    return bugToView;
+  }
+
 
   initializeData() {
     this.bugsService.getAllBugs().subscribe((obj) => {
@@ -170,13 +234,28 @@ export class BugsComponent implements OnInit {
       this.checkIfUserHasPermission('BUG_MANAGEMENT');
       this.checkIfUserHasPermission('BUG_CLOSE');
       this.checkIfUserHasPermission('BUG_EXPORT_PDF');
-      console.log('BUG MANAGEMENT ', this.userHasManagementPermission);
-      console.log('BUG CLOSE ', this.userHasBugClosePermission);
     }, ((error: HttpErrorResponse) => {
       console.error(error);
-      this.toastrService.error(error.error);
+      this.toastrService.error("Couldn't load bug table.");
+    }));
+
+    this.bugsService.getAllAttachments().subscribe((obj) => {
+      this.attachments = obj;
+    }, ((error: HttpErrorResponse) => {
+      console.error(error);
+      this.toastrService.error("Couldn't load bug attachment.");
     }));
   }
+
+ attachmentOfBug(bug: Bug){
+    for(let i = 0; i < this.attachments.length; i++){
+      if(this.attachments[i].bug.id === bug.id){
+        console.log(this.attachments[i].attContent)
+        this.assignedAttachment = this.attachments[i].attContent;
+      }
+    }
+    return null;
+}
 
   /**
    * Adds the usernames of users for the filter and edit bug functionality.
@@ -185,9 +264,6 @@ export class BugsComponent implements OnInit {
     this.createdByUsernamesForDropDown = [
       {label: 'No one', value: null}
     ];
-
-
-
     for (let i = 0; i < this.users.length; i++) {
       this.usernamesForFilter.push({label: this.users[i].username, value: this.users[i].username});
       this.createdByUsernamesForDropDown.push({label: this.users[i].username, value: this.users[i].username});
@@ -205,6 +281,7 @@ export class BugsComponent implements OnInit {
     this.popUpBug = this.cloneBug(event.data);
     this.selectedBugDate = new Date(this.popUpBug.targetDate);
     this.displayBugPopUp = true;
+    this.attachmentOfBug(event.data);
   }
 
   checkStatusType(currentStatus: Status) {
@@ -334,10 +411,17 @@ export class BugsComponent implements OnInit {
     bugToInsert.createdId = createdByUser;
     bugToInsert.assignedId = assignedToUser;
 
-    this.bugsService.editBug(bugToInsert.id, bugToInsert).subscribe(
+    let attachmentToInsert = this.createAttachment(editBugForm);
+    let bugAttWrapper = this.createBugAttachmentWrapper(bugToInsert, attachmentToInsert);
+
+    this.bugsService.editBug(bugAttWrapper).subscribe(
       () => {
         this.initializeData();
-        this.toastrService.success('Bug edited successfully');
+        let message = {
+          type: 'SENT',
+          text: 'Your bug was just updated.'
+        }
+        this.sendNotificationsService.messages.next(message);
 
       },
       (error: HttpErrorResponse) => {
@@ -345,6 +429,22 @@ export class BugsComponent implements OnInit {
         this.toastrService.error(error.message);
       }
     );
+  }
+
+  createAttachment(editBugForm: NgForm): Attachment {
+    let attachmentToInsert: Attachment = {} as Attachment;
+    attachmentToInsert.id = 0;
+    attachmentToInsert.attContent = editBugForm.controls.attachment.value;
+    attachmentToInsert.bug = null;
+
+    return attachmentToInsert;
+  }
+
+  createBugAttachmentWrapper(bug: Bug, attachment: Attachment): BugAttachmentWrapper {
+    const bugAttWrapper: BugAttachmentWrapper = {} as BugAttachmentWrapper;
+    bugAttWrapper.bugDTO = bug;
+    bugAttWrapper.attachmentDTO = attachment;
+    return bugAttWrapper;
   }
 
   findUserWithUsername(username: String): User {
@@ -380,7 +480,8 @@ export class BugsComponent implements OnInit {
   exportAsXLSX(): void {
     this.excelbugservice.exportAsExcelFile(this.bugs, 'bugs');
   }
-  // downloadPdf(bug: BugToShow) {
+
+   downloadPdf(bug: BugToShow) {
   //   const doc = new jsPDF();
   //   const col = ['Title', 'Description', 'Target Date', 'Version', 'Status', 'Fixed Version', 'Severity', 'Createfd By', 'Assigned to'];
   //   const rows = [];
@@ -390,8 +491,16 @@ export class BugsComponent implements OnInit {
   //   rows.push(temp);
   //
   //
-  //   doc.autoTable(col, rows, {startY: 10});
+  //   doc.autoTable(col, rows, {
+  //     startY: 10,
+  //     styles: {
+  //       cellWidth: 'wrap'
+  //     },
+  //     columnStyles: {
+  //       1: {columnWidth: 'auto'}
+  //     }
+  //   });
   //   doc.save('Bug-' + bug.title + '.pdf');
-  // }
+   }
 }
 

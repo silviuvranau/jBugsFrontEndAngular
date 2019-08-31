@@ -29,9 +29,9 @@
         <input *ngSwitchCase="'version'" pInputText type="text"
                (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" [ngStyle]="{'width':'50px'}">
 
-        <p-calendar #cal=ngModel ngModel name="calendar" id="calendar" [style]="{'width': '199px'}"
-                    *ngSwitchCase="'targetDate'" [defaultDate]="" [readonlyInput]="false" dateFormat="yy-MM-dd"
-                    (onSelect)="dt.filter($event, col.field, 'dateFilter')"></p-calendar>
+        <p-calendar #cal=ngModel ngModel name="calendar" id="calendar" [style]="{'width': '200px'}"
+                    *ngSwitchCase="'targetDate'" [defaultDate]="" [readonlyInput]="false" dateFormat="yy-MM-dd" [showButtonBar]="true"
+                    (onSelect)="dt.filter($event, col.field, 'dateFilter')" (onClearClick)="dt.filter($event.target.value, col.field, 'contains')"></p-calendar>
 
         <p-multiSelect [style]="{'width':'90px'}" *ngSwitchCase="'status'" [options]="statusTypes" defaultLabel="{{'BDETAILS.ALLTYPES' | translate}}"
                     (onChange)="dt.filter($event.value, col.field, 'equals')"></p-multiSelect>
@@ -81,7 +81,9 @@
 
       <div class="ui-g-12">
         <div class="ui-g-4">
+          <div class="form-style">
           <label for="title">{{'BDETAILS.TITLE' | translate}}</label>
+          </div>
         </div>
         <div class="ui-g-8">
           <input pInputText
@@ -107,7 +109,9 @@
 
       <div class="ui-g-12">
         <div class="ui-g-4">
+          <div class="form-style">
           <label for="description">{{'BDETAILS.DESC' | translate}}</label>
+          </div>
         </div>
         <div class="ui-g-8">
           <textarea required
@@ -133,7 +137,9 @@
 
       <div class="ui-g-12">
         <div class="ui-g-4">
+          <div class="form-style">
           <label for="version">{{'BDETAILS.VERSION' | translate}}</label>
+          </div>
         </div>
         <div class="ui-g-8">
           <input pInputText
@@ -159,7 +165,9 @@
 
       <div class="ui-g-12">
         <div class="ui-g-4">
+          <div class="form-style">
           <label for="targetDate">{{'BDETAILS.TARGETDATE' | translate}}</label>
+          </div>
         </div>
         <div class="ui-g-8">
           <p-calendar ngModel name="targetDate" id="targetDate" #targetDate="ngModel" [style]="{'width': '300px'}"
@@ -170,7 +178,9 @@
 
       <div class="ui-g-12">
         <div class="ui-g-4">
+          <div class="form-style">
           <label for="status">{{'BDETAILS.STATUS' | translate}}</label>
+          </div>
         </div>
         <div class="ui-g-8">
           <p-dropdown id="status" name="status" [options]="getTransitionOptions(popUpBug.status)"
@@ -185,11 +195,12 @@
 
       <div class="ui-g-12">
         <div class="ui-g-4">
+          <div class="form-style">
           <label for="fixedVersion">{{'BDETAILS.FXVERSION' | translate}}</label>
+          </div>
         </div>
         <div class="ui-g-8">
           <input pInputText
-                 required
                  pattern="^[0-9.]*$"
                  id="fixedVersion"
                  name="fixedVersion"
@@ -208,7 +219,9 @@
 
       <div class="ui-g-12">
         <div class="ui-g-4">
+          <div class="form-style">
           <label for="severity">{{'BDETAILS.SEVERITY' | translate}}</label>
+          </div>
         </div>
         <div class="ui-g-8">
           <p-dropdown id="severity" name="severity" [options]="severityTypes" [(ngModel)]="popUpBug.severity"
@@ -218,7 +231,9 @@
 
       <div class="ui-g-12">
         <div class="ui-g-4">
+          <div class="form-style">
           <label for="createdId">{{'BDETAILS.CREATEDBY' | translate}}</label>
+          </div>
         </div>
         <div class="ui-g-8">
           <input pInputText id="createdId" name="createdId" [disabled]="true" [(ngModel)]="popUpBug.createdId"/>
@@ -227,7 +242,9 @@
 
       <div class="ui-g-12">
         <div class="ui-g-4">
+          <div class="form-style">
           <label for="assignedId">{{'BDETAILS.ASSIGNEDTO' | translate}}</label>
+          </div>
         </div>
         <div class="ui-g-8">
           <p-dropdown id="assignedId" name="assignedId" [options]="createdByUsernamesForDropDown"
@@ -235,6 +252,31 @@
                       [(ngModel)]="popUpBug.assignedId"></p-dropdown>
         </div>
       </div>
+
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <div class="form-style">
+          <label for="attachment">Attachment</label>
+          </div>
+        </div>
+        <div class="ui-g-8">
+
+          <div class = "form-inline">
+          <input
+            id="attachment"
+            name="attachment"
+            type="file"
+            accept=".pdf,.doc,.odf,.xlsx,.xls"
+            #attachment="ngModel"
+            ngModel
+          >
+          <div class="form-style">
+          <label>Current Attachment: {{assignedAttachment.substring(9)}}</label>
+          </div>
+          </div>
+        </div>
+      </div>
+
   </div>
 
     <button class="btn btn-primary" style="margin-top:3%" [disabled]="editBugForm.invalid"

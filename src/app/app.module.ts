@@ -43,8 +43,9 @@ import {CreateBugComponent} from './create-bug/create-bug.component';
 
 
 import {HttpClient} from '@angular/common/http';
-import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import {TranslateModule, TranslateLoader, TranslateService} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { SendNotificationsService } from './service/send-notifications.service';
 
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -97,7 +98,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     })
   ],
   providers: [BugsService, RolesService, LoginService, PermissionCheckerService, AuthGuardService, ExcelService,
-    CookieService, DatePipe, ExcelBugsService],
+    CookieService, DatePipe, ExcelBugsService, SendNotificationsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

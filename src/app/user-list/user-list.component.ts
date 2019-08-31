@@ -11,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../service/user.service';
 import {executeBrowserBuilder} from "@angular-devkit/build-angular";
 import {TranslateService} from "@ngx-translate/core";
+import { SendNotificationsService } from '../service/send-notifications.service';
 
 @Component({
   selector: 'app-user-list',
@@ -94,15 +95,9 @@ export class UserListComponent implements OnInit {
     const user = Object.assign({}, u);
     return user;
   }
-  exportAsXLSX(): void {
-    this.excelservice.exportAsExcelFile(this.arrUsers, 'sample');
-  }
-  downloadPdf() {
-    //const doc = new jsPDF();
 
-    // doc.text(this.arrUsers);
-    // doc.save('a4.pdf');
-  }
+
+
 
   onEditClick(){
     this.selectedUser.roleIds = [];
@@ -131,8 +126,7 @@ export class UserListComponent implements OnInit {
     }
 
     if(this.selectedUser.password === ''){
-      this.toastrService.error("Password cannot be empty");
-      return;
+      this.selectedUser.password = null;
     }
 
 

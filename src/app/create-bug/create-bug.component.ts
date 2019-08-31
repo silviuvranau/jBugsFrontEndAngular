@@ -94,7 +94,13 @@ export class CreateBugComponent implements OnInit {
     bugToInsert.targetDate = new DatePipe('en').transform(createBugForm.controls.targetDate.value, 'yyyy-MM-dd');
     bugToInsert.fixedVersion = createBugForm.controls.fixedVersion.value;
     bugToInsert.status = createBugForm.controls.status.value;
-    bugToInsert.severity = createBugForm.controls.severity.value;
+    //bugToInsert.severity = createBugForm.controls.severity.value;
+    if (createBugForm.controls.severity.value === ""){
+      bugToInsert.severity = Severity.LOW;
+    }else{
+      bugToInsert.severity = createBugForm.controls.severity.value;
+    }
+    console.log(bugToInsert);
 
     let createdByUser = this.findUserWithUsername(this.loggedInUser);
     let assignedUsername = createBugForm.controls.assignedTo.value;
