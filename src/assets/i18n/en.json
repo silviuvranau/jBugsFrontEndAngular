@@ -38,7 +38,8 @@
     "ROLEPERMISSION": "Role Permissions",
     "BUGS": "Bugs",
     "LOGOUT": "Log out",
-    "NOT": "Notification"
+    "NOT": "Notification",
+    "SIGNEDINAS": "Signed in as: "
   },
   "USERLIST": {
     "FirstName": "First Name",
@@ -165,7 +166,9 @@
     "EXPEXCEL": "Export as Excel",
     "EXPPDF": "Export as PDF",
     "ALL": "ALL",
-    "ALLTYPES": "All Types"
+    "ALLTYPES": "All Types",
+    "ATTACHMENT": "Attachment",
+    "CURRATTACHMENT": "Current Attachmnet:"
 
 
   }
