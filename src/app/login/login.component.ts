@@ -1,14 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {BackendService} from "../core/backend/backend.service";
 import {Login} from "../models/login.model";
-import {ToasterService} from "ngx-toaster/src/lib";
-import {ToastrComponentlessModule, ToastrService} from "ngx-toastr";
+import {ToastrService} from "ngx-toastr";
 import {LoginService} from "../service/login.service";
 import {AuthService} from "../service/auth.serice";
-import { CookieService } from 'ngx-cookie-service';
-import {$} from "protractor";
-import {FilterMetadata} from "primeng/api";
+import {CookieService} from 'ngx-cookie-service';
 import {TranslateService} from "@ngx-translate/core";
 import {PermissionCheckerService} from "../utils/permissionCheckerService";
 
@@ -123,6 +119,7 @@ export class LoginComponent implements OnInit {
           else if(error.error === 'Invalid credentials') {
 
             this.toasterService.error(this.translateService.instant('LOGIN.CREDENTIALSINVALID'));
+            this.generateNumbers();
 
           }
           else if(error.error === 'Account is blocked !'){
