@@ -4,158 +4,93 @@
 <script src="bootstrap.min.js"></script>
 <script src="bootstrap-auto-dismiss-alert.js"></script>
 
-<body>
-<form #f = 'ngForm' (ngSubmit) = 'login(username,password,captcha)' [style.background-image]="'url(' ++ ')'"  >
+<img src="assets/jbugs-login.jpg" width="325" height="115" style = 'margin-left: 39%; margin-top:3%'><br>
+
+    <form #f = 'ngForm' (ngSubmit) = 'login(username,password,captcha)'>
 
 
-  <h2 style =' margin-left: 45%' > {{'HOME.TITLE' | translate}}</h2>
-  <div class="padd">
-    <div class = "form-group input-group-lg">
+      <div class="padd">
+        <div class = "form-group input-group-lg">
+          <h3 style ='margin-top:1%'>{{'HOME.TITLE' | translate}}</h3>
 
 
-
-      <label for="username">  </label>
-
-      <input
-             placeholder="{{'LOGIN.USERNAME' | translate}}"
-             class = "form-control"
-             type="text"
-             id="username"
-             name="username"
-             ngModel
-             required
-             #username ="ngModel"
-
-
-
-      >
-
-
-      <div  *ngIf= "username.touched && username.invalid">
-
-        <div *ngIf="username.errors.required" style="color: palevioletred">
-
-          {{'NOTIFICATION.USERNAMEREQUIRED' | translate}}
-
-
-
-        </div>
-
-
-      </div>
-
-      <div class = "form-group input-group-lg">
-
-        <label for="password"></label>
-
-        <input   placeholder="{{'LOGIN.PASSWORD' | translate}}" class="form-control" type="password" id="password"
-                name ="password" ngModel required #password ="ngModel"
-
-
-
-        >
-
-        <div *ngIf="password.touched && password.invalid">
-
-          <div *ngIf="password.errors.required" style="color: palevioletred">
-            {{'NOTIFICATION.PASSWORDREQUIRED' | translate}}
-
-
-          </div>
-
-
-        </div>
-
-      </div>
-
-<!--      <p>{{f.value | json}}</p>-->
-
-
-    </div>
-
-
-    <!-- START CAPTCHA -->
-    <div class="capbox">
-      <div class = "form-group input-group-lg">
-
-
-
-
-        <label for = 'captcha'>
-
-
-          <h2 style="margin-top: 1px;">Captcha</h2>
-
-
-        </label>
-
-        <div >
-          <label  >{{text}}</label>
-
-        </div>
-
-        <div   >
-
+          <label for="username">  </label>
 
           <input
-
-            placeholder="{{'LOGIN.CAPTCHA' | translate}}"
-            class = 'form-control col-lg-8 '
-            type="text"
-            id="captcha"
-            name="captcha"
-            ngModel
-            required
-            #captcha ="ngModel"
-            size ='3'
+                placeholder="{{'LOGIN.USERNAME' | translate}}"
+                class = "form-control"
+                type="text"
+                id="username"
+                name="username"
+                ngModel
+                required
+                #username ="ngModel"
           >
 
 
-
-
-
-          <div  *ngIf="captcha.touched && captcha.invalid">
-
-            <div *ngIf="captcha.errors.required" style="color: palevioletred">
-
-
-                {{'NOTIFICATION.CAPTCHAREQUIRED' | translate}}
-
-
+          <div  *ngIf= "username.touched && username.invalid">
+            <div *ngIf="username.errors.required" style="color: palevioletred">
+              {{'NOTIFICATION.USERNAMEREQUIRED' | translate}}
             </div>
           </div>
 
+          <div class = "form-group input-group-lg">
+            <label for="password"></label>
+            <input   placeholder="{{'LOGIN.PASSWORD' | translate}}" class="form-control" type="password" id="password"
+                    name ="password" ngModel required #password ="ngModel"
+            >
+
+            <div *ngIf="password.touched && password.invalid">
+              <div *ngIf="password.errors.required" style="color: palevioletred">
+                {{'NOTIFICATION.PASSWORDREQUIRED' | translate}}
+              </div>
+            </div>
+
+          </div>
         </div>
+
+
+        <!-- START CAPTCHA -->
+        <div class="capbox">
+          <div class = "form-group input-group-lg">
+            <label for = 'captcha'>
+              <h3 style="margin-top: 1px;">Captcha</h3>
+            </label>
+            <div >
+              <label  >{{text}}</label>
+            </div>
+            <div>
+              <input
+                placeholder="{{'LOGIN.CAPTCHA' | translate}}"
+                class = 'form-control col-lg-8 '
+                type="text"
+                id="captcha"
+                name="captcha"
+                ngModel
+                required
+                #captcha ="ngModel"
+                size ='3'
+              >
+              <div  *ngIf="captcha.touched && captcha.invalid">
+                <div *ngIf="captcha.errors.required" style="color: palevioletred">
+                    {{'NOTIFICATION.CAPTCHAREQUIRED' | translate}}
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <button  [disabled]="f.invalid"
+                  class ="btn btn-primary btn-lg"
+          >
+            {{'LOGIN.LOGBUTTON' | translate}}
+          </button>
+        </div>
+        <br><br>
+        <!-- END CAPTCHA -->
+
       </div>
+    </form>
 
-
-
-    </div>
-
-
-
-
-
-    <div>
-
-    <button  [disabled]="f.invalid"
-             class ="btn btn-primary btn-lg"
-
-
-    >
-      {{'LOGIN.LOGBUTTON' | translate}}
-
-
-    </button>
-
-    </div>
-    <br><br>
-    <!-- END CAPTCHA -->
-
-  </div>
-
-
-
-</form>
-
-</body>

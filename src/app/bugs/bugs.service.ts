@@ -27,15 +27,15 @@ export class BugsService {
     return this.backendService.post("http://localhost:8080/jbugs/api/bugs", bugAttWrapper);
   }
 
-  getAllAttachments(): Observable<Attachment[]>{
+  getAllAttachments(): Observable<Attachment[]> {
     return this.backendService.get('http://localhost:8080/jbugs/api/attachments/')
   }
 
-  getABug(id: number): Observable<Bug>{
+  getABug(id: number): Observable<Bug> {
     return this.backendService.get('http://localhost:8080/jbugs/api/bugs/'+id);
   }
 
-  deleteCurrentAttachment(id:number){
+  deleteCurrentAttachment(id: number) {
     return this.backendService.delete('http://localhost:8080/jbugs/api/attachments/'+id);
   }
 }

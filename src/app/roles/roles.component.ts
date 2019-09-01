@@ -7,6 +7,7 @@ import {CookieService} from 'ngx-cookie-service';
 import {PermissionCheckerService} from "../utils/permissionCheckerService";
 import {HttpErrorResponse} from "@angular/common/http";
 import {ToastrService} from "ngx-toastr";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-roles',
@@ -21,7 +22,8 @@ export class RolesComponent implements OnInit {
   loggedInUser: string;
   isDisabled = false;
 
-  constructor(private toastrService: ToastrService, private roleService: RolesService, private cookieService: CookieService, private permissionChecker: PermissionCheckerService) {
+  constructor(private toastrService: ToastrService, private roleService: RolesService, private cookieService: CookieService,
+              private permissionChecker: PermissionCheckerService, private translateService: TranslateService) {
   }
 
   ngOnInit() {
@@ -62,10 +64,10 @@ export class RolesComponent implements OnInit {
 
     this.roleService.sendData(this.rolePermission).subscribe(
       () => {
-        this.toastrService.success("Permission changed.")
+        this.toastrService.success(this.translateService.instant('NOTIFICATION.PERMCHANGED'))
       },
       (error: HttpErrorResponse) => {
-        this.toastrService.error("Your request could not be carried out.");
+        this.toastrService.error(this.translateService.instant('NOTIFICATION.REQFAILED'));
       }
     );
   }
@@ -84,7 +86,7 @@ export class RolesComponent implements OnInit {
       },
       (error: HttpErrorResponse) => {
         console.error(error);
-        this.toastrService.error("Internal error.");
+        this.toastrService.error(this.translateService.instant('NOTIFICATION.INTERROR'));
       }
     );
     return false;

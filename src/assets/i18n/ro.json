@@ -1,6 +1,6 @@
 {
   "HOME": {
-    "TITLE": "LOGARE",
+    "TITLE": "Conectare",
     "SELECT": "Schimba Limba"
   },
   "LOGIN": {
@@ -33,7 +33,15 @@
     "INVALIDEMAIL": "*Email invalid",
     "INVALIDMOBILENUMBER": "*Telefon mobil invalid",
     "USERNAMEREQUIRED": "*Utilizator obligatoriu",
-    "CAPTCHAREQUIRED": "*Captcha obligatoriu"
+    "CAPTCHAREQUIRED": "*Captcha obligatoriu",
+    "INTERROR": "Eroare interna",
+    "REQFAILED": "Cererea nu a putut fi finalizata",
+    "LOADFAILED":"Nu s-au primit date.",
+    "BUGADDSUCC": "Bug adaugat",
+    "BUGUPDATED": "Bug actualizat.",
+    "BUGCLOSE": "Bug inchis.",
+    "BUGSTATUS": "Statusul bugului actualizat.",
+    "PERMCHANGED": "Permisiune schimbata"
 
 
   },
@@ -67,7 +75,8 @@
     "BUGS": "Bugs",
     "LOGOUT": "Delogare",
     "NOT": "Notificari",
-    "SIGNEDINAS": "Logat ca: "
+    "SIGNEDINAS": "Buna,  ",
+    "CREATEBUG": "Creare bug"
 
   },
 
@@ -111,7 +120,8 @@
     "MOBILENUMBER": "Telefon mobil",
     "PASSWORD": "Parola",
     "ROLES": "Roluri",
-    "ADDUSER": "Adauga Utilizator"
+    "ADDUSER": "Adauga Utilizator",
+    "MANDATORYFIELDS": "Campurile marcate cu * sunt obligatorii."
 
 
   },
@@ -173,22 +183,25 @@
     "CREATEDBY": "Creat de",
     "ASSIGNEDTO": "Asignat lui",
     "BTNEDIT": "Editare bug",
-    "DESCREQUIRED": "*Descriere obligatorie",
-    "DESCINVALID": "*Descriere invalida Descrierea trebuie sa aiba minimum 250 caractere",
-    "VERSIONREQUIRED": "*Versiune obligatorie",
-    "VERSIONINVALID": "*Versiune invalida. Versiunea trebuie sa fie de forma '1.1.1'",
-    "TITLEREQUIRED": "*Titlu obligatoriu",
+    "DESCREQUIRED": "*Descriere obligatorie.",
+    "DESCINVALID": "*Descriere invalida. Descrierea trebuie sa aiba minim 250 caractere.",
+    "VERSIONREQUIRED": "*Versiune obligatorie.",
+    "VERSIONINVALID": "*Versiune invalida. Versiunea trebuie sa fie de forma '1.1.1'.",
+    "TITLEREQUIRED": "*Titlu obligatoriu.",
     "TITLEINVALID": "*Titlu invalid.",
-    "EXPEXCEL": "Exportare ca Excel",
-    "EXPPDF": "Exportare ca PDF",
+    "TITLESHORT": "*Titlu invalid. Titlul trebuie sa contina minim 3 caractere.",
+    "EXPEXCEL": "Exportare in Excel",
+    "EXPPDF": "Exportare in PDF",
     "ALL": "Toate",
     "ALLTYPES": "Toate tipurile",
     "ATTACHMENT": "Atasament",
-    "CURRATTACHMENT": "Atasament curent:"
+    "CURRATTACHMENT": "Atasament curent:",
+    "FILEWARNING": "*Fisierul nu poate fi mai mare de 25MB.",
+    "DELATT": "Sterge atasamentul curent",
 
-
-
-
+    "ADDBUG": "Adaugare bug nou",
+    "ADDBUGBUTTON": "Adaugare",
+    "MANDATORYFIELDS": "Campurile marcate cu * sunt obligatorii."
 
 
   }

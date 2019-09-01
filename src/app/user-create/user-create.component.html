@@ -6,10 +6,10 @@
 <p-card header="{{'CREATE.ADD' | translate}}" subheader="">
     <form #createUserForm="ngForm" (ngSubmit) = addUser(createUserForm)>
       <div class="requiredNote">
-        * Marked fields are mandatory.
+        {{'CREATE.MANDATORYFIELDS' | translate}}
       </div>
         <div class = "form-style">
-            <label class="required"for="firstName">{{'CREATE.FIRSTNAME' | translate}}</label>
+            <label class="required" for="firstName">{{'CREATE.FIRSTNAME' | translate}}</label>
             <input
             required
             pattern = "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$"
@@ -52,7 +52,9 @@
 
             </div>
         </div>
-        <label  for="email" class = "form-style">{{'CREATE.EMAIL' | translate}}</label>
+        <div class="form-style">
+        <label  for="email" class = "required">{{'CREATE.EMAIL' | translate}}</label>
+        </div>
         <div class = "form-inline">
         <!-- <div style="width:400px"> -->
             <input
