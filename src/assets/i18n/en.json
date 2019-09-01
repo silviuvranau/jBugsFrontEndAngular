@@ -33,7 +33,10 @@
     "INTERROR": "Internal error",
     "REQFAILED": "Your request could not be completed",
     "LOADFAILED":"Data could not be loaded.",
-    "BUGADDSUCC": "Bug added"
+    "BUGADDSUCC": "Bug added",
+    "BUGUPDATED": "Your bug was just updated.",
+    "BUGCLOSE": "Your bug has been closed.",
+    "BUGSTATUS": "Your bug's status has just been updated."
   },
   "DASHBOARD": {
     "JBUGS": "JBugs",

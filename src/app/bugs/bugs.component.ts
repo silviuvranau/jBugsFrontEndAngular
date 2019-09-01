@@ -431,20 +431,20 @@ export class BugsComponent implements OnInit {
         this.initializeData();
         let message = {
           type: 'SENT',
-          text: 'Your bug was just updated.'
+          text: this.translateService.instant('NOTIFICATION.BUGUPDATED')
         }
         this.sendNotificationsService.messages.next(message);
         if(bugHasBeenClosed){
           let closedMessage = {
             type: 'SENT',
-            text: 'Your bug has been closed.'
+            text: this.translateService.instant('NOTIFICATION.BUGCLOSE')
           }
           this.sendNotificationsService.messages.next(closedMessage);
         }
         if(statusHasBeenUpdated){
           let statusUpdateMessage = {
             type: 'SENT',
-            text: 'Your bug\'s status has just been updated.'
+            text: this.translateService.instant('NOTIFICATION.BUGSTATUS')
           }
           this.sendNotificationsService.messages.next(statusUpdateMessage);
         }
