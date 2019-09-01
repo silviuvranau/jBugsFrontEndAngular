@@ -64,18 +64,5 @@ export class DashboardComponent implements OnInit {
     return false;
   }
 
-  /**
-   checkIfUserHasUserManagementPermission() {
-    this.permissionChecker.checkIfUserHasPermission(this.loggedInUser, 'USER_MANAGEMENT').subscribe(
-      (obj) => {
-        this.userHasUserManagementPermission = JSON.parse(obj);
-      },
-      (error: HttpErrorResponse) => {
-        console.error(error);
-        this.toastrService.error("Internal error.");
-      }
-    );
-    return false;
-  }**/
 
 }
