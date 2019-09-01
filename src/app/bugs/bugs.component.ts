@@ -461,6 +461,7 @@ export class BugsComponent implements OnInit {
     attachmentToInsert.id = 0;
     attachmentToInsert.attContent = editBugForm.controls.attachment.value;
     attachmentToInsert.bug = null;
+    this.assignedAttachment = editBugForm.controls.attachment.value.substring(12);
 
     return attachmentToInsert;
   }
