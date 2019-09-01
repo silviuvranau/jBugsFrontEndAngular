@@ -40,7 +40,8 @@
     "BUGADDSUCC": "Bug adaugat",
     "BUGUPDATED": "Bug actualizat.",
     "BUGCLOSE": "Bug inchis.",
-    "BUGSTATUS": "Statusul bugului actualizat."
+    "BUGSTATUS": "Statusul bugului actualizat.",
+    "PERMCHANGED": "Permisiune schimbata"
 
 
   },

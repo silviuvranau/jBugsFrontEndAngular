@@ -36,7 +36,8 @@
     "BUGADDSUCC": "Bug added",
     "BUGUPDATED": "Your bug was just updated.",
     "BUGCLOSE": "Your bug has been closed.",
-    "BUGSTATUS": "Your bug's status has just been updated."
+    "BUGSTATUS": "Your bug's status has just been updated.",
+    "PERMCHANGED": "Permission changed"
   },
   "DASHBOARD": {
     "JBUGS": "JBugs",
