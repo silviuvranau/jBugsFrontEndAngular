@@ -29,7 +29,11 @@
     "INVALIDEMAIL": "*Invalid email",
     "INVALIDMOBILENUMBER": "*Invalid mobile number",
     "USERNAMEREQUIRED": "*Username required",
-    "CAPTCHAREQUIRED": "*Captcha required"
+    "CAPTCHAREQUIRED": "*Captcha required",
+    "INTERROR": "Internal error",
+    "REQFAILED": "Your request could not be completed",
+    "LOADFAILED":"Data could not be loaded.",
+    "BUGADDSUCC": "Bug added"
   },
   "DASHBOARD": {
     "JBUGS": "JBugs",

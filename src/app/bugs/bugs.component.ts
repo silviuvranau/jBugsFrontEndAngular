@@ -66,7 +66,7 @@ export class BugsComponent implements OnInit {
 
   constructor(private bugsService: BugsService, private permissionChecker: PermissionCheckerService, private datePipe: DatePipe, private toastrService: ToastrService,
               private cookieService: CookieService, private excelbugservice: ExcelBugsService, private translateService: TranslateService,
-              private route: ActivatedRoute, private router: Router, private sendNotificationsService: SendNotificationsService) {
+              private route: ActivatedRoute, private router: Router, private sendNotificationsService: SendNotificationsService,) {
   }
 
   ngOnInit() {
@@ -230,7 +230,7 @@ export class BugsComponent implements OnInit {
     this.bugsService.getAllAttachments().subscribe((obj) => {
       this.attachments = obj;
     }, ((error: HttpErrorResponse) => {
-      this.toastrService.error("Couldn't load bug attachment.");
+      this.toastrService.error(this.translateService.instant('NOTIFICATION.LOADFAILED'));
     }));
 
     this.bugsService.getAllBugs().subscribe((obj) => {
@@ -240,7 +240,7 @@ export class BugsComponent implements OnInit {
       this.checkIfUserHasPermission('BUG_CLOSE');
       this.checkIfUserHasPermission('BUG_EXPORT_PDF');
     }, ((error: HttpErrorResponse) => {
-      this.toastrService.error("Couldn't load bug table.");
+      this.toastrService.error(this.translateService.instant('NOTIFICATION.LOADFAILED'));
     }));
 
     console.log(this.attachments);
@@ -375,7 +375,7 @@ export class BugsComponent implements OnInit {
         }
       },
       (error: HttpErrorResponse) => {
-        this.toastrService.error("Internal error.");
+        this.toastrService.error(this.translateService.instant('NOTIFICATION.INTERROR'));
       }
     );
     return false;
@@ -451,7 +451,7 @@ export class BugsComponent implements OnInit {
 
       },
       (error: HttpErrorResponse) => {
-        this.toastrService.error("Your request could not be completed.");
+        this.toastrService.error(this.translateService.instant('NOTIFICATION.REQFAILED'));
       }
     );
   }
@@ -472,7 +472,7 @@ export class BugsComponent implements OnInit {
         this.toastrService.success("Attachment deleted.")
       },
       (error: HttpErrorResponse) => {
-        this.toastrService.error("Your request could not be completed.");
+        this.toastrService.error(this.translateService.instant('NOTIFICATION.REQFAILED'));
       }
     );
     this.initializeData();
