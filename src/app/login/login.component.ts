@@ -1,15 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {BackendService} from "../core/backend/backend.service";
 import {Login} from "../models/login.model";
-import {ToasterService} from "ngx-toaster/src/lib";
-import {ToastrComponentlessModule, ToastrService} from "ngx-toastr";
+import {ToastrService} from "ngx-toastr";
 import {LoginService} from "../service/login.service";
 import {AuthService} from "../service/auth.serice";
-import { CookieService } from 'ngx-cookie-service';
-import {$} from "protractor";
-import {FilterMetadata} from "primeng/api";
+import {CookieService} from 'ngx-cookie-service';
 import {TranslateService} from "@ngx-translate/core";
+import {PermissionCheckerService} from "../utils/permissionCheckerService";
 
 
 @Component({
@@ -21,6 +18,7 @@ export class LoginComponent implements OnInit {
 
   loginCreds: Login;
   text: number;
+  userHasBugManagmentPermission: boolean;
 
 
 
@@ -31,7 +29,8 @@ export class LoginComponent implements OnInit {
 
   constructor(private router: Router, private loginService: LoginService,
      private toasterService: ToastrService, private authService: AuthService,
-     private cookieService: CookieService, private translateService: TranslateService) {
+     private cookieService: CookieService, private translateService: TranslateService,
+     private permissionChecker: PermissionCheckerService) {
 
 
   }
@@ -39,6 +38,11 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
 
+    this.generateNumbers();
+    // this.authService.loggedInSetter(false);
+
+    localStorage.setItem("loggedIn","false");
+    this.cookieService.delete("username");
     this.generateNumbers();
     // this.authService.loggedInSetter(false);
 
@@ -71,6 +75,10 @@ export class LoginComponent implements OnInit {
       password: pass.value
     };
 
+    this.permissionChecker.checkIfUserHasPermission(this.loginCreds.username, 'BUG_MANAGEMENT').subscribe(
+      (obj) => {
+        this.userHasBugManagmentPermission = obj;
+      });
 
     if (this.text.toString() !== captcha.value.toString()) {
       this.toasterService.error(this.translateService.instant('NOTIFICATION.INVALID_CAPTCHA'));
@@ -88,7 +96,12 @@ export class LoginComponent implements OnInit {
 
 
           this.toasterService.success(this.translateService.instant('NOTIFICATION.LOGIN_SUCCESS'));
-            this.router.navigate(['/dashboard']);
+          if(this.userHasBugManagmentPermission){
+            this.router.navigate(['/dashboard/bugs']);
+          }
+          else{
+            this.router.navigate(['/dashboard/notifications']);
+          }
             this.authService.loggedInSetter();
 
             this.cookieService.set("username", this.loginCreds.username);
@@ -106,6 +119,7 @@ export class LoginComponent implements OnInit {
           else if(error.error === 'Invalid credentials') {
 
             this.toasterService.error(this.translateService.instant('LOGIN.CREDENTIALSINVALID'));
+            this.generateNumbers();
 
           }
           else if(error.error === 'Account is blocked !'){

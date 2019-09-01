@@ -31,7 +31,7 @@ export class UserCreateComponent implements OnInit {
       },
       (error: HttpErrorResponse) => {
         console.error(error);
-        this.toastrService.error(error.error);
+        this.toastrService.error("Internal error.");
       }
     );
   }
@@ -57,7 +57,7 @@ export class UserCreateComponent implements OnInit {
       },
       (error: HttpErrorResponse) => {
         console.error(error);
-        this.toastrService.error(error.error);
+        this.toastrService.error("Internal error.");
       }
     );
 

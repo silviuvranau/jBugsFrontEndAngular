@@ -36,7 +36,7 @@ export class CreateBugComponent implements OnInit {
       this.createUsernameLabels();
     }, ((error: HttpErrorResponse) => {
       console.error(error);
-      this.toastrService.error(error.message);
+      this.toastrService.error("Internal error.");
     }));
 
     this.currentDate = new Date();
@@ -80,7 +80,7 @@ export class CreateBugComponent implements OnInit {
       },
       (error: HttpErrorResponse) => {
         console.error(error);
-        this.toastrService.error(error.message);
+        this.toastrService.error("Your request could not be completed.");
       }
     )
   }

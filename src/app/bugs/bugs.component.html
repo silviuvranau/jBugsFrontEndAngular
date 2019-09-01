@@ -82,7 +82,7 @@
       <div class="ui-g-12">
         <div class="ui-g-4">
           <div class="form-style">
-            <label for="title">{{'BDETAILS.TITLE' | translate}}</label>
+            <label class="required" for="title">{{'BDETAILS.TITLE' | translate}}</label>
           </div>
         </div>
         <div class="ui-g-8">
@@ -284,9 +284,13 @@
             *File can't be larger than 25MB.
           </div>
 
-          <div style="color:dimgrey; font-style: italic">
-            <label>Current Attachment: {{assignedAttachment}}</label>
-          </div>
+
+            <div style="color:dimgrey; font-style: italic">
+              <label>Current Attachment: {{assignedAttachment}}</label>
+            </div>
+            <div *ngIf="assignedAttachment !== 'None'">
+              <button class="deleteAttButton" type="button" (click)="deleteCurrentAttachment()">Delete current attachment</button>
+            </div>
 
         </div>
       </div>

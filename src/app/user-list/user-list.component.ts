@@ -12,6 +12,8 @@ import { UserService } from '../service/user.service';
 import {executeBrowserBuilder} from "@angular-devkit/build-angular";
 import {TranslateService} from "@ngx-translate/core";
 import { SendNotificationsService } from '../service/send-notifications.service';
+import { PermissionCheckerService } from '../utils/permissionCheckerService';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-user-list',
@@ -24,7 +26,9 @@ export class UserListComponent implements OnInit {
 
   constructor(private backendService: BackendService, private excelservice: ExcelService,
             private roleService: RoleService, private toastrService: ToastrService,
-            private userService: UserService, private translateService: TranslateService) {
+            private userService: UserService, private translateService: TranslateService,
+            private permissionCheckerService: PermissionCheckerService,
+            private cookieService: CookieService) {
   }
 
   arrUsers: User[];
@@ -32,6 +36,7 @@ export class UserListComponent implements OnInit {
   displayDialog: boolean;
   selectedUser: User;
   newUser: boolean;
+  loggedInUser: string;
 
   roles: Role[];
 
@@ -42,14 +47,15 @@ export class UserListComponent implements OnInit {
     //   console.log(data);
     // });
     this.cols = [
-      { field: 'firstName', header: 'FirstName', width: '200px' },
-      {field: 'lastName', header: 'LastName', width: '200px' },
+      { field: 'firstName', header: 'FirstName', width: '150px' },
+      {field: 'lastName', header: 'LastName', width: '150px' },
       { field: 'email', header: 'Email', width: '270px' },
       { field: 'mobileNumber', header: 'Mobile', width: '120px'},
       { field: 'username', header: 'Username', width: '150px'},
       { field: 'status', header: 'Status', width: '100px'},
     ];
 
+    this.loggedInUser = this.cookieService.get('username');
   }
 
   findAllRoles(){
@@ -60,7 +66,7 @@ export class UserListComponent implements OnInit {
       },
       (error: HttpErrorResponse) => {
         console.error(error);
-        this.toastrService.error(error.error);
+        this.toastrService.error("Internal error.");
       }
     );
   }
@@ -80,15 +86,22 @@ export class UserListComponent implements OnInit {
 
 
   onRowSelect(event) {
-    this.selectedUser = this.cloneUser(event.data);
-    this.displayDialog = true;
-    console.log(this.selectedUser);
-    this.selectedUser.password = '';
-    for(let role of this.roles){
-      for(let id of this.selectedUser.roleIds)
-        if(role.id === id)
-          role.checked = true;
-    }
+    this.permissionCheckerService.checkIfUserHasPermission(this.loggedInUser,'USER_MANAGEMENT').subscribe(
+      (success) => {
+        if(success === true){
+          this.selectedUser = this.cloneUser(event.data);
+          console.log(this.selectedUser);
+          this.selectedUser.password = '';
+          for(let role of this.roles){
+            role.checked = false;
+            for(let id of this.selectedUser.roleIds)
+              if(role.id === id)
+                role.checked = true;
+          }
+          this.displayDialog = true;
+        }
+      }
+    )
   }
 
   cloneUser(u: User): User {
@@ -167,7 +180,7 @@ export class UserListComponent implements OnInit {
           },
           (error: HttpErrorResponse) => {
             console.error(error);
-            this.toastrService.error(error.error);
+            this.toastrService.error("Your request could not be carried out.");
           }
         );
 

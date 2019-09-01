@@ -16,9 +16,6 @@ import {Attachment} from "../models/attachment.model";
 import {BugAttachmentWrapper} from "../models/bugAttachmentWrapper.model";
 import {ActivatedRoute, Router} from '@angular/router';
 import {SendNotificationsService} from '../service/send-notifications.service';
-// import jsPDF from 'jspdf';
-// import * as jsPDF from 'jspdf'
-// import 'jspdf-autotable';
 
 var jsPDF = require('jspdf');
 require('jspdf-autotable');
@@ -38,6 +35,7 @@ export class BugsComponent implements OnInit {
   userHasExportPermission: boolean;
   isStatusFixed: boolean;
   assignedAttachment: string;
+  assignedAttachmentId: number;
 
   isStatusRejected: boolean;
   users: User[];
@@ -229,6 +227,12 @@ export class BugsComponent implements OnInit {
 
 
   initializeData() {
+    this.bugsService.getAllAttachments().subscribe((obj) => {
+      this.attachments = obj;
+    }, ((error: HttpErrorResponse) => {
+      this.toastrService.error("Couldn't load bug attachment.");
+    }));
+
     this.bugsService.getAllBugs().subscribe((obj) => {
       this.bugs = obj;
       this.getBugsToView();
@@ -236,23 +240,18 @@ export class BugsComponent implements OnInit {
       this.checkIfUserHasPermission('BUG_CLOSE');
       this.checkIfUserHasPermission('BUG_EXPORT_PDF');
     }, ((error: HttpErrorResponse) => {
-      console.error(error);
       this.toastrService.error("Couldn't load bug table.");
     }));
 
-    this.bugsService.getAllAttachments().subscribe((obj) => {
-      this.attachments = obj;
-    }, ((error: HttpErrorResponse) => {
-      console.error(error);
-      this.toastrService.error("Couldn't load bug attachment.");
-    }));
+    console.log(this.attachments);
   }
 
  attachmentOfBug(bug: Bug){
+   this.assignedAttachment = "";
    for(let i = 0; i < this.attachments.length; i++){
      if(this.attachments[i].bug.id === bug.id){
-       console.log(this.attachments[i].attContent)
        this.assignedAttachment = this.attachments[i].attContent.substring(9);
+       this.assignedAttachmentId = this.attachments[i].id;
      }
    }
    if (this.assignedAttachment === "") {
@@ -374,11 +373,9 @@ export class BugsComponent implements OnInit {
         } else if (requiredPermission === 'BUG_EXPORT_PDF') {
           this.userHasExportPermission = obj;
         }
-        // return obj;
       },
       (error: HttpErrorResponse) => {
-        console.error(error);
-        this.toastrService.error(error.message);
+        this.toastrService.error("Internal error.");
       }
     );
     return false;
@@ -421,7 +418,7 @@ export class BugsComponent implements OnInit {
     let bugHasBeenClosed: boolean;
     let statusHasBeenUpdated:boolean;
 
-    if(editBugForm.controls.status.value === Status.CLOSED){
+    if(editBugForm.controls.status.value === Status.CLOSED && this.currentBugStatus != Status.CLOSED){
       bugHasBeenClosed = true;
     }
 
@@ -454,8 +451,7 @@ export class BugsComponent implements OnInit {
 
       },
       (error: HttpErrorResponse) => {
-        console.error(error);
-        this.toastrService.error(error.message);
+        this.toastrService.error("Your request could not be completed.");
       }
     );
   }
@@ -467,6 +463,19 @@ export class BugsComponent implements OnInit {
     attachmentToInsert.bug = null;
 
     return attachmentToInsert;
+  }
+
+  deleteCurrentAttachment() {
+    this.bugsService.deleteCurrentAttachment(this.assignedAttachmentId).subscribe(
+      (obj) => {
+        this.attachments = obj;
+        this.toastrService.success("Attachment deleted.")
+      },
+      (error: HttpErrorResponse) => {
+        this.toastrService.error("Your request could not be completed.");
+      }
+    );
+    this.initializeData();
   }
 
   createBugAttachmentWrapper(bug: Bug, attachment: Attachment): BugAttachmentWrapper {

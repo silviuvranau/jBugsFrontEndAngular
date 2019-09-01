@@ -1,8 +1,11 @@
 <div style="margin-left:30%; width: 550px;">
   <p-card header="Add a new bug" subheader="">
     <form #createBugForm="ngForm" (ngSubmit)=addBug(createBugForm)>
+      <div class="requiredNote">
+        * Marked fields are mandatory.
+      </div>
       <div class="form-style">
-        <label for="title">Title</label>
+        <label class="required" for="title">Title</label>
       </div>
         <input
           required
@@ -29,7 +32,7 @@
 
 
       <div class="form-style">
-        <label for="description">Description</label>
+        <label class="required" for="description">Description</label>
       </div>
         <textarea required
                   minlength=250
@@ -51,7 +54,7 @@
         </div>
 
       <div class="form-style">
-        <label for="description">Version</label>
+        <label class="required" for="version">Version</label>
       </div>
         <input pInputText
                required
@@ -73,7 +76,7 @@
         </div>
 
       <div class="form-style">
-        <label for="targetDate">Target Date</label>
+        <label class="required" for="targetDate">Target Date</label>
       </div>
         <div>
           <p-calendar required ngModel name="targetDate" id="targetDate" [style]="{'width': '300px'}"
@@ -112,7 +115,7 @@
         </div>
 
       <div class="form-style">
-        <label for="severity">Severity</label>
+        <label class="required" for="severity">Severity</label>
       </div>
         <div>
           <p-dropdown id="severity"
