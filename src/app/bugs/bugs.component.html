@@ -196,7 +196,7 @@
                       !((!userHasBugClosePermission && userHasManagementPermission) && !(isStatusFixed || isStatusRejected)) ) &&
                       !(userHasBugClosePermission && userHasManagementPermission)
                       )"
-                      ngModel="popUpBug.status"></p-dropdown>
+                      [ngModel]="popUpBug.status"></p-dropdown>
         </div>
       </div>
 
