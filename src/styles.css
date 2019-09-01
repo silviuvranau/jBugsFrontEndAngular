@@ -12,3 +12,11 @@
   height: 100px;
   padding: 15px;
 } */
+.bg-img {
+  background-image: url('https://media.giphy.com/media/13gvXfEVlxQjDO/giphy.gif');
+  background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}

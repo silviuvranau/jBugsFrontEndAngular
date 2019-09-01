@@ -4,7 +4,7 @@ import {CookieService} from "ngx-cookie-service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {PermissionCheckerService} from "../utils/permissionCheckerService";
 import {ToastrService} from "ngx-toastr";
-import { SendNotificationsService } from '../service/send-notifications.service';
+import {SendNotificationsService} from '../service/send-notifications.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -23,6 +23,7 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
+    document.body.classList.add('bg-img');
     this.loggedInUser = this.cookieService.get("username");
     this.checkIfUserHasBugManagementPermission();
     this.unreadNotifications = 0;
