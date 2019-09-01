@@ -25,6 +25,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.loggedInUser = this.cookieService.get("username");
     this.checkIfUserHasBugManagementPermission();
+    this.checkIfUserHasUserManagementPermission();
     this.unreadNotifications = 0;
 
     this.sendNotificationsService.messages.subscribe(msg => {
