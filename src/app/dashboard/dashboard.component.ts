@@ -4,7 +4,7 @@ import {CookieService} from "ngx-cookie-service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {PermissionCheckerService} from "../utils/permissionCheckerService";
 import {ToastrService} from "ngx-toastr";
-import { SendNotificationsService } from '../service/send-notifications.service';
+import {SendNotificationsService} from '../service/send-notifications.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,7 +16,7 @@ export class DashboardComponent implements OnInit {
   loggedInUser: string;
   userHasBugManagementPermission: boolean;
   unreadNotifications: number;
-
+  userHasUserManagementPermission: boolean;
 
   constructor(private router: Router, private cookieService: CookieService, private permissionChecker: PermissionCheckerService,
               private toastrService: ToastrService, private sendNotificationsService: SendNotificationsService) {  
@@ -24,7 +24,8 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.loggedInUser = this.cookieService.get("username");
-    this.checkIfUserHasBugManagementPermission();
+    this.checkIfUserHasManagementPermission('BUG_MANAGEMENT');
+    this.checkIfUserHasManagementPermission('USER_MANAGEMENT');
     this.unreadNotifications = 0;
 
     this.sendNotificationsService.messages.subscribe(msg => {
@@ -46,10 +47,14 @@ export class DashboardComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  checkIfUserHasBugManagementPermission() {
-    this.permissionChecker.checkIfUserHasPermission(this.loggedInUser, 'BUG_MANAGEMENT').subscribe(
+  checkIfUserHasManagementPermission(permission: string) {
+    this.permissionChecker.checkIfUserHasPermission(this.loggedInUser, permission).subscribe(
       (obj) => {
-        this.userHasBugManagementPermission = JSON.parse(obj);
+        if (permission === 'BUG_MANAGEMENT') {
+          this.userHasBugManagementPermission = JSON.parse(obj);
+        } else {
+          this.userHasUserManagementPermission = JSON.parse(obj);
+        }
       },
       (error: HttpErrorResponse) => {
         console.error(error);
@@ -58,5 +63,6 @@ export class DashboardComponent implements OnInit {
     );
     return false;
   }
+
 
 }

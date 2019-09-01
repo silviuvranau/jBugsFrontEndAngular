@@ -26,6 +26,7 @@
     "@progress/kendo-angular-common": "^1.1.0",
     "@progress/kendo-angular-pdf-export": "^2.0.0",
     "@progress/kendo-drawing": "^1.5.12",
+    "angular-file-upload": "^2.5.0",
     "animations": "0.0.0",
     "bootstrap": "^4.3.1",
     "chart.js": "^2.8.0",

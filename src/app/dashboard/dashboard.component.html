@@ -10,7 +10,6 @@
 </div>
 <router-outlet></router-outlet> -->
 
-
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#1F70E8">
     <a class="navbar-brand" routerLink="/">
       <img src="/assets/jbugs-logo-large.jpg" width="104" height="37" class="d-inline-block align-top" alt="">
@@ -26,12 +25,14 @@
         </a>
       </li>
 
-      <li class="nav-item" routerLinkActive="active">
+      <div *ngIf="userHasUserManagementPermission === true">
+        <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" routerLink="add-user">
             <i class = "pi pi-user-plus"></i>
             {{'DASHBOARD.CREATEUSER' | translate}}
           </a>
-      </li>
+        </li>
+      </div>
 
       <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" routerLink="changePermissions">
