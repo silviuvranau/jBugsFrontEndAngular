@@ -470,6 +470,7 @@ export class BugsComponent implements OnInit {
     this.bugsService.deleteCurrentAttachment(this.assignedAttachmentId).subscribe(
       (obj) => {
         this.attachments = obj;
+        this.assignedAttachment = "None";
         this.toastrService.success("Attachment deleted.")
       },
       (error: HttpErrorResponse) => {
