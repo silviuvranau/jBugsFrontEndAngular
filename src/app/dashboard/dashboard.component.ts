@@ -24,8 +24,8 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.loggedInUser = this.cookieService.get("username");
-    this.checkIfUserHasBugManagementPermission();
-    this.checkIfUserHasUserManagementPermission();
+    this.checkIfUserHasManagementPermission('BUG_MANAGEMENT');
+    this.checkIfUserHasManagementPermission('USER_MANAGEMENT');
     this.unreadNotifications = 0;
 
     this.sendNotificationsService.messages.subscribe(msg => {
@@ -47,10 +47,14 @@ export class DashboardComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  checkIfUserHasBugManagementPermission() {
-    this.permissionChecker.checkIfUserHasPermission(this.loggedInUser, 'BUG_MANAGEMENT').subscribe(
+  checkIfUserHasManagementPermission(permission: string) {
+    this.permissionChecker.checkIfUserHasPermission(this.loggedInUser, permission).subscribe(
       (obj) => {
-        this.userHasBugManagementPermission = JSON.parse(obj);
+        if (permission === 'BUG_MANAGEMENT') {
+          this.userHasBugManagementPermission = JSON.parse(obj);
+        } else {
+          this.userHasUserManagementPermission = JSON.parse(obj);
+        }
       },
       (error: HttpErrorResponse) => {
         console.error(error);
@@ -60,7 +64,8 @@ export class DashboardComponent implements OnInit {
     return false;
   }
 
-  checkIfUserHasUserManagementPermission() {
+  /**
+   checkIfUserHasUserManagementPermission() {
     this.permissionChecker.checkIfUserHasPermission(this.loggedInUser, 'USER_MANAGEMENT').subscribe(
       (obj) => {
         this.userHasUserManagementPermission = JSON.parse(obj);
@@ -71,6 +76,6 @@ export class DashboardComponent implements OnInit {
       }
     );
     return false;
-  }
+  }**/
 
 }
