@@ -34,7 +34,7 @@
                     (onSelect)="dt.filter($event, col.field, 'dateFilter')" (onClearClick)="dt.filter($event.target.value, col.field, 'contains')"></p-calendar>
 
         <p-multiSelect [style]="{'width':'90px'}" *ngSwitchCase="'status'" [options]="statusTypes" defaultLabel="All Types"
-                       (onChange)="dt.filter($event.value, col.field, 'equals')"></p-multiSelect>
+                       (onChange)="dt.filter($event.value, col.field, 'in')"></p-multiSelect>
 
         <input *ngSwitchCase="'fixedVersion'" pInputText type="text"
                (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)" [ngStyle]="{'width':'50px'}">
@@ -196,7 +196,7 @@
                       !((!userHasBugClosePermission && userHasManagementPermission) && !(isStatusFixed || isStatusRejected)) ) &&
                       !(userHasBugClosePermission && userHasManagementPermission)
                       )"
-                      ngModel="popUpBug.status"></p-dropdown>
+                      [ngModel]="popUpBug.status"></p-dropdown>
         </div>
       </div>
 

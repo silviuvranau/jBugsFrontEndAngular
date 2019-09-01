@@ -12,6 +12,7 @@
     "CREDENTIALSINVALID": "Invalid credentials !",
     "ACCBLOCKED": "Account is blocked !"
   },
+
   "NOTIFICATION": {
     "INVALID_CAPTCHA": "Invalid Captcha",
     "INVALID_CREDENTIALS": "Invalid Credentials",
@@ -32,7 +33,7 @@
     "CAPTCHAREQUIRED": "*Captcha required",
     "INTERROR": "Internal error",
     "REQFAILED": "Your request could not be completed",
-    "LOADFAILED":"Data could not be loaded.",
+    "LOADFAILED":"Data could not be loaded. You may not have the required permission.",
     "BUGADDSUCC": "Bug added",
     "BUGUPDATED": "Your bug was just updated.",
     "BUGCLOSE": "Your bug has been closed.",
@@ -46,7 +47,7 @@
     "ROLEPERMISSION": "Role Permissions",
     "BUGS": "Bugs",
     "LOGOUT": "Log out",
-    "NOT": "Notification",
+    "NOT": "Notifications",
     "SIGNEDINAS": "Hello,  ",
     "CREATEBUG": "Create Bug"
   },
