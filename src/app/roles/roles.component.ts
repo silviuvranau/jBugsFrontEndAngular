@@ -84,7 +84,7 @@ export class RolesComponent implements OnInit {
       },
       (error: HttpErrorResponse) => {
         console.error(error);
-        this.toastrService.error(error.message);
+        this.toastrService.error("Internal error.");
       }
     );
     return false;

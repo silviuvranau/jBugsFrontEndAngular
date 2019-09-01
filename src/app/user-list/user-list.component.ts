@@ -66,7 +66,7 @@ export class UserListComponent implements OnInit {
       },
       (error: HttpErrorResponse) => {
         console.error(error);
-        this.toastrService.error(error.error);
+        this.toastrService.error("Internal error.");
       }
     );
   }
@@ -176,7 +176,7 @@ export class UserListComponent implements OnInit {
           },
           (error: HttpErrorResponse) => {
             console.error(error);
-            this.toastrService.error(error.error);
+            this.toastrService.error("Your request could not be carried out.");
           }
         );
 
