@@ -73,7 +73,7 @@
 </p-table>
 
 
-<p-dialog header="{{'BDETAIL.DET' | translate}}" [(visible)]="displayBugPopUp" [responsive]="true" [modal]="true"
+<p-dialog header="{{'BDETAILS.DET' | translate}}" [(visible)]="displayBugPopUp" [responsive]="true" [modal]="true"
           width="700">
   <form #editBugForm="ngForm" (ngSubmit)=editBug(editBugForm)>
 
@@ -100,13 +100,13 @@
           />
           <div *ngIf="title.touched && title.invalid">
             <div *ngIf="title.errors.required" style="color:red">
-              *Title is required.
+              {{'BDETAILS.TITLEREQUIRED' | translate}}
             </div>
             <div *ngIf="title.errors.minlength" style="color:red">
-              *Invalid title. Title must have a minimum of 3 characters.
+              {{'BDETAILS.TITLESHORT' | translate}}
             </div>
             <div *ngIf="title.errors.pattern" style="color:red">
-              *Invalid title.
+              {{'BDETAILS.TITLEINVALID' | translate}}
             </div>
           </div>
         </div>
@@ -132,10 +132,10 @@
           </textarea>
           <div *ngIf="description.touched && description.invalid">
             <div *ngIf="description.errors.required" style="color:red">
-              *Description is required.
+              {{'BDETAILS.DESCREQUIRED' | translate}}
             </div>
             <div *ngIf="description.errors.minlength" style="color:red">
-              *Invalid description. Description must have a minimum of 250 characters.
+              {{'BDETAILS.DESCINVALID' | translate}}
             </div>
           </div>
         </div>
@@ -161,10 +161,10 @@
           />
           <div *ngIf="version.touched && version.invalid">
             <div *ngIf="version.errors.required" style="color:red">
-              *Version is required.
+              {{'BDETAILS.VERSIONREQUIRED' | translate}}
             </div>
             <div *ngIf="version.errors.pattern" style="color:red">
-              *Invalid version. Versions must be of the form '1.1.1'
+              {{'BDETAILS.VERSIONINVALID' | translate}}
             </div>
           </div>
         </div>
@@ -219,7 +219,7 @@
           />
           <div *ngIf="fixedVersion.touched && fixedVersion.invalid">
             <div *ngIf="fixedVersion.errors.pattern" style="color:red">
-              *Invalid version. Versions must be of the form '1.1.1'
+              {{'BDETAILS.VERSIONINVALID' | translate}}
             </div>
           </div>
         </div>
@@ -264,7 +264,7 @@
       <div class="ui-g-12">
         <div class="ui-g-4">
           <div class="form-style">
-            <label for="attachment">Attachment</label>
+            <label for="attachment">{{'BDETAILS.ATTACHMENT' | translate}}</label>
           </div>
         </div>
         <div class="ui-g-8">
@@ -281,15 +281,15 @@
             ngModel
           >
           <div style="color:dimgrey; font-style: italic; font-size:10px">
-            *File can't be larger than 25MB.
+            {{'BDETAILS.FILEWARNING' | translate}}
           </div>
 
 
             <div style="color:dimgrey; font-style: italic">
-              <label>Current Attachment: {{assignedAttachment}}</label>
+              <label>{{'BDETAILS.CURRATTACHMENT' | translate}} {{assignedAttachment}}</label>
             </div>
             <div *ngIf="assignedAttachment !== 'None'">
-              <button class="deleteAttButton" type="button" (click)="deleteCurrentAttachment()">Delete current attachment</button>
+              <button class="deleteAttButton" type="button" (click)="deleteCurrentAttachment()">{{'BDETAILS.DELATT' | translate}}</button>
             </div>
 
         </div>
@@ -303,9 +303,9 @@
     </button>
 
     <button class="btn btn-primary" type="button" style="margin-top:3%; margin-left:3px"
-            [hidden]="!userHasExportPermission" (click)="downloadPdf(popUpBug)">Export as PDF
+            [hidden]="!userHasExportPermission" (click)="downloadPdf(popUpBug)">{{'BDETAILS.EXPPDF' | translate}}
     </button>
 
   </form>
 </p-dialog>
-<button class="btn btn-primary" style="margin-top:3%" (click)="exportAsXLSX()">Export List as Excel</button>
+<button class="btn btn-primary" style="margin-top:3%" (click)="exportAsXLSX()">{{'BDETAILS.EXPEXCEL' | translate}}</button>

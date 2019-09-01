@@ -39,7 +39,8 @@
     "BUGS": "Bugs",
     "LOGOUT": "Log out",
     "NOT": "Notification",
-    "SIGNEDINAS": "Signed in as: "
+    "SIGNEDINAS": "Hello,  ",
+    "CREATEBUG": "Create Bug"
   },
   "USERLIST": {
     "FirstName": "First Name",
@@ -75,7 +76,8 @@
     "MOBILENUMBER": "Mobile Number",
     "PASSWORD": "Password",
     "ROLES": "Roles",
-    "ADDUSER": "Add User"
+    "ADDUSER": "Add User",
+    "MANDATORYFIELDS": "* Marked fields are mandatory."
   },
   "ROLES1": {
     "USER_MANAGEMENT": "User Management",
@@ -157,19 +159,25 @@
     "CREATEDBY": "Created by",
     "ASSIGNEDTO": "Assigned to",
     "BTNEDIT": "Edit bug",
-    "DESCREQUIRED": "*Description is required",
+    "DESCREQUIRED": "*Description is required.",
     "DESCINVALID": "*Invalid description. Description must have a minimum of 250 characters.",
     "VERSIONREQUIRED": "*Version is required.",
     "VERSIONINVALID": "*Invalid version. Versions must be of the form '1.1.1'",
     "TITLEREQUIRED": "*Title is required",
     "TITLEINVALID": "*Invalid title.",
+    "TITLESHORT": "*Invalid title. Title must have a minimum of 3 characters.",
     "EXPEXCEL": "Export as Excel",
     "EXPPDF": "Export as PDF",
     "ALL": "ALL",
     "ALLTYPES": "All Types",
     "ATTACHMENT": "Attachment",
-    "CURRATTACHMENT": "Current Attachmnet:"
+    "CURRATTACHMENT": "Current Attachmnet:",
+    "FILEWARNING": "*File can't be larger than 25MB.",
+    "DELATT": "Delete current attachment",
 
+    "ADDBUG": "Add a new bug",
+    "ADDBUGBUTTON": "Add bug",
+    "MANDATORYFIELDS": "* Marked fields are mandatory."
 
   }
 

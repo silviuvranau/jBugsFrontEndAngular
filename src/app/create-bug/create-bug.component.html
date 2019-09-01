@@ -1,11 +1,11 @@
 <div style="margin-left:30%; width: 550px;">
-  <p-card header="Add a new bug" subheader="">
+  <p-card header="{{'BDETAILS.ADDBUG' | translate}}" subheader="">
     <form #createBugForm="ngForm" (ngSubmit)=addBug(createBugForm)>
       <div class="requiredNote">
-        * Marked fields are mandatory.
+        {{'BDETAILS.MANDATORYFIELDS' | translate}}
       </div>
       <div class="form-style">
-        <label class="required" for="title">Title</label>
+        <label class="required" for="title">{{'BDETAILS.TITLE' | translate}}</label>
       </div>
         <input
           required
@@ -20,19 +20,19 @@
         >
         <div style="width:400px" *ngIf="title.touched && title.invalid">
           <div *ngIf="title.errors.required" style="color:red">
-            *Title is required.
+            {{'BDETAILS.TITLEREQUIRED' | translate}}
           </div>
           <div *ngIf="title.errors.minlength" style="color:red">
-            *Invalid title. Title must have a minimum of 3 characters.
+            {{'BDETAILS.TITLESHORT' | translate}}
           </div>
           <div *ngIf="title.errors.pattern" style="color:red">
-            *Invalid title.
+            {{'BDETAILS.TITLEINVALID' | translate}}
           </div>
         </div>
 
 
       <div class="form-style">
-        <label class="required" for="description">Description</label>
+        <label class="required" for="description">{{'BDETAILS.DESC' | translate}}</label>
       </div>
         <textarea required
                   minlength=250
@@ -46,15 +46,15 @@
             </textarea>
         <div *ngIf="description.touched && description.invalid">
           <div *ngIf="description.errors.required" style="color:red">
-            *Description is required.
+            {{'BDETAILS.DESCREQUIRED' | translate}}
           </div>
           <div *ngIf="description.errors.minlength" style="color:red">
-            *Invalid description. Description must have a minimum of 250 characters.
+            {{'BDETAILS.DESCINVALID' | translate}}
           </div>
         </div>
 
       <div class="form-style">
-        <label class="required" for="version">Version</label>
+        <label class="required" for="version">{{'BDETAILS.VERSION' | translate}}</label>
       </div>
         <input pInputText
                required
@@ -68,15 +68,15 @@
         />
         <div *ngIf="version.touched && version.invalid">
           <div *ngIf="version.errors.required" style="color:red">
-            *Version is required.
+            {{'BDETAILS.VERSIONREQUIRED' | translate}}
           </div>
           <div *ngIf="version.errors.pattern" style="color:red">
-            *Invalid version. Versions must be of the form '1.1.1'
+            {{'BDETAILS.VERSIONINVALID' | translate}}
           </div>
         </div>
 
       <div class="form-style">
-        <label class="required" for="targetDate">Target Date</label>
+        <label class="required" for="targetDate">{{'BDETAILS.TARGETDATE' | translate}}</label>
       </div>
         <div>
           <p-calendar required ngModel name="targetDate" id="targetDate" [style]="{'width': '300px'}"
@@ -85,7 +85,7 @@
         </div>
 
       <div class="form-style">
-        <label for="status">Status</label>
+        <label for="status">{{'BDETAILS.STATUS' | translate}}</label>
       </div>
         <input pInputText
                id="status"
@@ -97,7 +97,7 @@
         />
 
       <div class="form-style">
-        <label for="fixedVersion">Fixed Version</label>
+        <label for="fixedVersion">{{'BDETAILS.FXVERSION' | translate}}</label>
       </div>
         <input pInputText
                maxlength=10
@@ -105,17 +105,17 @@
                id="fixedVersion"
                name="fixedVersion"
                class="form-control"
-               #version="ngModel"
+               #fixedVersion="ngModel"
                ngModel
         />
-        <div *ngIf="version.touched && version.invalid">
-          <div *ngIf="version.errors.pattern" style="color:red">
-            *Invalid version. Versions must be of the form '1.1.1'
+        <div *ngIf="fixedVersion.touched && fixedVersion.invalid">
+          <div *ngIf="fixedVersion.errors.pattern" style="color:red">
+            {{'BDETAILS.VERSIONINVALID' | translate}}
           </div>
         </div>
 
       <div class="form-style">
-        <label class="required" for="severity">Severity</label>
+        <label class="required" for="severity">{{'BDETAILS.SEVERITY' | translate}}</label>
       </div>
         <div>
           <p-dropdown id="severity"
@@ -125,7 +125,7 @@
         </div>
 
       <div class="form-style">
-        <label for="createdBy">Created by</label>
+        <label for="createdBy">{{'BDETAILS.CREATEDBY' | translate}}</label>
       </div>
         <input pInputText
                id="createdBy"
@@ -137,7 +137,7 @@
         />
 
       <div class="form-style">
-        <label for="assignedTo">Assigned to</label>
+        <label for="assignedTo">{{'BDETAILS.ASSIGNEDTO' | translate}}</label>
       </div>
         <div>
           <p-dropdown id="assignedTo" name="assignedTo" [options]="assignedToUsernamesForDropDown"
@@ -145,7 +145,7 @@
         </div>
 
       <div class="form-style">
-        <label for="attachment">Attachment</label>
+        <label for="attachment">{{'BDETAILS.ATTACHMENT' | translate}}</label>
       </div>
         <div class = "form-inline">
           <input
@@ -161,10 +161,10 @@
           >
         </div>
         <div style="color:dimgrey; font-style: italic; font-size:10px">
-          *File can't be larger than 25MB.
+          {{'BDETAILS.FILEWARNING' | translate}}
         </div>
 
-      <button class="btn btn-primary" style="margin-top:3%" [disabled]="createBugForm.invalid">Add Bug</button>
+      <button class="btn btn-primary" style="margin-top:3%" [disabled]="createBugForm.invalid">{{'BDETAILS.ADDBUGBUTTON' | translate}}</button>
     </form>
 
   </p-card>
