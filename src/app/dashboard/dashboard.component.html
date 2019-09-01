@@ -25,12 +25,14 @@
         </a>
       </li>
 
-      <li class="nav-item" routerLinkActive="active">
+      <div *ngIf="userHasUserManagementPermission === true">
+        <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" routerLink="add-user">
             <i class = "pi pi-user-plus"></i>
             {{'DASHBOARD.CREATEUSER' | translate}}
           </a>
-      </li>
+        </li>
+      </div>
 
       <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" routerLink="changePermissions">

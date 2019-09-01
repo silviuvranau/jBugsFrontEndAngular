@@ -16,14 +16,13 @@ export class DashboardComponent implements OnInit {
   loggedInUser: string;
   userHasBugManagementPermission: boolean;
   unreadNotifications: number;
-
+  userHasUserManagementPermission: boolean;
 
   constructor(private router: Router, private cookieService: CookieService, private permissionChecker: PermissionCheckerService,
               private toastrService: ToastrService, private sendNotificationsService: SendNotificationsService) {  
   }
 
   ngOnInit() {
-    document.body.classList.add('bg-img');
     this.loggedInUser = this.cookieService.get("username");
     this.checkIfUserHasBugManagementPermission();
     this.unreadNotifications = 0;
@@ -51,6 +50,19 @@ export class DashboardComponent implements OnInit {
     this.permissionChecker.checkIfUserHasPermission(this.loggedInUser, 'BUG_MANAGEMENT').subscribe(
       (obj) => {
         this.userHasBugManagementPermission = JSON.parse(obj);
+      },
+      (error: HttpErrorResponse) => {
+        console.error(error);
+        this.toastrService.error("Internal error.");
+      }
+    );
+    return false;
+  }
+
+  checkIfUserHasUserManagementPermission() {
+    this.permissionChecker.checkIfUserHasPermission(this.loggedInUser, 'USER_MANAGEMENT').subscribe(
+      (obj) => {
+        this.userHasUserManagementPermission = JSON.parse(obj);
       },
       (error: HttpErrorResponse) => {
         console.error(error);
