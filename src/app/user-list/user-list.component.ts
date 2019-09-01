@@ -113,6 +113,7 @@ export class UserListComponent implements OnInit {
   }
   downloadPdf() {
     //const doc = new jsPDF();
+  }
 
 
 
