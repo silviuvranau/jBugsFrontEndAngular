@@ -33,7 +33,14 @@
     "INVALIDEMAIL": "*Email invalid",
     "INVALIDMOBILENUMBER": "*Telefon mobil invalid",
     "USERNAMEREQUIRED": "*Utilizator obligatoriu",
-    "CAPTCHAREQUIRED": "*Captcha obligatoriu"
+    "CAPTCHAREQUIRED": "*Captcha obligatoriu",
+    "INTERROR": "Eroare interna",
+    "REQFAILED": "Cererea nu a putut fi finalizata",
+    "LOADFAILED":"Nu s-au primit date.",
+    "BUGADDSUCC": "Bug adaugat",
+    "BUGUPDATED": "Bug actualizat.",
+    "BUGCLOSE": "Bug inchis.",
+    "BUGSTATUS": "Statusul bugului actualizat."
 
 
   },

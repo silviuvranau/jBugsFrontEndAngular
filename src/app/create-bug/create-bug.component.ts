@@ -11,6 +11,7 @@ import {DatePipe} from "@angular/common";
 import {Attachment} from "../models/attachment.model";
 import {BugAttachmentWrapper} from "../models/bugAttachmentWrapper.model";
 import {BugsService} from "../bugs/bugs.service";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-create-bug',
@@ -27,7 +28,7 @@ export class CreateBugComponent implements OnInit {
 
 
   constructor(private cookieService: CookieService, private userService: UserService, private toastrService: ToastrService,
-              private bugsService: BugsService) {
+              private bugsService: BugsService, private translateService: TranslateService) {
   }
 
   ngOnInit() {
@@ -36,7 +37,7 @@ export class CreateBugComponent implements OnInit {
       this.createUsernameLabels();
     }, ((error: HttpErrorResponse) => {
       console.error(error);
-      this.toastrService.error("Internal error.");
+      this.toastrService.error(this.translateService.instant('NOTIFICATION.REQFAILED'));
     }));
 
     this.currentDate = new Date();
@@ -75,12 +76,12 @@ export class CreateBugComponent implements OnInit {
 
     this.bugsService.insertBug(bugAttWrapper).subscribe(
       () => {
-        this.toastrService.success("Bug added successfully");
+        this.toastrService.success(this.translateService.instant('NOTIFICATION.BUGADDSUCC'));
 
       },
       (error: HttpErrorResponse) => {
         console.error(error);
-        this.toastrService.error("Your request could not be completed.");
+        this.toastrService.error(this.translateService.instant('NOTIFICATION.REQFAILED'));
       }
     )
   }
