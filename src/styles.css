@@ -6,3 +6,12 @@
 @import "../node_modules/ngx-toastr/toastr.css";
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
+.bg-img
+{
+  background-image: url("C:\Users\bondom\Downloads\bugs2.gif");
+  background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}

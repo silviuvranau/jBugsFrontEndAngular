@@ -23,6 +23,7 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
+    document.body.classList.add('bg-img');
     this.loggedInUser = this.cookieService.get("username");
     this.checkIfUserHasManagementPermission('BUG_MANAGEMENT');
     this.checkIfUserHasManagementPermission('USER_MANAGEMENT');
